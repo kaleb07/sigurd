@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
-import {StyleSheet,Text,View,TouchableOpacity
-} from 'react-native';
+import {StyleSheet,Text,View,TouchableOpacity} from 'react-native';
 
 export default class Create_Activity extends Component < {} > {
   register() {
     Actions.register()
   }
+
   render(){
     return (
     <View style = {styles.container}>

@@ -5,6 +5,7 @@ import SearchableDropdown from 'react-native-searchable-dropdown';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {Actions} from 'react-native-router-flux';
 
 var items = [
   {id: 1, name: 'Cabe Merah'},
@@ -36,6 +37,10 @@ export default class Form extends Component<Props>{
     this.myfun = this.myfun.bind(this);
   };
 
+  prospecting() {
+    Actions.prospecting()
+  };
+
   myfun(){
       ImagePicker.showImagePicker(options, (response) => {
         console.log('Response = ', response);
@@ -57,6 +62,7 @@ export default class Form extends Component<Props>{
         }
       });
     };
+
 
 render(){
   let data = [{
@@ -178,7 +184,7 @@ render(){
       Batal
       </Text>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={this.prospecting}>
       <Text style={{
         backgroundColor:'#00bfff',
         color:'#ffffff',
@@ -188,7 +194,7 @@ render(){
         height:35,
         textAlign:'center',
       }}>
-      Simpan
+      Selanjutnya
       </Text>
       </TouchableOpacity>
       </View>
