@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Button, ScrollView, Image, Animated} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import {Dropdown} from 'react-native-material-dropdown';
+import ImagePicker from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 var items = [
   {id: 1, name: 'Cabe Merah'},
@@ -11,16 +13,13 @@ var items = [
   {id: 4, name: 'Durian'},
 ];
 
-var kegiatan = [
-  {id: 1, name: 'Prospecting'},
-  {id: 2, name: 'Konsultasi'},
-  {id: 3, name: 'Monitor Lapangan'},
-  {id: 4, name: 'Tanam Perdana'},
-  {id: 5, name: 'Panen'},
-  {id: 6, name: 'Lainnya'},
-];
+const options={
+  title: 'my pic app',
+  takePhotoButtonTitle:'Take photo your camera',
+  chooseFromLibraryButtonTitle:'Choose photo from library',
+}
 
-export default class Form extends Component{
+export default class Form extends Component<Props>{
   // state = {
   //   search: '',
   // };
@@ -28,28 +27,36 @@ export default class Form extends Component{
   // updateSearch = search => {
   //   this.setState({ search });
   // };
-  constructor() {
-    super();
-    this.state = {
-      serverData: [],
-      //Data Source for the SearchableDropdown
-    };
-  }
+  constructor(props) {
+    super(props);
+   this.state={
+     avatar:null,
+     pic:null
+    }
+    this.myfun = this.myfun.bind(this);
+  };
 
-  componentDidMount() {
-  fetch('https://aboutreact.com/demo/demosearchables.php')
-    .then(response => response.json())
-    .then(responseJson => {
-      //Successful response from the API Call
-      this.setState({
-        serverData: [...this.state.serverData, ...responseJson.results],
-        //adding the new data in Data Source of the SearchableDropdown
+  myfun(){
+      ImagePicker.showImagePicker(options, (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else {
+          const source = { uri: response.uri };
+
+          // You can also display the image using data:
+          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+          this.setState({
+            avatar: source,
+            pic:response.data
+          });
+        }
       });
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
+    };
 
 render(){
   let data = [{
@@ -68,6 +75,7 @@ render(){
   const  search  = this.state;
 
   return (
+      <ScrollView>
     <View style={styles.container}>
       <Text style={styles.text}>
       </Text>
@@ -140,22 +148,56 @@ render(){
         <Text style={styles.hasil_kegiatan}>
         <Text>Hasil Kegiatan</Text>
       </Text>
-
       <TextInput style={styles.inputBox}/>
         <Text style={styles.foto_kegiatan}>
         <Text>Foto Kegiatan</Text>
       </Text>
-
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Browse</Text>
+      <View style={{flexDirection: 'row',justifyContent: 'space-between'}}>
+        <TouchableOpacity onPress={this.myfun}>
+          <Image source={this.state.avatar}
+          style={{width:50, height:50, margin:10}}/>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonbox}>
-        <Text style={styles.buttonText}>Simpan</Text>
+        <TextInput style={styles.inputText}/>
+          <Icon name="trash" size={50}color="#000000"/>
+        </View>
+        <View style={[{ width: "100%", marginVertical: 10 }]}>
+      <Button onPress={this.myfun} title="pilih gambar" color="#a9a9a9"/>
+      </View>
+      <View style={{flexDirection: 'row',justifyContent: 'space-between'}}>
+      <TouchableOpacity>
+      <Text style={{
+        backgroundColor:'#ff0000',
+        color:'#ffffff',
+        fontSize:16,
+        padding:5,
+        width: 150,
+        height:35,
+        textAlign:'center',
+        marginRight:20
+      }}>
+      Batal
+      </Text>
       </TouchableOpacity>
-    </View>
+      <TouchableOpacity>
+      <Text style={{
+        backgroundColor:'#00bfff',
+        color:'#ffffff',
+        fontSize:16,
+        padding:5,
+        width: 150,
+        height:35,
+        textAlign:'center',
+      }}>
+      Simpan
+      </Text>
+      </TouchableOpacity>
+      </View>
+      </View>
+      </ScrollView>
   )
   }
 }
+
 const styles = StyleSheet.create({
   container:{
   marginTop:30,
@@ -228,7 +270,7 @@ const styles = StyleSheet.create({
   },
 
   inputBox:{
-  width:350,
+  width:360,
   borderRadius:5,
   borderWidth: 1,
   borderColor: '#000000',
@@ -237,5 +279,17 @@ const styles = StyleSheet.create({
   fontSize:16,
   color:'#000000',
   marginVertical: 10
-
-}});
+  },
+  inputText:{
+    width:260,
+    borderRadius:5,
+    borderWidth: 1,
+    borderColor: '#000000',
+    //borderRadius: 25,
+    //paddingHorizontal:16,
+    fontSize:16,
+    color:'#000000',
+    marginVertical: 10,
+    marginLeft:5
+  }
+});
