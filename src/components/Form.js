@@ -32,7 +32,8 @@ export default class Form extends Component<Props>{
     super(props);
    this.state={
      avatar:null,
-     pic:null
+     pic:null,
+     kegiatan:"kosong",
     }
     this.myfun = this.myfun.bind(this);
   };
@@ -82,123 +83,130 @@ render(){
 
   return (
       <ScrollView>
-    <View style={styles.container}>
-      <Text style={styles.text}>
-      </Text>
-      <Dropdown style={styles.dropdown} label= 'Kegiatan' data={data}/>
-      <Text style={styles.kegiatan}>
-      </Text>
+        <View style={styles.container}>
+          <Text style={styles.text}>
+          {search.kegiatan}
+          </Text>
+          <Dropdown style={styles.dropdown} label= 'Kegiatan' data={data}/>
+          <Text
+            style={styles.kegiatan}
+          >
+          </Text>
 
-      <Text style={styles.text}>
-        <Text>Deskripsi Kegiatan</Text>
-      </Text>
-      <TextInput style={styles.inputBox}/>
+          <Text style={styles.text}>
+            <Text>Deskripsi Kegiatan</Text>
+          </Text>
+          <TextInput
+          style={styles.inputBox}
+          value={search.kegiatan}
+          onChangeText={(text) => this.setState({kegiatan:text})}
+          />
 
-      <Text style={styles.proyek}>
-        <Text>Proyek</Text>
-      </Text>
-      <SearchableDropdown
-          onTextChange={text => console.log(text)}
-          //On text change listner on the searchable input
-          onItemSelect={items => alert(JSON.stringify(items))}
-          //onItemSelect called after the selection from the dropdown
-          containerStyle={{ padding: 1 }}
-          //suggestion container style
-          // <TextInput style={styles.inputBox}/>
+          <Text style={styles.proyek}>
+            <Text>Proyek</Text>
+          </Text>
+          <SearchableDropdown
+              onTextChange={text => console.log(text)}
+              //On text change listner on the searchable input
+              onItemSelect={items => alert(JSON.stringify(items))}
+              //onItemSelect called after the selection from the dropdown
+              containerStyle={{ padding: 1 }}
+              //suggestion container style
+              // <TextInput style={styles.inputBox}/>
 
-          textInputStyle={{
-            // inserted text style
-            // padding: 10,
-            borderWidth: 1,
-            borderRadius:5,
-            width:350,
-            borderColor: '#000000',
-            backgroundColor: '#FFFFFF',
-            marginVertical: 10,
-          }}
-          itemStyle={{
-            //single dropdown item style
-            padding: 15,
-            marginTop: 2,
-            backgroundColor: '#FFFFFF',
-            borderColor: '#000000',
-            borderWidth: 1,
-            borderRadius:5,
-          }}
-          itemTextStyle={{
-            //single dropdown item's text style
-            color: '#222',
-          }}
-          itemsContainerStyle={{
-            //items container style you can pass maxHeight
-            //to restrict the items dropdown hieght
-            maxHeight: 140,
-          }}
-          items={items}
-          //mapping of item array
-          defaultIndex={2}
-          //default selected item index
-          placeholder="Proyek"
-          //place holder for the search input
-          resetValue={false}
-          //reset textInput Value with true and false state
-          underlineColorAndroid="transparent"
-          //To remove the underline from the android input
-        />
+              textInputStyle={{
+                // inserted text style
+                // padding: 10,
+                borderWidth: 1,
+                borderRadius:5,
+                width:350,
+                borderColor: '#000000',
+                backgroundColor: '#FFFFFF',
+                marginVertical: 10,
+              }}
+              itemStyle={{
+                //single dropdown item style
+                padding: 15,
+                marginTop: 2,
+                backgroundColor: '#FFFFFF',
+                borderColor: '#000000',
+                borderWidth: 1,
+                borderRadius:5,
+              }}
+              itemTextStyle={{
+                //single dropdown item's text style
+                color: '#222',
+              }}
+              itemsContainerStyle={{
+                //items container style you can pass maxHeight
+                //to restrict the items dropdown hieght
+                maxHeight: 140,
+              }}
+              items={items}
+              //mapping of item array
+              defaultIndex={2}
+              //default selected item index
+              placeholder="Proyek"
+              //place holder for the search input
+              resetValue={false}
+              //reset textInput Value with true and false state
+              underlineColorAndroid="transparent"
+              //To remove the underline from the android input
+            />
 
-      <Text style={styles.lokasi}>
-        <Text>Lokasi</Text>
-      </Text>
+          <Text style={styles.lokasi}>
+            <Text>Lokasi</Text>
+          </Text>
 
-      <TextInput style={styles.inputBox}/>
-        <Text style={styles.hasil_kegiatan}>
-        <Text>Hasil Kegiatan</Text>
-      </Text>
-      <TextInput style={styles.inputBox}/>
-        <Text style={styles.foto_kegiatan}>
-        <Text>Foto Kegiatan</Text>
-      </Text>
-      <View style={{flexDirection: 'row',justifyContent: 'space-between'}}>
-        <TouchableOpacity onPress={this.myfun}>
-          <Image source={this.state.avatar}
-          style={{width:50, height:50, margin:10}}/>
-        </TouchableOpacity>
-        <TextInput style={styles.inputText}/>
-          <Icon name="trash" size={50}color="#000000"/>
+          <TextInput style={styles.inputBox}/>
+            <Text style={styles.hasil_kegiatan}>
+            <Text>Hasil Kegiatan</Text>
+          </Text>
+          <TextInput style={styles.inputBox}/>
+            <Text style={styles.foto_kegiatan}>
+            <Text>Foto Kegiatan</Text>
+          </Text>
+          <View style={{flexDirection: 'row',justifyContent: 'space-between'}}>
+            <TouchableOpacity onPress={this.myfun}>
+              <Image source={this.state.avatar}
+              style={{width:50, height:50, margin:10}}/>
+            </TouchableOpacity>
+            <TextInput style={styles.inputText}/>
+              <Icon name="trash" size={50}color="#000000"/>
+            </View>
+            <View style={[{ width: "100%", marginVertical: 10 }]}>
+          <Button onPress={this.myfun} title="pilih gambar" color="#a9a9a9"/>
+          </View>
+          <View style={{flexDirection: 'row',justifyContent: 'space-between'}}>
+          <TouchableOpacity>
+          <Text style={{
+            backgroundColor:'#ff0000',
+            color:'#ffffff',
+            fontSize:16,
+            padding:5,
+            width: 150,
+            height:35,
+            textAlign:'center',
+            marginRight:20
+          }}>
+          Batal
+          </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.prospecting}>
+          <Text style={{
+            backgroundColor:'#00bfff',
+            color:'#ffffff',
+            fontSize:16,
+            padding:5,
+            width: 150,
+            height:35,
+            textAlign:'center',
+          }}>
+          Selanjutnya
+          </Text>
+          </TouchableOpacity>
+          </View>
         </View>
-        <View style={[{ width: "100%", marginVertical: 10 }]}>
-      <Button onPress={this.myfun} title="pilih gambar" color="#a9a9a9"/>
-      </View>
-      <View style={{flexDirection: 'row',justifyContent: 'space-between'}}>
-      <TouchableOpacity>
-      <Text style={{
-        backgroundColor:'#ff0000',
-        color:'#ffffff',
-        fontSize:16,
-        padding:5,
-        width: 150,
-        height:35,
-        textAlign:'center',
-        marginRight:20
-      }}>
-      Batal
-      </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={this.prospecting}>
-      <Text style={{
-        backgroundColor:'#00bfff',
-        color:'#ffffff',
-        fontSize:16,
-        padding:5,
-        width: 150,
-        height:35,
-        textAlign:'center',
-      }}>
-      Selanjutnya
-      </Text>
-      </TouchableOpacity>
-      </View>
-      </View>
       </ScrollView>
   )
   }

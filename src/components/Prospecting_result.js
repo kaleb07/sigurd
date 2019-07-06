@@ -21,8 +21,25 @@ export default class Form extends Component<{}> {
     };
 
   removeItem(index) {
+    console.log('index',index);
+
     const list = this.state.arr;
+
+    // const whichItem = list.find(a => a.index === index)
+
+    // console.log('whichItem',whichItem.index);
+
+    console.log('old list',list);
      list.splice(index, 1);
+
+     // const newList = list.map(data => {
+     //   console.log('data', data);
+     //   if(data.index !== whichItem.index) {
+     //     return data;
+     //   }
+     // })
+
+    console.log('new list',list);
      this.setState({ list });
 
   };
@@ -38,45 +55,64 @@ export default class Form extends Component<{}> {
     this.setState({ arr: this.state.arr });
   };
 
+  insertVal(data, index) {
+    const list = this.state.arr;
+    const newList = list.map(listData => {
+      if(listData.index === index) {
+        return {
+          ...listData,
+          placeholder: data,
+        }
+      }
+      return listData
+    })
+
+    this.setState({ arr:newList });
+  };
+
 
   render(){
+    console.log('this.state.arr',this.state.arr);
+
     let arr = this.state.arr.map((r, index) => {
+      return (
+        <View key={ index } index = { index }>
+          <View style={styles.small}>
+           <View style={styles.textInputWrapper}>
+              <Text style={styles.text}>
+                <Text>Komoditas</Text>
+              </Text>
+              <TextInput
+                style={styles.smallInputBox}
+                value={r.placeholder}
+                onChangeText={data => this.insertVal(data, index)}
+              />
+           </View>
 
-    return (
+           <View style={styles.textInputWrapper}>
+              <Text style={styles.text}>
+                <Text>Kapasitas</Text>
+              </Text>
+              <TextInput style={styles.smallInputBox}  keyboardType="numeric"/>
+            </View>
 
-      <View key={ index } index = { index }>
-      <View style={styles.small}>
-         <View style={styles.textInputWrapper}>
-            <Text style={styles.text}>
-              <Text>Komoditas</Text>
-            </Text>
-            <TextInput style={styles.smallInputBox}/>
-         </View>
-
-         <View style={styles.textInputWrapper}>
-            <Text style={styles.text}>
-              <Text>Kapasitas</Text>
-            </Text>
-            <TextInput style={styles.smallInputBox} keyboardType="numeric"/>
-          </View>
-
-         <View style={styles.textInputWrapper}>
-            <Text style={styles.text}>
-              <Text>Harga</Text>
-            </Text>
-            <TextInput style={styles.smallInputBox} keyboardType="numeric"/>
-         </View>
-         <Icon
-    				name="trash-2"
-    				size={30}
-    				color="red"
-    				style={{ marginLeft: 'auto', marginTop: 40}}
-    				onPress={() => this.removeItem(index)}
-    			/>
-         </View>
-      </View>
-    );
-  });
+           <View style={styles.textInputWrapper}>
+              <Text style={styles.text}>
+                <Text>Harga</Text>
+              </Text>
+              <TextInput style={styles.smallInputBox} keyboardType="numeric"/>
+           </View>
+           <Icon
+      				name="trash-2"
+      				size={30}
+      				color="red"
+      				style={{ marginLeft: 'auto', marginTop: 40}}
+      				onPress={() => this.removeItem(index)}
+      			/>
+           </View>
+        </View>
+      );
+    });
 
     return(
       <KeyboardAwareScrollView>
@@ -148,12 +184,12 @@ export default class Form extends Component<{}> {
           <View>
           { arr }
            <TouchableOpacity
-             onPress={ () => { this.insertSomeThing('add') }}
+             onPress={ () => { this.insertSomeThing('') }}
              style={styles.button}>
              <Text>Tambah Produk</Text>
            </TouchableOpacity>
          </View>
-        </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView>
       );
   }};
 
