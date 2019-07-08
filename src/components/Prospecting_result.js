@@ -11,70 +11,84 @@ export default class Form extends Component<{}> {
   constructor(){
     super();
     this.state = {
-      arr: [],
-      show: true,
+      arr: [{
+        index:0,
+        commodity:'',
+        capacity:'',
+        price:'',
+        type:'textInput'}],
+      text: '',
+      text2: '',
     };
   };
-
-  handleClick(value) {
-    console.log(value);
-    };
 
   removeItem(index) {
-    console.log('index',index);
-
     const list = this.state.arr;
-
-    // const whichItem = list.find(a => a.index === index)
-
-    // console.log('whichItem',whichItem.index);
-
-    console.log('old list',list);
+    // console.log('old list',list);
      list.splice(index, 1);
 
-     // const newList = list.map(data => {
-     //   console.log('data', data);
-     //   if(data.index !== whichItem.index) {
-     //     return data;
-     //   }
-     // })
+     const newList = list.filter(data => {
+       return data.index !== index;
+     })
 
-    console.log('new list',list);
-     this.setState({ list });
-
-  };
-
-  HideComponent(){
-    if (this.state.show == true){
-       this.setState(() => ({ show: false }));
-    }
+    // console.log('new list',list);
+     this.setState({ arr:newList });
   };
 
   insertSomeThing( placeholder ){
-    this.state.arr.push({index:index++, placeholder:placeholder, type:'textInput'});
+    const newIndex = this.state.arr[this.state.arr.length-1].index+1
+    this.state.arr.push({
+      index:newIndex,
+      commodity:'',
+      capacity: '',
+      price: '',
+      type:'textInput'});
     this.setState({ arr: this.state.arr });
   };
 
-  insertVal(data, index) {
+  insertVal(data, index, key) {
     const list = this.state.arr;
     const newList = list.map(listData => {
       if(listData.index === index) {
         return {
           ...listData,
-          placeholder: data,
+          [key]: data,
         }
       }
       return listData
     })
-
     this.setState({ arr:newList });
   };
 
+  clearVal() {
+    const list = this.state.arr;
+    const newList = list.map(data => {
+      return {
+        ...data,
+        index:0,
+        commodity:'',
+        capacity:'',
+        price:'',
+        type:'textInput'
+      }
+    })
+     console.log('old list', list);
+   console.log('new list', newList);
+    this.setState({ arr:newList });
+ };
+
+ trashVal(){
+   const list = this.state.arr;
+   if (list.length === 1){
+     this.clearVal();
+   } else {
+     this.removeItem();
+   };
+ }
 
   render(){
-    console.log('this.state.arr',this.state.arr);
-
     let arr = this.state.arr.map((r, index) => {
+
       return (
         <View key={ index } index = { index }>
           <View style={styles.small}>
@@ -84,8 +98,8 @@ export default class Form extends Component<{}> {
               </Text>
               <TextInput
                 style={styles.smallInputBox}
-                value={r.placeholder}
-                onChangeText={data => this.insertVal(data, index)}
+                value={r.commodity}
+                onChangeText={data => this.insertVal(data, r.index, 'commodity')}
               />
            </View>
 
@@ -93,21 +107,29 @@ export default class Form extends Component<{}> {
               <Text style={styles.text}>
                 <Text>Kapasitas</Text>
               </Text>
-              <TextInput style={styles.smallInputBox}  keyboardType="numeric"/>
+              <TextInput
+                  style={styles.smallInputBox}
+                  value={r.capacity}
+                  onChangeText={data => this.insertVal(data, r.index, 'capacity')}
+                  keyboardType="numeric"/>
             </View>
 
            <View style={styles.textInputWrapper}>
               <Text style={styles.text}>
                 <Text>Harga</Text>
               </Text>
-              <TextInput style={styles.smallInputBox} keyboardType="numeric"/>
+              <TextInput
+                  style={styles.smallInputBox}
+                  value={r.price}
+                  onChangeText={data => this.insertVal(data, r.index, 'price')}
+                  keyboardType="numeric"/>
            </View>
            <Icon
       				name="trash-2"
       				size={30}
       				color="red"
       				style={{ marginLeft: 'auto', marginTop: 40}}
-      				onPress={() => this.removeItem(index)}
+      				onPress={() => this.trashVal()}
       			/>
            </View>
         </View>
@@ -152,34 +174,7 @@ export default class Form extends Component<{}> {
             </Text>
             <TextInput style={styles.inputBox}/>
 
-            <View style={styles.small}>
-               <View style={styles.textInputWrapper}>
-                  <Text style={styles.text}>
-                    <Text>Komoditas</Text>
-                  </Text>
-                  <TextInput style={styles.smallInputBox}/>
-               </View>
 
-               <View style={styles.textInputWrapper}>
-                  <Text style={styles.text}>
-                    <Text>Kapasitas</Text>
-                  </Text>
-                  <TextInput style={styles.smallInputBox} keyboardType="numeric"/>
-                </View>
-
-               <View style={styles.textInputWrapper}>
-                  <Text style={styles.text}>
-                    <Text>Harga</Text>
-                  </Text>
-                  <TextInput style={styles.smallInputBox} keyboardType="numeric"/>
-               </View>
-                   <Icon
-              				name="trash-2"
-              				size={30}
-              				color="red"
-              				style={{ marginLeft: 'auto', marginTop: 40}}
-              			/>
-            </View>
           </View>
           <View>
           { arr }
