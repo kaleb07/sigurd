@@ -197,16 +197,16 @@ render(){
           </Text>
           <View style={styles.imageGroup}>
               <TouchableOpacity onPress={this.selectImage}>
-                  <Image source={this.state.avatar} style={styles.imageBox}/>
+              <Image source={this.state.avatar !=null ? this.state.avatar :
+                require('../images/add.png')}
+                style={{width:50, height:50, margin:10}}/>
               </TouchableOpacity>
               <TextInput style={styles.inputText}/>
-              <Icon name="trash" size={50} color="#000000"/>
+              <Icon name="trash"
+             size={40}
+             color="red"
+             style={{ marginLeft: 'auto', marginTop: 10}}/>
           </View>
-
-          <View style={styles.buttonImage}>
-            <Button onPress={this.selectImage} title="Tambah Gambar" color="#a9a9a9"/>
-          </View>
-
           <View style={styles.imageGroup}>
               <TouchableOpacity>
                 <Text style={styles.cancel}>Batal</Text>
