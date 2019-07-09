@@ -21,20 +21,15 @@ const options={
   chooseFromLibraryButtonTitle:'Choose photo from library',
 }
 
-export default class Form extends Component<Props>{
-  // state = {
-  //   search: '',
-  // };
-  //
-  // updateSearch = search => {
-  //   this.setState({ search });
-  // };
-  constructor(props) {
-    super(props);
+export default class Form extends Component<{}>{
+  constructor() {
+    super();
     this.state = {
-       arr: [],
+      arr: [{
+        index:0,
+        caption:'',
        avatar:null,
-       pic:null
+       pic:null }]
     }
     this.selectImage = this.selectImage.bind(this);
   };
@@ -45,12 +40,19 @@ export default class Form extends Component<Props>{
 
   removeItem(index) {
     const list = this.state.arr;
-     list.splice(index, 1);
-     this.setState({ list });
+    const newList = list.filter(data => {
+      return data.index !== index;
+    })
+     this.setState({ arr:newList });
   };
 
   insertSomeThing( placeholder ){
-    this.state.arr.push({index:index++, placeholder:placeholder, type:'textInput'});
+    const newIndex = this.state.arr[this.state.arr.length-1].index+1
+    this.state.arr.push({
+      index:newIndex,
+      caption:'',
+      avatar:null,
+      pic:null});
     this.setState({ arr: this.state.arr });
   };
 
@@ -60,12 +62,11 @@ export default class Form extends Component<Props>{
       if(listData.index === index) {
         return {
           ...listData,
-          placeholder: data,
+          caption: data,
         }
       }
       return listData
     })
-
     this.setState({ arr:newList });
   };
 
@@ -109,46 +110,25 @@ render(){
   const  search  = this.state;
   let arr = this.state.arr.map((r, index) => {
     return (
-      <View key={ index } index = { index }>
-        <View style={styles.small}>
-         <View style={styles.textInputWrapper}>
-            <Text style={styles.text}>
-              <Text>Komoditas</Text>
-            </Text>
-            <TextInput
-              style={styles.smallInputBox}
-              value={r.placeholder}
-              onChangeText={data => this.insertVal(data, index)}
+      <View key={ index }>
+        <View style={styles.imageGroup}>
+            <TouchableOpacity onPress={this.selectImage}>
+            <Image source={this.state.avatar !=null ? this.state.avatar :
+              require('../images/add.png')}
+              style={{width:50, height:50, margin:10}}
             />
-         </View>
-
-         <View style={styles.textInputWrapper}>
-            <Text style={styles.text}>
-              <Text>Kapasitas</Text>
-            </Text>
+            </TouchableOpacity>
             <TextInput
-                style={styles.smallInputBox}
-                onChangeText={data => this.insertVal(data, index)}
-                keyboardType="numeric"/>
-          </View>
-
-         <View style={styles.textInputWrapper}>
-            <Text style={styles.text}>
-              <Text>Harga</Text>
-            </Text>
-            <TextInput
-                style={styles.smallInputBox}
-                onChangeText={data => this.insertVal(data, index)}
-                keyboardType="numeric"/>
-         </View>
-         <Icon
-            name="trash-2"
-            size={30}
-            color="red"
-            style={{ marginLeft: 'auto', marginTop: 40}}
-            onPress={() => this.removeItem(index)}
-          />
-         </View>
+              style={styles.inputBox}
+              value={r.caption}
+              onChangeText={data => this.insertVal(data, r.index)}
+            />
+            <Icon name="trash"
+               size={30}
+               color="red"
+               style={{ marginLeft: 'auto', marginTop: 10}}
+            />
+        </View>
       </View>
     );
   });
@@ -195,18 +175,11 @@ render(){
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
           </Text>
-          <View style={styles.imageGroup}>
-              <TouchableOpacity onPress={this.selectImage}>
-              <Image source={this.state.avatar !=null ? this.state.avatar :
-                require('../images/add.png')}
-                style={{width:50, height:50, margin:10}}/>
-              </TouchableOpacity>
-              <TextInput style={styles.inputText}/>
-              <Icon name="trash"
-             size={40}
-             color="red"
-             style={{ marginLeft: 'auto', marginTop: 10}}/>
-          </View>
+
+          {arr}
+          <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+            <Text style={styles.save}>Tambah Gambar</Text>
+          </TouchableOpacity>
           <View style={styles.imageGroup}>
               <TouchableOpacity>
                 <Text style={styles.cancel}>Batal</Text>
@@ -288,26 +261,14 @@ const styles = StyleSheet.create({
     borderRadius:5,
   },
   inputBox:{
-    width:360,
+    width:350,
     borderRadius:5,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: '#000000',
     //borderRadius: 25,
-    //paddingHorizontal:16,
+    paddingVertical: 6,
     fontSize:16,
     color:'#000000',
-    marginVertical: 10
+    marginVertical: 5
   },
-  inputText:{
-    width:260,
-    borderRadius:5,
-    borderWidth: 1,
-    borderColor: '#000000',
-    //borderRadius: 25,
-    //paddingHorizontal:16,
-    fontSize:16,
-    color:'#000000',
-    marginVertical: 10,
-    marginLeft:5
-  }
 });

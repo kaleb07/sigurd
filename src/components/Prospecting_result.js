@@ -17,32 +17,26 @@ export default class Form extends Component<{}> {
         capacity:'',
         price:'',
         type:'textInput'}],
-      text: '',
-      text2: '',
     };
   };
 
   removeItem(index) {
     const list = this.state.arr;
-    // console.log('old list',list);
-     list.splice(index, 1);
-
-     const newList = list.filter(data => {
-       return data.index !== index;
-     })
-
-    // console.log('new list',list);
+    const newList = list.filter(data => {
+      return data.index !== index;
+    })
      this.setState({ arr:newList });
   };
 
-  insertSomeThing( placeholder ){
+  insertSomeThing(){
     const newIndex = this.state.arr[this.state.arr.length-1].index+1
     this.state.arr.push({
       index:newIndex,
       commodity:'',
       capacity: '',
       price: '',
-      type:'textInput'});
+      type:'textInput'
+    });
     this.setState({ arr: this.state.arr });
   };
 
@@ -72,25 +66,23 @@ export default class Form extends Component<{}> {
         type:'textInput'
       }
     })
-     console.log('old list', list);
-   console.log('new list', newList);
     this.setState({ arr:newList });
  };
 
- trashVal(){
+ trashVal(index){
    const list = this.state.arr;
    if (list.length === 1){
      this.clearVal();
    } else {
-     this.removeItem();
+     this.removeItem(index);
    };
  }
 
   render(){
     let arr = this.state.arr.map((r, index) => {
-
+      console.log('r', r);
       return (
-        <View key={ index } index = { index }>
+        <View key={ index }>
           <View style={styles.small}>
            <View style={styles.textInputWrapper}>
               <Text style={styles.text}>
@@ -99,7 +91,7 @@ export default class Form extends Component<{}> {
               <TextInput
                 style={styles.smallInputBox}
                 value={r.commodity}
-                onChangeText={data => this.insertVal(data, r.index, 'commodity')}
+                onChangeText={commodity => this.insertVal(commodity, r.index, 'commodity')}
               />
            </View>
 
@@ -110,7 +102,7 @@ export default class Form extends Component<{}> {
               <TextInput
                   style={styles.smallInputBox}
                   value={r.capacity}
-                  onChangeText={data => this.insertVal(data, r.index, 'capacity')}
+                  onChangeText={capacity => this.insertVal(capacity, r.index, 'capacity')}
                   keyboardType="numeric"/>
             </View>
 
@@ -121,7 +113,7 @@ export default class Form extends Component<{}> {
               <TextInput
                   style={styles.smallInputBox}
                   value={r.price}
-                  onChangeText={data => this.insertVal(data, r.index, 'price')}
+                  onChangeText={price => this.insertVal(price, r.index, 'price')}
                   keyboardType="numeric"/>
            </View>
            <Icon
@@ -129,7 +121,7 @@ export default class Form extends Component<{}> {
       				size={30}
       				color="red"
       				style={{ marginLeft: 'auto', marginTop: 40}}
-      				onPress={() => this.trashVal()}
+      				onPress={() => this.trashVal(r.index)}
       			/>
            </View>
         </View>
@@ -179,7 +171,7 @@ export default class Form extends Component<{}> {
           <View>
           { arr }
            <TouchableOpacity
-             onPress={ () => { this.insertSomeThing('') }}
+             onPress={ () => { this.insertSomeThing() }}
              style={styles.button}>
              <Text>Tambah Produk</Text>
            </TouchableOpacity>
