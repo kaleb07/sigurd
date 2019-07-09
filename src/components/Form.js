@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Button, Image, Animated} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import {Dropdown} from 'react-native-material-dropdown';
@@ -7,6 +7,8 @@ import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import DatePicker from 'react-native-datepicker';
+
 
 var items = [
   {id: 1, name: 'Cabe Merah'},
@@ -28,8 +30,8 @@ export default class Form extends Component<{}>{
       arr: [{
         index:0,
         caption:'',
-       avatar:null,
-       pic:null }]
+        avatar:null,
+        date:""}]
     }
     this.selectImage = this.selectImage.bind(this);
   };
@@ -119,7 +121,7 @@ render(){
             />
             </TouchableOpacity>
             <TextInput
-              style={styles.inputBox}
+              style={styles.inputBox2}
               value={r.caption}
               onChangeText={data => this.insertVal(data, r.index)}
             />
@@ -136,7 +138,35 @@ render(){
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView>
-          <Text style={styles.text}>Kegiatan</Text>
+      <DatePicker
+          style={{width: 200}}
+          date={this.state.date} //initial date from state
+          mode="date" //The enum of date, datetime and time
+          placeholder="pilih tanggal"
+          format="DD-MM-YYYY"
+          minDate="01-01-2018"
+          maxDate="01-01-2050"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              position: 'absolute',
+              left: 0,
+              marginLeft: 0,
+              width:50,
+              height:50
+            },
+            dateInput: {
+              marginLeft: 60,
+              fontSize: 16,
+              borderRadius:5,
+              borderWidth: 1,
+              borderColor: '#000000',
+
+            }
+          }}
+          onDateChange={(date) => {this.setState({date: date})}}
+        />
           <Dropdown style={styles.dropdown} label= 'Kegiatan' data={data}/>
 
           <Text style={styles.text}>
@@ -180,6 +210,7 @@ render(){
           <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
             <Text style={styles.save}>Tambah Gambar</Text>
           </TouchableOpacity>
+
           <View style={styles.imageGroup}>
               <TouchableOpacity>
                 <Text style={styles.cancel}>Batal</Text>
@@ -262,6 +293,17 @@ const styles = StyleSheet.create({
   },
   inputBox:{
     width:350,
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    //borderRadius: 25,
+    paddingVertical: 6,
+    fontSize:16,
+    color:'#000000',
+    marginVertical: 5
+  },
+  inputBox2:{
+    width:250,
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
