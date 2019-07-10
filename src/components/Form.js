@@ -77,6 +77,12 @@ export default class Form extends Component<{}>{
   selectImage(index){
       ImagePicker.showImagePicker(options, (response) => {
         const list = this.state.arr;
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else {
           const source = { uri: response.uri };
 
           // You can also display the image using data:
@@ -93,7 +99,7 @@ export default class Form extends Component<{}>{
           })
 
           this.setState({ arr:newList });
-      });
+      }});
     };
 
     clearVal() {
@@ -197,7 +203,8 @@ render(){
           <Text style={styles.text}>
             <Text>Deskripsi Kegiatan</Text>
           </Text>
-          <TextInput style={styles.inputBox}/>
+          <TextInput style={styles.inputBox}
+                            multiline={true}/>
 
           <Text style={styles.text}>
             <Text>Proyek</Text>
@@ -220,12 +227,12 @@ render(){
           <Text style={styles.text}>
             <Text>Lokasi</Text>
           </Text>
-          <TextInput style={styles.inputBox}/>
-
+          <TextInput style={styles.inputBox3}/>
           <Text style={styles.text}>
             <Text>Hasil Kegiatan</Text>
           </Text>
-          <TextInput style={styles.inputBox}/>
+          <TextInput style={styles.inputBox}
+                       multiline={true}/>
 
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
@@ -274,15 +281,7 @@ const styles = StyleSheet.create({
   imageGroup:{
     flexDirection: 'row',
     justifyContent: 'space-between'
-  },
-  imageBox:{
-    width: 50,
-    height: 50,
-    margin: 10
-  },
-  buttonImage: {
-    width: "100%",
-    marginVertical: 10
+
   },
   cancel:{
     backgroundColor:'#ff0000',
@@ -332,6 +331,19 @@ const styles = StyleSheet.create({
   },
   inputBox:{
     width:350,
+    height:100,
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    //borderRadius: 25,
+    paddingVertical: 6,
+    fontSize:16,
+    color:'#000000',
+    marginVertical: 5,
+    textAlignVertical: 'top'
+  },
+  inputBox3:{
+    width:350,
     height:45,
     borderRadius:5,
     borderWidth: 0.5,
@@ -343,7 +355,7 @@ const styles = StyleSheet.create({
     marginVertical: 5
   },
   inputBox2:{
-    width:230,
+    width:260,
     height:45,
     borderRadius:5,
     borderWidth: 0.5,
