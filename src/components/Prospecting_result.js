@@ -97,7 +97,7 @@ export default class Form extends Component<{}> {
 
            <View style={styles.textInputWrapper}>
               <Text style={styles.text}>
-                <Text>Kapasitas</Text>
+                <Text>Kapasitas (kg/bulan)</Text>
               </Text>
               <TextInput
                   style={styles.smallInputBox}
@@ -108,7 +108,7 @@ export default class Form extends Component<{}> {
 
            <View style={styles.textInputWrapper}>
               <Text style={styles.text}>
-                <Text>Harga</Text>
+                <Text>Harga (Rp/kg)</Text>
               </Text>
               <TextInput
                   style={styles.smallInputBox}
@@ -183,6 +183,7 @@ export default class Form extends Component<{}> {
 
 var styles = StyleSheet.create({
   container:{
+    marginTop:35,
     backgroundColor:'#FFFFFF',
     flex: 1,
   },
@@ -198,6 +199,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#00bfff',
     marginVertical: 10,
     paddingVertical: 13,
+    marginBottom:35,
   },
   inputBox:{
     width:350,
