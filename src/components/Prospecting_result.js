@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Image} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 import { Button } from 'react-native-elements';
 
@@ -16,7 +16,10 @@ export default class Form extends Component<{}> {
         commodity:'',
         capacity:'',
         price:'',
-        type:'textInput'}],
+        type:'textInput',
+        value: "",
+        unit: "Kgs"}],
+
     };
   };
 
@@ -97,7 +100,7 @@ export default class Form extends Component<{}> {
 
            <View style={styles.textInputWrapper}>
               <Text style={styles.text}>
-                <Text>Kapasitas (kg/bulan)</Text>
+                <Text>Kapasitas</Text>
               </Text>
               <TextInput
                   style={styles.smallInputBox}
@@ -108,7 +111,7 @@ export default class Form extends Component<{}> {
 
            <View style={styles.textInputWrapper}>
               <Text style={styles.text}>
-                <Text>Harga (Rp/kg)</Text>
+                <Text>Harga</Text>
               </Text>
               <TextInput
                   style={styles.smallInputBox}
@@ -117,10 +120,10 @@ export default class Form extends Component<{}> {
                   keyboardType="numeric"/>
            </View>
            <Icon
-      				name="trash-2"
+      				name="trash"
       				size={30}
       				color="red"
-      				style={{ marginLeft: 'auto', marginTop: 40}}
+      				style={{ marginLeft: 'auto', marginTop: 40,marginRight:20}}
       				onPress={() => this.trashVal(r.index)}
       			/>
            </View>
@@ -129,8 +132,22 @@ export default class Form extends Component<{}> {
     });
 
     return(
-      <KeyboardAwareScrollView>
-          <View style={styles.container}>
+    <View style={styles.container}>
+        <View style = {{backgroundColor:'#3700B3', height:50,}}>
+        <View style={styles.imageGroup4}>
+        <TouchableOpacity onPress={this.prospecting}>
+          <Text style={styles.close}>keluar</Text>
+        </TouchableOpacity>
+        </View>
+        </View>
+        <View style={styles.imageGroup1}>
+          <Image style={{width:60, height:60, marginTop:15}}
+            source={require('../images/prospecting.png')}/>
+          <Text style={styles.text1}>
+            <Text>Prospecting</Text>
+          </Text>
+        </View>
+          <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
             <Text style={styles.text}>
                 <Text>Nama Ketua</Text>
             </Text>
@@ -165,9 +182,6 @@ export default class Form extends Component<{}> {
               <Text>Lama Bertani</Text>
             </Text>
             <TextInput style={styles.inputBox}/>
-
-
-          </View>
           <View>
           { arr }
            <TouchableOpacity
@@ -176,20 +190,43 @@ export default class Form extends Component<{}> {
              <Text>Tambah Produk</Text>
            </TouchableOpacity>
          </View>
-      </KeyboardAwareScrollView>
+        </KeyboardAwareScrollView>
+        <View style={styles.footer}>
+        <TouchableOpacity>
+          <Text style={styles.next}>Selanjutnya</Text>
+        </TouchableOpacity>
+        </View>
+      </View>
+
+
       );
   }};
 
 
 var styles = StyleSheet.create({
   container:{
-    marginTop:35,
+    //marginTop:35,
     backgroundColor:'#FFFFFF',
     flex: 1,
   },
   small:{
     flex: 1,
     flexDirection: 'row',
+  },
+  text1:{
+    fontSize: 25,
+    fontWeight: '400',
+    color:'#000000',
+    paddingRight:150,
+    marginBottom:30,
+    marginTop:30
+  },
+  imageGroup1:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingRight:20,
+    marginBottom:-5,
+    paddingLeft:20
   },
   button: {
     alignItems: 'center',
@@ -227,10 +264,49 @@ var styles = StyleSheet.create({
   textInputWrapper: {
      flex:1,
    },
+   footer: {
+     position: 'absolute',
+     flex:0.1,
+     left: 0,
+     right: 0,
+     bottom: 0,
+     backgroundColor:'#3700B3',
+     height:50,
+     alignItems:'center',
+  },
+  next:{
+    backgroundColor:'#FFC400',
+    color:'#000000',
+    fontSize:16,
+    marginTop:8,
+    padding:5,
+    width: 200,
+    borderRadius:5,
+    height:35,
+    textAlign:'center',
+
+ },
    text:{
      fontSize: 16,
      fontWeight: '400',
      color:'#000000',
      marginTop: 10
+   },
+     close:{
+       backgroundColor:'#E6B000',
+       color:'#000000',
+       fontSize:16,
+       padding:5,
+       width: 100,
+       height:35,
+       textAlign:'center',
+       borderRadius:5,
+       marginTop: 7
+     },
+     imageGroup4:{
+       flexDirection: 'row',
+       justifyContent: 'space-between',
+       paddingLeft:280,
+       borderRadius:5,
    },
 });

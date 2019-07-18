@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import Prospecting_result from '../components/Prospecting_result';
+import Create_Panen from '../components/Create_Panen';
 import { Actions } from 'react-native-router-flux';
 
 
-export default class Prospectingresult extends Component<{}> {
+export default class Createpanen extends Component<{}> {
   render(){
     return(
       <View style={styles.container}>
-        <Prospecting_result/>
+        <Create_Panen/>
       </View>
     )
   }
@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   container : {
     backgroundColor:'#FFFFFF',
     flex: 1,
-    //alignItems:'center',
-    //justifyContent:'center',
+    justifyContent:'center',
   }
 });

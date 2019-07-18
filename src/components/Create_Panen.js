@@ -25,7 +25,7 @@ const options={
   chooseFromLibraryButtonTitle:'Choose photo from library',
 }
 
-export default class Form extends Component<{}>{
+export default class Create_Panen extends Component<{}>{
   kegiatan() {
     Actions.kegiatan()
   }
@@ -134,7 +134,7 @@ render(){
             <TouchableOpacity onPress={() => this.selectImage(r.index)}>
             <Image source={r.image !=='' ? r.image :
               require('../images/add.png')}
-              style={{width:50, height:50,  marginRight:10,marginTop:10, paddingLeft:10}}/>
+              style={{width:50, height:50, margin:10}}/>
             </TouchableOpacity>
             <TextInput
               style={styles.inputBox2}
@@ -144,7 +144,7 @@ render(){
             <Icon name="trash"
                size={30}
                color="red"
-               style={{ marginLeft: 'auto', marginTop: 20, marginRight:5}}
+               style={{ marginLeft: 'auto', marginTop: 20, marginRight:-5}}
                onPress={() => this.trashVal(r.index)}
             />
         </View>
@@ -163,9 +163,9 @@ render(){
     </View>
     <View style={styles.imageGroup1}>
       <Image style={{width:60, height:60, marginTop:15}}
-        source={require('../images/konsultasi.png')}/>
+        source={require('../images/panen.png')}/>
       <Text style={styles.text1}>
-        <Text>Konsultasi</Text>
+        <Text>Panen</Text>
       </Text>
     </View>
       <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
@@ -235,9 +235,8 @@ render(){
           </Text>
 
           {arr}
-          <TouchableOpacity style={styles.save} onPress={() => { this.insertSomeThing('')}}>
-          <Icon name="plus"
-          size={40} color="black"/>
+          <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+            <Text style={styles.save}>Tambah Gambar</Text>
           </TouchableOpacity>
       </KeyboardAwareScrollView>
       <View style={styles.footer}>
@@ -266,14 +265,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
-    // /paddingLeft:10,
+    //paddingLeft:10,
     marginTop: 10,
   },
   text1:{
     fontSize: 25,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:165,
+    paddingRight:213,
     marginBottom:30,
     marginTop:30
   },
@@ -282,7 +281,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color:'#000000',
     paddingLeft:60,
-   marginBottom: 30,
+     marginBottom: 30,
   },
   dropdown:{
     // paddingVertical: 13,
@@ -307,7 +306,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingRight:20,
-    paddingLeft:20
+    paddingLeft:20,
   },
   cancel:{
     backgroundColor:'#FFC400',
@@ -321,15 +320,14 @@ const styles = StyleSheet.create({
     borderRadius:5,
   },
   save:{
-    backgroundColor:'#FFC400',
+    backgroundColor:'#00bfff',
     color:'#ffffff',
     fontSize:16,
     padding:5,
     marginBottom: 25,
-    width: 50,
-    height:50,
-    borderRadius:8,
-    alignItems:'center',
+    width: 350,
+    height:35,
+    textAlign:'center',
   },
   next:{
     backgroundColor:'#FFC400',
@@ -416,12 +414,11 @@ const styles = StyleSheet.create({
     textAlign:'center',
     borderRadius:5,
     marginTop: 7
- },
+  },
   imageGroup4:{
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft:280,
     borderRadius:5,
-
   },
 });
