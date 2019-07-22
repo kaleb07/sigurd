@@ -1,11 +1,35 @@
 import React, {Component} from 'react';
-import {View,StyleSheet,TouchableOpacity,Text,ScrollView,Image} from 'react-native';
+import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {Actions} from 'react-native-router-flux';
-
+import { getActivityOptionFromServer } from '../networking/server';
 
 export default class Kategori_kegiatan extends Component <{}>{
+  constructor() {
+    super();
+    this.state = ({
+      isLoading:true,
+      activityOptionFromServer: [],
+      refreshing: false
+      }
+    );
+  }
+
+  componentDidMount(){
+    return ( getActivityOptionFromServer().then((responseJson) => {
+      this.setState({
+      dataSource: responseJson,
+      isLoading:false
+    }, function(){
+
+    });
+    console.log('ok', responseJson);
+    }).catch((error)=> {
+    console.log('Error : ', error);
+  }))
+  }
+
   register() {
     Actions.register()
   }
@@ -26,9 +50,24 @@ export default class Kategori_kegiatan extends Component <{}>{
   }
 
   render(){
-    return (
-      <View style={styles.container}>
-      <ScrollView>
+
+      if(this.state.isLoading){
+        return(
+          <View style={{flex:1, padding:20}}>
+          <Image style={{width:70, height:70}}
+            source={require('../images/tanam.png')}/>
+          </View>
+        )
+      } else {
+        let activityOptions = this.state.dataSource.map((val, key) => {
+          return <View key={key}>
+                    <Text>{val.name}</Text>
+                 </View>
+
+        });
+      return (
+        <View style={styles.container}>
+        <ScrollView>
         <View style = {{backgroundColor:'#3700B3', height:50,}}>
         <View style={styles.imageGroup4}>
         <TouchableOpacity onPress={this.prospecting}>
@@ -50,8 +89,8 @@ export default class Kategori_kegiatan extends Component <{}>{
           </TouchableOpacity>
           </View>
           <View style={styles.textGroup}>
-              <Text>Prospecting</Text>
-              <Text>Konsultasi</Text>
+              {activityOptions[0]}
+              {activityOptions[1]}
           </View>
           <View style={styles.imageGroup}>
           <TouchableOpacity  onPress={this.monitor_lapangan}>
@@ -64,8 +103,8 @@ export default class Kategori_kegiatan extends Component <{}>{
             </TouchableOpacity>
           </View>
           <View style={styles.textGroup2}>
-              <Text>Monitor Lapangan</Text>
-              <Text>Tanam Perdana</Text>
+              {activityOptions[5]}
+              {activityOptions[2]}
           </View>
           <View style={styles.imageGroup}>
             <TouchableOpacity  onPress={this.create_panen}>
@@ -78,8 +117,8 @@ export default class Kategori_kegiatan extends Component <{}>{
             </TouchableOpacity>
           </View>
           <View style={styles.textGroup3}>
-              <Text>Panen</Text>
-              <Text>Lainnya</Text>
+              {activityOptions[4]}
+              {activityOptions[3]}
           </View>
         </ScrollView>
         <View style={styles.footer}>
@@ -88,6 +127,7 @@ export default class Kategori_kegiatan extends Component <{}>{
 
     )
   }
+}
 }
 
 const styles = StyleSheet.create({

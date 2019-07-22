@@ -10,7 +10,7 @@ import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 //import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
+import { insertActivityToServer } from '../networking/server';
 
 const options={
   title: 'my pic app',
@@ -26,6 +26,9 @@ export default class Create_Lainnya extends Component<{}>{
     super();
     this.state = {
       date:'',
+      activityDesc:'',
+      location:'',
+      activityResult:'',
       arr: [{
         index:0,
         image:'',
@@ -198,16 +201,26 @@ render(){
             <Text>Deskripsi Kegiatan</Text>
           </Text>
           <TextInput style={styles.inputBox}
-                            multiline={true}/>
+                    multiline={true}
+                    onChangeText={(activityDesc) => this.setState({activityDesc})}
+                    value={this.state.activityDesc}
+          />
+
           <Text style={styles.text}>
             <Text>Lokasi</Text>
           </Text>
-          <TextInput style={styles.inputBox3}/>
+          <TextInput style={styles.inputBox3}
+                    onChangeText={(location) => this.setState({location})}
+                    value={this.state.location}
+          />
           <Text style={styles.text}>
             <Text>Hasil Kegiatan </Text>
           </Text>
           <TextInput style={styles.inputBox}
-                       multiline={true}/>
+                    multiline={true}
+                    onChangeText={(activityResult) => this.setState({activityResult})}
+                    value={this.state.activityResult}
+          />
 
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
@@ -219,7 +232,18 @@ render(){
           </TouchableOpacity>
       </KeyboardAwareScrollView>
       <View style={styles.footer}>
-        <TouchableOpacity onPress={this.prospecting}>
+        <TouchableOpacity onPress={()=>{
+          const newActivity = {
+            date: this.state.date,
+            activityOption: 'Lainnya',
+            activityDesc: this.state.activityDesc,
+            location: this.state.location,
+            activityResult: this.state.activityResult,
+            images:this.state.arr,
+          };
+          insertActivityToServer(newActivity);
+
+        }}>
           <Text style={styles.next}>Selanjutnya</Text>
         </TouchableOpacity>
       </View>

@@ -9,6 +9,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
+// import { create } from '../data/api';
+// import axios from 'axios';
+import { insertActivityToServer } from '../networking/server';
 //import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
@@ -32,7 +35,11 @@ export default class Form extends Component<{}>{
   constructor() {
     super();
     this.state = {
+      isLoading:false,
       date:'',
+      activityDesc:'',
+      location:'',
+      activityResult:'',
       arr: [{
         index:0,
         image:'',
@@ -41,6 +48,7 @@ export default class Form extends Component<{}>{
     }
     this.selectImage = this.selectImage.bind(this);
   };
+
   removeItem(index) {
     const list = this.state.arr;
     const newList = list.filter(data => {
@@ -200,7 +208,10 @@ render(){
             <Text>Deskripsi Kegiatan</Text>
           </Text>
           <TextInput style={styles.inputBox}
-                            multiline={true}/>
+                    multiline={true}
+                    onChangeText={(activityDesc) => this.setState({activityDesc})}
+                    value={this.state.activityDesc}
+          />
 
           <Text style={styles.text}>
             <Text>Proyek</Text>
@@ -223,12 +234,18 @@ render(){
           <Text style={styles.text}>
             <Text>Lokasi</Text>
           </Text>
-          <TextInput style={styles.inputBox3}/>
+          <TextInput style={styles.inputBox3}
+                    onChangeText={(location) => this.setState({location})}
+                    value={this.state.location}
+          />
           <Text style={styles.text}>
             <Text>Hasil Kegiatan </Text>
           </Text>
           <TextInput style={styles.inputBox}
-                       multiline={true}/>
+                    multiline={true}
+                    onChangeText={(activityResult) => this.setState({activityResult})}
+                    value={this.state.activityResult}
+          />
 
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
@@ -246,7 +263,19 @@ render(){
             <Text style={styles.cancel}>Batal</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.prospecting}>
+          <TouchableOpacity onPress={() => {
+            const newActivity = {
+              date: this.state.date,
+              activityOption: 'Konsultasi',
+              activityDesc: this.state.activityDesc,
+              project: 'abc',
+              location: this.state.location,
+              activityResult: this.state.activityResult,
+              images: this.state.arr,
+            };
+            console.log("new: ", newActivity);
+            insertActivityToServer(newActivity);
+          }}>
             <Text style={styles.next}>Simpan</Text>
           </TouchableOpacity>
       </View>

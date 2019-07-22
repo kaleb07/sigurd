@@ -9,6 +9,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
+// import { create } from '../data/api';
+// import axios from 'axios';
+import { insertActivityToServer } from '../networking/server';
 //import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
@@ -25,14 +28,18 @@ const options={
   chooseFromLibraryButtonTitle:'Choose photo from library',
 }
 
-export default class Tanam_Perdana extends Component<{}>{
+export default class Form extends Component<{}>{
   kegiatan() {
     Actions.kegiatan()
   }
   constructor() {
     super();
     this.state = {
+      isLoading:false,
       date:'',
+      activityDesc:'',
+      location:'',
+      activityResult:'',
       arr: [{
         index:0,
         image:'',
@@ -41,6 +48,7 @@ export default class Tanam_Perdana extends Component<{}>{
     }
     this.selectImage = this.selectImage.bind(this);
   };
+
   removeItem(index) {
     const list = this.state.arr;
     const newList = list.filter(data => {
@@ -134,7 +142,7 @@ render(){
             <TouchableOpacity onPress={() => this.selectImage(r.index)}>
             <Image source={r.image !=='' ? r.image :
               require('../images/add.png')}
-              style={{width:50, height:50, margin:10}}/>
+              style={{width:50, height:50,  marginRight:10,marginTop:10, paddingLeft:10}}/>
             </TouchableOpacity>
             <TextInput
               style={styles.inputBox2}
@@ -144,7 +152,7 @@ render(){
             <Icon name="trash"
                size={30}
                color="red"
-               style={{ marginLeft: 'auto', marginTop: 20, marginRight:-5}}
+               style={{ marginLeft: 'auto', marginTop: 20, marginRight:5}}
                onPress={() => this.trashVal(r.index)}
             />
         </View>
@@ -163,12 +171,12 @@ render(){
     </View>
     <View style={styles.imageGroup1}>
       <Image style={{width:60, height:60, marginTop:15}}
-        source={require('../images/tanam.png')}/>
+        source={require('../images/konsultasi.png')}/>
       <Text style={styles.text1}>
-        <Text>Tanam Perdana</Text>
+        <Text>Konsultasi</Text>
       </Text>
     </View>
-    <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+      <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
       <DatePicker
           style={{width: 350}}
           date={this.state.date} //initial date from state
@@ -185,7 +193,7 @@ render(){
               left: 0,
               marginLeft: 0,
               width:50,
-              height:50,
+              height:50
             },
             dateInput: {
               marginLeft: 60,
@@ -200,7 +208,10 @@ render(){
             <Text>Deskripsi Kegiatan</Text>
           </Text>
           <TextInput style={styles.inputBox}
-                            multiline={true}/>
+                    multiline={true}
+                    onChangeText={(activityDesc) => this.setState({activityDesc})}
+                    value={this.state.activityDesc}
+          />
 
           <Text style={styles.text}>
             <Text>Proyek</Text>
@@ -223,20 +234,27 @@ render(){
           <Text style={styles.text}>
             <Text>Lokasi</Text>
           </Text>
-          <TextInput style={styles.inputBox3}/>
+          <TextInput style={styles.inputBox3}
+                    onChangeText={(location) => this.setState({location})}
+                    value={this.state.location}
+          />
           <Text style={styles.text}>
             <Text>Hasil Kegiatan </Text>
           </Text>
           <TextInput style={styles.inputBox}
-                       multiline={true}/>
+                    multiline={true}
+                    onChangeText={(activityResult) => this.setState({activityResult})}
+                    value={this.state.activityResult}
+          />
 
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
           </Text>
 
           {arr}
-          <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
-            <Text style={styles.save}>Tambah Gambar</Text>
+          <TouchableOpacity style={styles.save} onPress={() => { this.insertSomeThing('')}}>
+          <Icon name="plus"
+          size={40} color="black"/>
           </TouchableOpacity>
       </KeyboardAwareScrollView>
       <View style={styles.footer}>
@@ -245,7 +263,18 @@ render(){
             <Text style={styles.cancel}>Batal</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.prospecting}>
+          <TouchableOpacity onPress={() => {
+            const newActivity = {
+              date: this.state.date,
+              activityOption: 'Tanam Perdana',
+              activityDesc: this.state.activityDesc,
+              project: 'abc',
+              location: this.state.location,
+              activityResult: this.state.activityResult,
+              images:this.state.arr,
+            };
+            insertActivityToServer(newActivity);
+          }}>
             <Text style={styles.next}>Simpan</Text>
           </TouchableOpacity>
       </View>
@@ -265,14 +294,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
-    //paddingLeft:10,
+    // /paddingLeft:10,
     marginTop: 10,
   },
   text1:{
     fontSize: 25,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:105,
+    paddingRight:165,
     marginBottom:30,
     marginTop:30
   },
@@ -281,7 +310,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color:'#000000',
     paddingLeft:60,
-     marginBottom: 30,
+   marginBottom: 30,
   },
   dropdown:{
     // paddingVertical: 13,
@@ -306,7 +335,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingRight:20,
-    paddingLeft:20,
+    paddingLeft:20
   },
   cancel:{
     backgroundColor:'#FFC400',
@@ -320,14 +349,15 @@ const styles = StyleSheet.create({
     borderRadius:5,
   },
   save:{
-    backgroundColor:'#00bfff',
+    backgroundColor:'#FFC400',
     color:'#ffffff',
     fontSize:16,
     padding:5,
     marginBottom: 25,
-    width: 350,
-    height:35,
-    textAlign:'center',
+    width: 50,
+    height:50,
+    borderRadius:8,
+    alignItems:'center',
   },
   next:{
     backgroundColor:'#FFC400',
@@ -403,7 +433,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#3700B3',
     height:50,
     alignItems:'center',
-},
+  },
   close:{
     backgroundColor:'#E6B000',
     color:'#000000',
@@ -414,11 +444,12 @@ const styles = StyleSheet.create({
     textAlign:'center',
     borderRadius:5,
     marginTop: 7
-  },
+ },
   imageGroup4:{
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft:280,
     borderRadius:5,
+
   },
 });

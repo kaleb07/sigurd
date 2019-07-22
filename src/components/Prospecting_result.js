@@ -11,6 +11,12 @@ export default class Form extends Component<{}> {
   constructor(){
     super();
     this.state = {
+      leaderName:'',
+      phoneNumber:'',
+      groupFarmer:'',
+      numberOfMembers:'',
+      landArea:'',
+      longTimeFarming:'',
       arr: [{
         index:0,
         commodity:'',
@@ -151,37 +157,50 @@ export default class Form extends Component<{}> {
             <Text style={styles.text}>
                 <Text>Nama Ketua</Text>
             </Text>
-            <TextInput style={styles.inputBox}/>
+            <TextInput style={styles.inputBox}
+                      onChangeText={(leaderName) => this.setState({leaderName})}
+                      value={this.state.leaderName}
+            />
 
             <Text style={styles.text}>
                 <Text>Nomor Telepon</Text>
             </Text>
-            <TextInput style={styles.inputBox}/>
+            <TextInput style={styles.inputBox}
+                    onChangeText={(phoneNumber) => this.setState({phoneNumber})}
+                    value={this.state.phoneNumber}
+            />
 
             <Text style={styles.text}>
               <Text>Kelompok Tani</Text>
             </Text>
-            <TextInput style={styles.inputBox}/>
+            <TextInput style={styles.inputBox}
+                      onChangeText={(groupFarmer) => this.setState({groupFarmer})}
+                      value={this.state.groupFarmer}
+            />
 
             <Text style={styles.text}>
               <Text>Jumlah Anggota</Text>
             </Text>
-            <TextInput style={styles.inputBox}/>
+            <TextInput style={styles.inputBox}
+                    onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
+                    value={this.state.numberOfMembers}
+            />
 
             <Text style={styles.text}>
               <Text>Luas Lahan</Text>
             </Text>
-            <TextInput style={styles.inputBox}/>
-
-            <Text style={styles.text}>
-              <Text>Lokasi</Text>
-            </Text>
-            <TextInput style={styles.inputBox}/>
+            <TextInput style={styles.inputBox}
+                    onChangeText={(landArea) => this.setState({landArea})}
+                    value={this.state.landArea}
+            />
 
             <Text style={styles.text}>
               <Text>Lama Bertani</Text>
             </Text>
-            <TextInput style={styles.inputBox}/>
+            <TextInput style={styles.inputBox}
+                    onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
+                    value={this.state.longTimeFarming}
+            />
           <View>
           { arr }
            <TouchableOpacity
