@@ -169,16 +169,19 @@ export default class Monitor_Lapangan extends Component<{}>{
 
     return (
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#3700B3', height:50,}}>
-          <View style={styles.imageGroup4}>
-            <TouchableOpacity onPress={this.prospecting}>
-              <Text style={styles.close}>keluar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <View style = {{backgroundColor:'#3700B3', height:50}}>
+      <View style={styles.imageGroup5}>
+      <Image style={{width:40, height:40,}}
+        source={require('../images/logo1.png')}/>
+        <Text style={styles.text2}>FO Activity</Text>
+      <TouchableOpacity onPress={this.prospecting}>
+        <Text style={styles.close}>keluar</Text>
+      </TouchableOpacity>
+      </View>
+      </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
-            source={require('../images/konsultasi.png')}/>
+            source={require('../images/monitoring.png')}/>
           <Text style={styles.text1}>
             <Text> Monitor Lapangan</Text>
           </Text>
@@ -297,6 +300,15 @@ const styles = StyleSheet.create({
     marginBottom:30,
     marginTop:30
   },
+  text2:{
+    color:'#FFFFFF',
+    fontSize:20,
+    padding:5,
+    borderRadius:30,
+    marginTop:3,
+    fontWeight: 'bold',
+    paddingRight:130
+  },
   textgroup:{
     fontSize: 30,
     fontWeight: '400',
@@ -338,7 +350,7 @@ const styles = StyleSheet.create({
     height:35,
     textAlign:'center',
     marginRight:20,
-    borderRadius:5,
+    borderRadius:30
   },
   save:{
     backgroundColor:'#FFC400',
@@ -360,7 +372,7 @@ const styles = StyleSheet.create({
     width: 150,
     height:35,
     textAlign:'center',
-    borderRadius:5,
+    borderRadius:30
   },
   inputDropdown:{
     borderWidth: 1,
@@ -434,13 +446,20 @@ const styles = StyleSheet.create({
     width: 100,
     height:35,
     textAlign:'center',
-    borderRadius:5,
-    marginTop: 7
+    borderRadius:30,
+    marginTop: 3
  },
   imageGroup4:{
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft:280,
     borderRadius:5,
+  },
+  imageGroup5:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft:10,
+    paddingRight:10,
+    padding:5,
   },
 });

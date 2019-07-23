@@ -9,8 +9,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
-//import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { insertActivityToServer } from '../networking/server';
+//import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 
 const options={
   title: 'my pic app',
@@ -18,10 +19,11 @@ const options={
   chooseFromLibraryButtonTitle:'Choose photo from library',
 }
 
-export default class Create_Lainnya extends Component<{}>{
+export default class Create_Prospecting extends Component<{}>{
   kegiatan() {
     Actions.kegiatan()
   }
+
   constructor() {
     super();
     this.state = {
@@ -29,7 +31,7 @@ export default class Create_Lainnya extends Component<{}>{
       activityDesc:'',
       location:'',
       activityResult:'',
-      arr: [{
+       arr: [{
         index:0,
         image:'',
         caption:''
@@ -37,6 +39,25 @@ export default class Create_Lainnya extends Component<{}>{
     }
     this.selectImage = this.selectImage.bind(this);
   };
+
+  CheckTextInputIsEmptyOrNot(){
+    const {date}  = this.state ;
+    const { activityDesc }  = this.state ;
+    const { location }  = this.state ;
+    const { activityResult }  = this.state ;
+    const { image }  = this.state.arr ;
+    const { caption }  = this.state.arr ;
+    const { arr }  = this.state ;
+
+
+    if(date == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
+      Alert.alert("Please Enter All the Values.");
+    }
+    else{
+    this.insertToServer();
+    this.prospecting();
+    }
+  }
 
   prospecting() {
     Actions.prospecting()
@@ -97,19 +118,6 @@ export default class Create_Lainnya extends Component<{}>{
     }});
   };
 
-  insertToServer(){
-    const newActivity = {
-      date: this.state.date,
-      activityOption: 'Lainnya',
-      activityDesc: this.state.activityDesc,
-      location: this.state.location,
-      activityResult: this.state.activityResult,
-      images:this.state.arr,
-    };
-    insertActivityToServer(newActivity);
-    console.log(newActivity);
-  }
-
   clearVal() {
     const list = this.state.arr;
     const newList = list.map(data => {
@@ -132,7 +140,20 @@ export default class Create_Lainnya extends Component<{}>{
    };
  }
 
-  render(){
+ insertToServer(){
+   const newActivity = {
+     date: this.state.date,
+     activityOption: 'Prospecting',
+     activityDesc: this.state.activityDesc,
+     location: this.state.location,
+     activityResult: this.state.activityResult,
+     images:this.state.arr,
+   };
+   insertActivityToServer(newActivity);
+   console.log(newActivity);
+ }
+
+ render(){
     const  search  = this.state;
     let arr = this.state.arr.map((r, index) => {
       return (
@@ -141,7 +162,7 @@ export default class Create_Lainnya extends Component<{}>{
             <TouchableOpacity onPress={() => this.selectImage(r.index)}>
               <Image source={r.image !=='' ? r.image :
                 require('../images/add.png')}
-                style={{width:50, height:50, margin:10}}/>
+                style={{width:50, height:50,  marginRight:10,marginTop:10, paddingLeft:10}}/>
             </TouchableOpacity>
             <TextInput
               style={styles.inputBox2}
@@ -151,7 +172,7 @@ export default class Create_Lainnya extends Component<{}>{
             <Icon name="trash"
                size={30}
                color="red"
-               style={{ marginLeft: 'auto', marginTop: 20, marginRight:-5}}
+               style={{ marginLeft: 'auto', marginTop: 20, marginRight:25}}
                onPress={() => this.trashVal(r.index)}
             />
           </View>
@@ -161,13 +182,16 @@ export default class Create_Lainnya extends Component<{}>{
 
     return (
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#3700B3', height:50,}}>
-          <View style={styles.imageGroup4}>
-            <TouchableOpacity onPress={this.prospecting}>
-              <Text style={styles.close}>keluar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <View style = {{backgroundColor:'#3700B3', height:50}}>
+   <View style={styles.imageGroup2}>
+   <Image style={{width:40, height:40,}}
+     source={require('../images/logo1.png')}/>
+     <Text style={styles.text2}>FO Activity</Text>
+   <TouchableOpacity onPress={this.prospecting}>
+     <Text style={styles.close}>keluar</Text>
+   </TouchableOpacity>
+   </View>
+   </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
             source={require('../images/lainnya.png')}/>
@@ -211,7 +235,6 @@ export default class Create_Lainnya extends Component<{}>{
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
           />
-
           <Text style={styles.text}>
             <Text>Lokasi</Text>
           </Text>
@@ -231,12 +254,13 @@ export default class Create_Lainnya extends Component<{}>{
             <Text>Foto Kegiatan</Text>
           </Text>
           {arr}
-          <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
-            <Text style={styles.save}>Tambah Gambar</Text>
+          <TouchableOpacity style={styles.save} onPress={() => { this.insertSomeThing('')}}>
+            <Icon name="plus" size={40} color="black"/>
           </TouchableOpacity>
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
-          <TouchableOpacity onPress={()=>{ this. insertToServer() }}>
+          <TouchableOpacity
+              onPress={()=> {this.CheckTextInputIsEmptyOrNot() }}>
             <Text style={styles.next}>Selanjutnya</Text>
           </TouchableOpacity>
         </View>
@@ -259,14 +283,30 @@ const styles = StyleSheet.create({
     //paddingLeft:10,
     marginTop: 10,
   },
+ imageGroup2:{
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+   paddingLeft:10,
+   paddingRight:10,
+   padding:5,
+  },
   text1:{
     fontSize: 25,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:100,
+    paddingRight:200,
     marginBottom:30,
     marginTop:30
   },
+  text2:{
+   color:'#FFFFFF',
+   fontSize:20,
+   padding:5,
+   borderRadius:30,
+   marginTop:3,
+   fontWeight: 'bold',
+   paddingRight:130
+ },
   textgroup:{
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -281,13 +321,11 @@ const styles = StyleSheet.create({
   imageGroup:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight:20,
-    marginBottom:-5,
   },
   imageGroup1:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight:20,
+    paddingRight:70,
     marginBottom:-5,
     paddingLeft:20
   },
@@ -302,14 +340,15 @@ const styles = StyleSheet.create({
     marginRight:20
   },
   save:{
-    backgroundColor:'#00bfff',
+    backgroundColor:'#FFC400',
     color:'#ffffff',
     fontSize:16,
     padding:5,
     marginBottom: 25,
-    width: 350,
-    height:35,
-    textAlign:'center',
+    width: 50,
+    height:50,
+    borderRadius:8,
+    alignItems:'center',
   },
   next:{
     backgroundColor:'#FFC400',
@@ -318,7 +357,7 @@ const styles = StyleSheet.create({
     marginTop:8,
     padding:5,
     width: 200,
-    borderRadius:5,
+    borderRadius:30,
     height:35,
     textAlign:'center',
 
@@ -387,16 +426,16 @@ const styles = StyleSheet.create({
     height:50,
     alignItems:'center'
   },
-    close:{
-      backgroundColor:'#E6B000',
-      color:'#000000',
-      fontSize:16,
-      padding:5,
-      width: 100,
-      height:35,
-      textAlign:'center',
-      borderRadius:5,
-      marginTop: 7
+  close:{
+    backgroundColor:'#E6B000',
+    color:'#000000',
+    fontSize:16,
+    padding:5,
+    width: 100,
+    height:35,
+    textAlign:'center',
+    borderRadius:30,
+    marginTop: 3
 
     },
     imageGroup4:{

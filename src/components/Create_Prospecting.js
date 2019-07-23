@@ -182,13 +182,16 @@ export default class Create_Prospecting extends Component<{}>{
 
     return (
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#3700B3', height:50,}}>
-          <View style={styles.imageGroup4}>
-            <TouchableOpacity onPress={this.prospecting}>
-              <Text style={styles.close}>keluar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <View style = {{backgroundColor:'#3700B3', height:50}}>
+   <View style={styles.imageGroup2}>
+   <Image style={{width:40, height:40,}}
+     source={require('../images/logo1.png')}/>
+     <Text style={styles.text2}>FO Activity</Text>
+   <TouchableOpacity onPress={this.prospecting}>
+     <Text style={styles.close}>keluar</Text>
+   </TouchableOpacity>
+   </View>
+   </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
             source={require('../images/prospecting.png')}/>
@@ -280,6 +283,13 @@ const styles = StyleSheet.create({
     //paddingLeft:10,
     marginTop: 10,
   },
+ imageGroup2:{
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+   paddingLeft:10,
+   paddingRight:10,
+   padding:5,
+  },
   text1:{
     fontSize: 25,
     fontWeight: '400',
@@ -287,6 +297,15 @@ const styles = StyleSheet.create({
     paddingRight:100,
     marginBottom:30,
     marginTop:30
+  },
+text2:{
+ color:'#FFFFFF',
+ fontSize:20,
+ padding:5,
+ borderRadius:30,
+ marginTop:3,
+ fontWeight: 'bold',
+ paddingRight:130
   },
   textgroup:{
     flexDirection: 'row',
@@ -306,7 +325,7 @@ const styles = StyleSheet.create({
   imageGroup1:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight:20,
+    paddingRight:70,
     marginBottom:-5,
     paddingLeft:20
   },
@@ -338,7 +357,7 @@ const styles = StyleSheet.create({
     marginTop:8,
     padding:5,
     width: 200,
-    borderRadius:5,
+    borderRadius:30,
     height:35,
     textAlign:'center',
 
@@ -407,16 +426,16 @@ const styles = StyleSheet.create({
     height:50,
     alignItems:'center'
   },
-    close:{
-      backgroundColor:'#E6B000',
-      color:'#000000',
-      fontSize:16,
-      padding:5,
-      width: 100,
-      height:35,
-      textAlign:'center',
-      borderRadius:5,
-      marginTop: 7
+  close:{
+    backgroundColor:'#E6B000',
+    color:'#000000',
+    fontSize:16,
+    padding:5,
+    width: 100,
+    height:35,
+    textAlign:'center',
+    borderRadius:30,
+    marginTop: 3
 
     },
     imageGroup4:{
