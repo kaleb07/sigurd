@@ -4,10 +4,12 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 import { Button } from 'react-native-elements';
+import { insertProspectingToServer } from '../networking/server';
 
 let index = 0;
 
-export default class Form extends Component<{}> {
+export default class Prospecting_Result extends Component<{}> {
+
   constructor(){
     super();
     this.state = {
@@ -21,11 +23,7 @@ export default class Form extends Component<{}> {
         index:0,
         commodity:'',
         capacity:'',
-        price:'',
-        type:'textInput',
-        value: "",
-        unit: "Kgs"}],
-
+        price:''}],
     };
   };
 
@@ -38,7 +36,7 @@ export default class Form extends Component<{}> {
   };
 
   insertSomeThing(){
-    const newIndex = this.state.arr[this.state.arr.length-1].index+1
+    const newIndex = this.state.arr[this.state.arr.length-1].index+1;
     this.state.arr.push({
       index:newIndex,
       commodity:'',
@@ -48,6 +46,21 @@ export default class Form extends Component<{}> {
     });
     this.setState({ arr: this.state.arr });
   };
+
+  insertToServer(){
+    const newProspecting = {
+      leaderName: this.state.leaderName,
+      phoneNumber: this.state.phoneNumber,
+      groupFarmer: this.state.groupFarmer,
+      numberOfMembers: this.state.numberOfMembers,
+      landArea: this.state.landArea,
+      longTimeFarming: this.state.longTimeFarming,
+      product: this.state.arr,
+    };
+    console.log(newProspecting);
+    insertProspectingToServer(newProspecting);
+
+  }
 
   insertVal(data, index, key) {
     const list = this.state.arr;
@@ -89,7 +102,6 @@ export default class Form extends Component<{}> {
 
   render(){
     let arr = this.state.arr.map((r, index) => {
-      console.log('r', r);
       return (
         <View key={ index }>
           <View style={styles.small}>
@@ -103,7 +115,6 @@ export default class Form extends Component<{}> {
                 onChangeText={commodity => this.insertVal(commodity, r.index, 'commodity')}
               />
            </View>
-
            <View style={styles.textInputWrapper}>
               <Text style={styles.text}>
                 <Text>Kapasitas</Text>
@@ -114,7 +125,6 @@ export default class Form extends Component<{}> {
                   onChangeText={capacity => this.insertVal(capacity, r.index, 'capacity')}
                   keyboardType="numeric"/>
             </View>
-
            <View style={styles.textInputWrapper}>
               <Text style={styles.text}>
                 <Text>Harga</Text>
@@ -138,13 +148,13 @@ export default class Form extends Component<{}> {
     });
 
     return(
-    <View style={styles.container}>
+      <View style={styles.container}>
         <View style = {{backgroundColor:'#3700B3', height:50,}}>
-        <View style={styles.imageGroup4}>
-        <TouchableOpacity onPress={this.prospecting}>
-          <Text style={styles.close}>keluar</Text>
-        </TouchableOpacity>
-        </View>
+          <View style={styles.imageGroup4}>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
@@ -153,56 +163,52 @@ export default class Form extends Component<{}> {
             <Text>Prospecting</Text>
           </Text>
         </View>
-          <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
-            <Text style={styles.text}>
-                <Text>Nama Ketua</Text>
-            </Text>
-            <TextInput style={styles.inputBox}
-                      onChangeText={(leaderName) => this.setState({leaderName})}
-                      value={this.state.leaderName}
-            />
+        <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+          <Text style={styles.text}>
+              <Text>Nama Ketua</Text>
+          </Text>
+          <TextInput style={styles.inputBox}
+                    onChangeText={(leaderName) => this.setState({leaderName})}
+                    value={this.state.leaderName}
+          />
 
-            <Text style={styles.text}>
-                <Text>Nomor Telepon</Text>
-            </Text>
-            <TextInput style={styles.inputBox}
-                    onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-                    value={this.state.phoneNumber}
-            />
-
-            <Text style={styles.text}>
-              <Text>Kelompok Tani</Text>
-            </Text>
-            <TextInput style={styles.inputBox}
-                      onChangeText={(groupFarmer) => this.setState({groupFarmer})}
-                      value={this.state.groupFarmer}
-            />
-
-            <Text style={styles.text}>
-              <Text>Jumlah Anggota</Text>
-            </Text>
-            <TextInput style={styles.inputBox}
-                    onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
-                    value={this.state.numberOfMembers}
-            />
-
-            <Text style={styles.text}>
-              <Text>Luas Lahan</Text>
-            </Text>
-            <TextInput style={styles.inputBox}
-                    onChangeText={(landArea) => this.setState({landArea})}
-                    value={this.state.landArea}
-            />
-
-            <Text style={styles.text}>
-              <Text>Lama Bertani</Text>
-            </Text>
-            <TextInput style={styles.inputBox}
-                    onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
-                    value={this.state.longTimeFarming}
-            />
-          <View>
-          { arr }
+          <Text style={styles.text}>
+              <Text>{this.state.leaderName}</Text>
+          </Text>
+          <TextInput style={styles.inputBox}
+                  onChangeText={(phoneNumber) => this.setState({phoneNumber})}
+                  value={this.state.phoneNumber}
+          />
+          <Text style={styles.text}>
+            <Text>Kelompok Tani</Text>
+          </Text>
+          <TextInput style={styles.inputBox}
+                    onChangeText={(groupFarmer) => this.setState({groupFarmer})}
+                    value={this.state.groupFarmer}
+          />
+          <Text style={styles.text}>
+            <Text>Jumlah Anggota</Text>
+          </Text>
+          <TextInput style={styles.inputBox}
+                  onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
+                  value={this.state.numberOfMembers}
+          />
+          <Text style={styles.text}>
+            <Text>Luas Lahan</Text>
+          </Text>
+          <TextInput style={styles.inputBox}
+                  onChangeText={(landArea) => this.setState({landArea})}
+                  value={this.state.landArea}
+          />
+          <Text style={styles.text}>
+            <Text>Lama Bertani</Text>
+          </Text>
+          <TextInput style={styles.inputBox}
+                  onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
+                  value={this.state.longTimeFarming}
+          />
+         <View>
+            { arr }
            <TouchableOpacity
              onPress={ () => { this.insertSomeThing() }}
              style={styles.button}>
@@ -211,16 +217,14 @@ export default class Form extends Component<{}> {
          </View>
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
-        <TouchableOpacity>
-          <Text style={styles.next}>Selanjutnya</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={ () => { this.insertToServer() }}>
+            <Text style={styles.next}>Selanjutnya</Text>
+          </TouchableOpacity>
         </View>
       </View>
-
-
-      );
-  }};
-
+    );
+  }
+};
 
 var styles = StyleSheet.create({
   container:{
@@ -303,7 +307,6 @@ var styles = StyleSheet.create({
     borderRadius:5,
     height:35,
     textAlign:'center',
-
  },
    text:{
      fontSize: 16,

@@ -28,7 +28,7 @@ const options={
   chooseFromLibraryButtonTitle:'Choose photo from library',
 }
 
-export default class Form extends Component<{}>{
+export default class Create_Panen extends Component<{}>{
   kegiatan() {
     Actions.kegiatan()
   }
@@ -82,67 +82,74 @@ export default class Form extends Component<{}>{
   };
 
   selectImage(index){
-      ImagePicker.showImagePicker(options, (response) => {
-        const list = this.state.arr;
-
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else {
-          const source = { uri: response.uri };
-
-          // You can also display the image using data:
-          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-          const newList = list.map(listData => {
-            if(listData.index === index) {
-              return {
-                ...listData,
-                image: source,
-              }
-            }
-            return listData
-            console.log('listdata = ', listData);
-          })
-
-          this.setState({ arr:newList });
-      }});
-    };
-
-    clearVal() {
+    ImagePicker.showImagePicker(options, (response) => {
       const list = this.state.arr;
-      const newList = list.map(data => {
-        return {
-          ...data,
-          index:0,
-          image:'',
-          caption:''
-        }
-      })
-      this.setState({ arr:newList });
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const source = { uri: response.uri };
+        const newList = list.map(listData => {
+          if(listData.index === index) {
+            return {
+              ...listData,
+              image: source,
+            }
+          }
+          return listData
+          console.log('listdata = ', listData);
+        })
+        this.setState({ arr:newList });
+    }});
+  };
+
+  insertToServer(){
+    const newActivity = {
+      date: this.state.date,
+      activityOption: 'Panen',
+      activityDesc: this.state.activityDesc,
+      project: 'abc',
+      location: this.state.location,
+      activityResult: this.state.activityResult,
+      images:this.state.arr,
+    };
+    insertActivityToServer(newActivity);
+    console.log(newActivity);
+  }
+
+  clearVal() {
+    const list = this.state.arr;
+    const newList = list.map(data => {
+      return {
+        ...data,
+        index:0,
+        image:'',
+        caption:''
+      }
+    })
+    this.setState({ arr:newList });
+ };
+
+ trashVal(index){
+   const list = this.state.arr;
+   if (list.length === 1){
+     this.clearVal();
+   } else {
+     this.removeItem(index);
    };
+ }
 
-   trashVal(index){
-     const list = this.state.arr;
-     if (list.length === 1){
-       this.clearVal();
-     } else {
-       this.removeItem(index);
-     };
-   }
-
-render(){
-  const  search  = this.state;
-  let arr = this.state.arr.map((r, index) => {
-      console.log('index',index);
-    console.log('url',r.avatar);
-    return (
-      <View key={ index }>
-        <View style={styles.imageGroup}>
+  render(){
+    const  search  = this.state;
+    let arr = this.state.arr.map((r, index) => {
+      return (
+        <View key={ index }>
+          <View style={styles.imageGroup}>
             <TouchableOpacity onPress={() => this.selectImage(r.index)}>
-            <Image source={r.image !=='' ? r.image :
-              require('../images/add.png')}
-              style={{width:50, height:50,  marginRight:10,marginTop:10, paddingLeft:10}}/>
+              <Image source={r.image !=='' ? r.image :
+                require('../images/add.png')}
+                style={{width:50, height:50,  marginRight:10,marginTop:10, paddingLeft:10}}/>
             </TouchableOpacity>
             <TextInput
               style={styles.inputBox2}
@@ -155,55 +162,55 @@ render(){
                style={{ marginLeft: 'auto', marginTop: 20, marginRight:5}}
                onPress={() => this.trashVal(r.index)}
             />
+          </View>
         </View>
-      </View>
-    );
-  });
+      );
+    });
 
-  return (
-    <View style={styles.container}>
-    <View style = {{backgroundColor:'#3700B3', height:50,}}>
-    <View style={styles.imageGroup4}>
-    <TouchableOpacity onPress={this.prospecting}>
-      <Text style={styles.close}>keluar</Text>
-    </TouchableOpacity>
-    </View>
-    </View>
-    <View style={styles.imageGroup1}>
-      <Image style={{width:60, height:60, marginTop:15}}
-        source={require('../images/konsultasi.png')}/>
-      <Text style={styles.text1}>
-        <Text>Konsultasi</Text>
-      </Text>
-    </View>
-      <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
-      <DatePicker
-          style={{width: 350}}
-          date={this.state.date} //initial date from state
-          mode="date" //The enum of date, datetime and time
-          placeholder="pilih tanggal"
-          format="DD-MM-YYYY"
-          minDate="01-01-2018"
-          maxDate="01-01-2050"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: 'absolute',
-              left: 0,
-              marginLeft: 0,
-              width:50,
-              height:50
-            },
-            dateInput: {
-              marginLeft: 60,
-              fontSize: 16,
-              borderRadius:5,
-              borderWidth: 1,
-              borderColor: '#000000',
-            }
-          }}
-          onDateChange={(date) => {this.setState({date: date})}}/>
+    return (
+      <View style={styles.container}>
+        <View style = {{backgroundColor:'#3700B3', height:50,}}>
+          <View style={styles.imageGroup4}>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.imageGroup1}>
+          <Image style={{width:60, height:60, marginTop:15}}
+            source={require('../images/konsultasi.png')}/>
+          <Text style={styles.text1}>
+            <Text> Panen</Text>
+          </Text>
+        </View>
+        <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+          <DatePicker
+              style={{width: 350}}
+              date={this.state.date} //initial date from state
+              mode="date" //The enum of date, datetime and time
+              placeholder="pilih tanggal"
+              format="DD-MM-YYYY"
+              minDate="01-01-2018"
+              maxDate="01-01-2050"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  marginLeft: 0,
+                  width:50,
+                  height:50
+                },
+                dateInput: {
+                  marginLeft: 60,
+                  fontSize: 16,
+                  borderRadius:5,
+                  borderWidth: 1,
+                  borderColor: '#000000',
+                }
+              }}
+              onDateChange={(date) => {this.setState({date: date})}}/>
           <Text style={styles.text}>
             <Text>Deskripsi Kegiatan</Text>
           </Text>
@@ -246,41 +253,28 @@ render(){
                     onChangeText={(activityResult) => this.setState({activityResult})}
                     value={this.state.activityResult}
           />
-
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
           </Text>
-
           {arr}
           <TouchableOpacity style={styles.save} onPress={() => { this.insertSomeThing('')}}>
-          <Icon name="plus"
-          size={40} color="black"/>
+            <Icon name="plus" size={40} color="black"/>
           </TouchableOpacity>
-      </KeyboardAwareScrollView>
-      <View style={styles.footer}>
-      <View style={styles.imageGroup2}>
-          <TouchableOpacity onPress={this.kegiatan} >
-            <Text style={styles.cancel}>Batal</Text>
-          </TouchableOpacity>
+        </KeyboardAwareScrollView>
+        <View style={styles.footer}>
+          <View style={styles.imageGroup2}>
+              <TouchableOpacity onPress={this.kegiatan} >
+                <Text style={styles.cancel}>Batal</Text>
+              </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => {
-            const newActivity = {
-              date: this.state.date,
-              activityOption: 'Panen',
-              activityDesc: this.state.activityDesc,
-              project: 'abc',
-              location: this.state.location,
-              activityResult: this.state.activityResult,
-              images:this.state.arr,
-            };
-            insertActivityToServer(newActivity);
-          }}>
-            <Text style={styles.next}>Simpan</Text>
-          </TouchableOpacity>
+              <TouchableOpacity onPress={() => { this.insertToServer() }}>
+                <Text style={styles.next}>Simpan</Text>
+              </TouchableOpacity>
+          </View>
+        </View>
       </View>
-      </View>
-    </View>
-  )};
+    )
+  };
 };
 
 const styles = StyleSheet.create({
@@ -301,7 +295,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:165,
+    paddingRight:100,
     marginBottom:30,
     marginTop:30
   },
@@ -450,6 +444,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingLeft:280,
     borderRadius:5,
-
   },
 });

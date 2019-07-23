@@ -9,22 +9,23 @@ export default class Laporkan_Aktivitas extends Component <{}>{
   kegiatan() {
     Actions.kegiatan()
   }
+
   render(){
     return (
       <View style={styles.container}>
-          <View style = {{backgroundColor:'#3700B3', height:50}}>
+        <View style = {{backgroundColor:'#3700B3', height:50}}>
           <View style={styles.imageGroup}>
-          <TouchableOpacity onPress={this.prospecting}>
-            <Text style={styles.next}>keluar</Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.next}>keluar</Text>
+            </TouchableOpacity>
           </View>
-          </View>
+        </View>
 
-          <View style={styles.footer}>
+        <View style={styles.footer}>
           <TouchableOpacity onPress={this.kegiatan} style = {styles.button}>
               <Text style = {styles.buttonText}> Laporkan Aktivitas </Text>
           </TouchableOpacity>
-          </View>
+        </View>
       </View>
     )
   }
@@ -46,8 +47,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
     //justifyContent: 'space-between',
-
-
   },
   button: {
     width: 200,
@@ -73,13 +72,11 @@ const styles = StyleSheet.create({
     textAlign:'center',
     borderRadius:5,
     marginTop: 7
-
   },
   imageGroup:{
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft:280,
     borderRadius:5,
-
   }
 });

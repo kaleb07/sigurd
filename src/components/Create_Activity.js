@@ -11,30 +11,31 @@ export default class Create_Activity extends Component < {} > {
   render(){
     return (
       <View style = {styles.container}>
-            <View style={styles.logo}>
-                <Image style={{width:40, height:70}}
-                  source={require('../images/logo.jpg')}/>
-            </View>
-            <Text style={styles.text}>
-                <Text>Selamat datang!! </Text>
-            </Text>
-            <Text style={styles.text}>
-                <Text>Silahkan masuk melalui akun</Text>
-            </Text>
-              <Text style={styles.text}>
-                <Text>anda</Text>
-            </Text>
-            <View style = {styles.button}>
-                <TouchableOpacity>
-                  <Button block warning onPress={this.laporkan_aktivitas}>
-                    <Text>Masuk dengan google</Text>
-                  </Button>
-                </TouchableOpacity>
-            </View>
-          </View>
-        )
-      }
-    }
+        <View style={styles.logo}>
+            <Image style={{width:40, height:70}}
+              source={require('../images/logo.jpg')}/>
+        </View>
+        <Text style={styles.text}>
+            <Text>Selamat datang!! </Text>
+        </Text>
+        <Text style={styles.text}>
+            <Text>Silahkan masuk melalui akun</Text>
+        </Text>
+          <Text style={styles.text}>
+            <Text>anda</Text>
+        </Text>
+        <View style = {styles.button}>
+            <TouchableOpacity>
+              <Button block warning onPress={this.laporkan_aktivitas}>
+                <Text>Masuk dengan google</Text>
+              </Button>
+            </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -45,17 +46,14 @@ const styles = StyleSheet.create({
     color:'black',
     textAlign:'center',
     fontWeight: 'bold',
-
   },
   button:{
     marginVertical: 40,
     width: 350,
-
   },
   logo: {
     width: 300,
     alignItems: 'center',
     marginVertical: 100,
-
   }
 });

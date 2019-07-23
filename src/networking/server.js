@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {AppRegistry, SectionList, StyleSheet, Text, View, Alert, Platform } from 'react-native';
 
 const apiActivity = 'http://localhost:3011/activity';
 const apiActivityOption = 'http://localhost:3011/activity_option';
-
+const apiProspecting = 'http://localhost:3011/prospecting';
+var id = '';
 
 async function getActivityFromServer(){
   try{
@@ -36,12 +36,37 @@ async function insertActivityToServer(params){
         },
         body: JSON.stringify(params),
     });
-    let responseJson = response.json();
+    let responseJson = await response.json();
+    id = responseJson.id;
+    console.log('from server ', id)
     return responseJson;
   } catch(error){
     console.log('Error is: ', error);
   }
 }
+
+async function insertProspectingToServer(params){
+  try{
+    params.activityId = id
+    console.log('params', params);
+    let response = await fetch(apiProspecting, {
+        method: 'POST',
+        headers: {
+          'Accept' : 'application/json',
+          'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify(params)
+    });
+
+    let responseJson = await response.json();
+    console.log('respon: ', responseJson);
+    return responseJson;
+  } catch(error){
+    console.log('Error is: ', error);
+  }
+}
+
 export {getActivityOptionFromServer};
 export {getActivityFromServer};
 export {insertActivityToServer};
+export {insertProspectingToServer};

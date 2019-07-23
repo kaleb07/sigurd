@@ -11,27 +11,23 @@ import Createpanen from './pages/Createpanen';
 import Createlainnya from './pages/Createlainnya';
 import Laporkanaktivitas from './pages/Laporkanaktivitas';
 
-
 export default class Routes extends Component < {} > {
-
-render() {
-
-return (
-    <Router >
-    <Stack key = "root"hideNavBar = {true}>
-    <Scene key = "login"component = {Create_Function}title = "Create Function"initial = {true}/>
-    <Scene key = "register"component = {Create_Form}title = "Create Form" / >
-    <Scene key = "prospecting"component = {Prospectingresult}title = "Create Prospecting Result" / >
-    <Scene key = "kegiatan"component = {Kategorikegiatan}title = "Kategori kegiatan" / >
-    <Scene key = "create_prospecting"component = {Createprospecting}title = "Create Prospecting" / >
-    <Scene key = "monitor_lapangan"component = {Monitorlapangan}title = "Monitor Lapangan" / >
-    <Scene key = "tanam_perdana"component = {Tanamperdana}title = "Tanam Perdana" / >
-    <Scene key = "create_panen"component = {Createpanen}title = "Create Panen" / >
-    <Scene key = "create_lainnya"component = {Createlainnya}title = "Create Lainnya" / >
-    <Scene key = "laporkan_aktivitas"component = {Laporkanaktivitas}title = "Laporkan Aktivitas" / >
-    </Stack>
-    </Router>
+  render() {
+    return (
+      <Router >
+        <Stack key = "root"hideNavBar = {true}>
+          <Scene key = "login"component = {Create_Function}title = "Create Function"initial = {true}/>
+          <Scene key = "register"component = {Create_Form}title = "Create Form" / >
+          <Scene key = "prospecting"component = {Prospectingresult}title = "Create Prospecting Result" / >
+          <Scene key = "kegiatan"component = {Kategorikegiatan}title = "Kategori kegiatan" / >
+          <Scene key = "create_prospecting"component = {Createprospecting}title = "Create Prospecting" / >
+          <Scene key = "monitor_lapangan"component = {Monitorlapangan}title = "Monitor Lapangan" / >
+          <Scene key = "tanam_perdana"component = {Tanamperdana}title = "Tanam Perdana" / >
+          <Scene key = "create_panen"component = {Createpanen}title = "Create Panen" / >
+          <Scene key = "create_lainnya"component = {Createlainnya}title = "Create Lainnya" / >
+          <Scene key = "laporkan_aktivitas"component = {Laporkanaktivitas}title = "Laporkan Aktivitas" / >
+        </Stack>
+      </Router>
     )
   }
-
 }

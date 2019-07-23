@@ -23,6 +23,7 @@ export default class Create_Prospecting extends Component<{}>{
   kegiatan() {
     Actions.kegiatan()
   }
+
   constructor() {
     super();
     this.state = {
@@ -38,6 +39,25 @@ export default class Create_Prospecting extends Component<{}>{
     }
     this.selectImage = this.selectImage.bind(this);
   };
+
+  CheckTextInputIsEmptyOrNot(){
+    const {date}  = this.state ;
+    const { activityDesc }  = this.state ;
+    const { location }  = this.state ;
+    const { activityResult }  = this.state ;
+    const { image }  = this.state.arr ;
+    const { caption }  = this.state.arr ;
+    const { arr }  = this.state ;
+
+
+    if(date == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
+      Alert.alert("Please Enter All the Values.");
+    }
+    else{
+    this.insertToServer();
+    this.prospecting();
+    }
+  }
 
   prospecting() {
     Actions.prospecting()
@@ -76,67 +96,73 @@ export default class Create_Prospecting extends Component<{}>{
   };
 
   selectImage(index){
-      ImagePicker.showImagePicker(options, (response) => {
-        const list = this.state.arr;
-
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else {
-          const source = { uri: response.uri };
-
-          // You can also display the image using data:
-          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-          const newList = list.map(listData => {
-            if(listData.index === index) {
-              return {
-                ...listData,
-                image: source,
-              }
-            }
-            return listData
-            console.log('listdata = ', listData);
-          })
-
-          this.setState({ arr:newList });
-      }});
-    };
-
-    clearVal() {
+    ImagePicker.showImagePicker(options, (response) => {
       const list = this.state.arr;
-      const newList = list.map(data => {
-        return {
-          ...data,
-          index:0,
-          image:'',
-          caption:''
-        }
-      })
-      this.setState({ arr:newList });
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const source = { uri: response.uri };
+        const newList = list.map(listData => {
+          if(listData.index === index) {
+            return {
+              ...listData,
+              image: source,
+            }
+          }
+          return listData
+          console.log('listdata = ', listData);
+        })
+        this.setState({ arr:newList });
+    }});
+  };
+
+  clearVal() {
+    const list = this.state.arr;
+    const newList = list.map(data => {
+      return {
+        ...data,
+        index:0,
+        image:'',
+        caption:''
+      }
+    })
+    this.setState({ arr:newList });
+ };
+
+ trashVal(index){
+   const list = this.state.arr;
+   if (list.length === 1){
+     this.clearVal();
+   } else {
+     this.removeItem(index);
    };
+ }
 
-   trashVal(index){
-     const list = this.state.arr;
-     if (list.length === 1){
-       this.clearVal();
-     } else {
-       this.removeItem(index);
-     };
-   }
+ insertToServer(){
+   const newActivity = {
+     date: this.state.date,
+     activityOption: 'Prospecting',
+     activityDesc: this.state.activityDesc,
+     location: this.state.location,
+     activityResult: this.state.activityResult,
+     images:this.state.arr,
+   };
+   insertActivityToServer(newActivity);
+   console.log(newActivity);
+ }
 
-render(){
-  const  search  = this.state;
-  let arr = this.state.arr.map((r, index) => {
-      console.log('index',index);
-    console.log('url',r.avatar);
-    return (
-      <View key={ index }>
-        <View style={styles.imageGroup}>
+ render(){
+    const  search  = this.state;
+    let arr = this.state.arr.map((r, index) => {
+      return (
+        <View key={ index }>
+          <View style={styles.imageGroup}>
             <TouchableOpacity onPress={() => this.selectImage(r.index)}>
-            <Image source={r.image !=='' ? r.image :
-              require('../images/add.png')}
-              style={{width:50, height:50,  marginRight:10,marginTop:10, paddingLeft:10}}/>
+              <Image source={r.image !=='' ? r.image :
+                require('../images/add.png')}
+                style={{width:50, height:50,  marginRight:10,marginTop:10, paddingLeft:10}}/>
             </TouchableOpacity>
             <TextInput
               style={styles.inputBox2}
@@ -149,55 +175,55 @@ render(){
                style={{ marginLeft: 'auto', marginTop: 20, marginRight:25}}
                onPress={() => this.trashVal(r.index)}
             />
+          </View>
         </View>
-      </View>
-    );
-  });
+      );
+    });
 
-  return (
-    <View style={styles.container}>
-    <View style = {{backgroundColor:'#3700B3', height:50,}}>
-    <View style={styles.imageGroup4}>
-    <TouchableOpacity onPress={this.prospecting}>
-      <Text style={styles.close}>keluar</Text>
-    </TouchableOpacity>
-    </View>
-    </View>
-    <View style={styles.imageGroup1}>
-      <Image style={{width:60, height:60, marginTop:15}}
-        source={require('../images/prospecting.png')}/>
-      <Text style={styles.text1}>
-        <Text>Prospecting</Text>
-      </Text>
-    </View>
-      <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
-      <DatePicker
-          style={{width: 350}}
-          date={this.state.date} //initial date from state
-          mode="date" //The enum of date, datetime and time
-          placeholder="pilih tanggal"
-          format="DD-MM-YYYY"
-          minDate="01-01-2018"
-          maxDate="01-01-2050"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: 'absolute',
-              left: 0,
-              marginLeft: 0,
-              width:50,
-              height:50
-            },
-            dateInput: {
-              marginLeft: 60,
-              fontSize: 16,
-              borderRadius:5,
-              borderWidth: 1,
-              borderColor: '#000000',
-            }
-          }}
-          onDateChange={(date) => {this.setState({date: date})}}/>
+    return (
+      <View style={styles.container}>
+        <View style = {{backgroundColor:'#3700B3', height:50,}}>
+          <View style={styles.imageGroup4}>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.imageGroup1}>
+          <Image style={{width:60, height:60, marginTop:15}}
+            source={require('../images/prospecting.png')}/>
+          <Text style={styles.text1}>
+            <Text> Prospecting</Text>
+          </Text>
+        </View>
+        <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+          <DatePicker
+              style={{width: 350}}
+              date={this.state.date} //initial date from state
+              mode="date" //The enum of date, datetime and time
+              placeholder="pilih tanggal"
+              format="DD-MM-YYYY"
+              minDate="01-01-2018"
+              maxDate="01-01-2050"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  marginLeft: 0,
+                  width:50,
+                  height:50
+                },
+                dateInput: {
+                  marginLeft: 60,
+                  fontSize: 16,
+                  borderRadius:5,
+                  borderWidth: 1,
+                  borderColor: '#000000',
+                }
+              }}
+              onDateChange={(date) => {this.setState({date: date})}}/>
           <Text style={styles.text}>
             <Text>Deskripsi Kegiatan</Text>
           </Text>
@@ -206,7 +232,6 @@ render(){
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
           />
-
           <Text style={styles.text}>
             <Text>Lokasi</Text>
           </Text>
@@ -222,35 +247,23 @@ render(){
                     onChangeText={(activityResult) => this.setState({activityResult})}
                     value={this.state.activityResult}
           />
-
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
           </Text>
-
           {arr}
           <TouchableOpacity style={styles.save} onPress={() => { this.insertSomeThing('')}}>
-            <Icon name="plus"
-            size={40} color="black"/>
+            <Icon name="plus" size={40} color="black"/>
           </TouchableOpacity>
-      </KeyboardAwareScrollView>
-      <View style={styles.footer}>
-        <TouchableOpacity onPress={()=>{
-          const newActivity = {
-            date: this.state.date,
-            activityOption: 'Prospecting',
-            activityDesc: this.state.activityDesc,
-            location: this.state.location,
-            activityResult: this.state.activityResult,
-            images:this.state.arr,
-          };
-          insertActivityToServer(newActivity);
-          this.prospecting();
-        }}>
-          <Text style={styles.next}>Selanjutnya</Text>
-        </TouchableOpacity>
+        </KeyboardAwareScrollView>
+        <View style={styles.footer}>
+          <TouchableOpacity
+              onPress={()=> {this.CheckTextInputIsEmptyOrNot() }}>
+            <Text style={styles.next}>Selanjutnya</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  )};
+    )
+  };
 };
 
 const styles = StyleSheet.create({
@@ -259,7 +272,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
     //width: wp('100%'),
     //height: hp('95%'),
-
   },
   text:{
     fontSize: 16,
@@ -272,7 +284,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:150,
+    paddingRight:100,
     marginBottom:30,
     marginTop:30
   },
