@@ -10,6 +10,7 @@ import Tanamperdana from './pages/Tanamperdana';
 import Createpanen from './pages/Createpanen';
 import Createlainnya from './pages/Createlainnya';
 import Laporkanaktivitas from './pages/Laporkanaktivitas';
+import Listdata from './pages/Listdata';
 
 export default class Routes extends Component < {} > {
   render() {
@@ -26,6 +27,7 @@ export default class Routes extends Component < {} > {
           <Scene key = "create_panen"component = {Createpanen}title = "Create Panen" / >
           <Scene key = "create_lainnya"component = {Createlainnya}title = "Create Lainnya" / >
           <Scene key = "laporkan_aktivitas"component = {Laporkanaktivitas}title = "Laporkan Aktivitas" / >
+          <Scene key = "list_data"component = {Listdata}title = "List Data" / >
         </Stack>
       </Router>
     )

@@ -32,6 +32,11 @@ export default class Create_Panen extends Component<{}>{
   kegiatan() {
     Actions.kegiatan()
   }
+
+  laporkan_aktivitas() {
+    Actions.laporkan_aktivitas()
+  }
+
   constructor() {
     super();
     this.state = {
@@ -48,6 +53,24 @@ export default class Create_Panen extends Component<{}>{
     }
     this.selectImage = this.selectImage.bind(this);
   };
+
+  CheckTextInputIsEmptyOrNot(){
+    const {date}  = this.state ;
+    const { activityDesc }  = this.state ;
+    const { location }  = this.state ;
+    const { activityResult }  = this.state ;
+    const { image }  = this.state.arr ;
+    const { caption }  = this.state.arr ;
+    const { arr }  = this.state ;
+
+
+    if(date == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
+      Alert.alert("Please Enter All the Values.");
+    }
+    else{
+    this.insertToServer();
+    }
+  }
 
   removeItem(index) {
     const list = this.state.arr;
@@ -115,6 +138,7 @@ export default class Create_Panen extends Component<{}>{
       images:this.state.arr,
     };
     insertActivityToServer(newActivity);
+    this.laporkan_aktivitas();
     console.log(newActivity);
   }
 
@@ -270,7 +294,7 @@ export default class Create_Panen extends Component<{}>{
                 <Text style={styles.cancel}>Batal</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => { this.insertToServer() }}>
+              <TouchableOpacity onPress={() => { this.CheckTextInputIsEmptyOrNot() }}>
                 <Text style={styles.next}>Simpan</Text>
               </TouchableOpacity>
           </View>

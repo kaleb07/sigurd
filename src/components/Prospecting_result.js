@@ -4,12 +4,12 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 import { Button } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import { insertProspectingToServer } from '../networking/server';
 
 let index = 0;
 
 export default class Prospecting_Result extends Component<{}> {
-
   constructor(){
     super();
     this.state = {
@@ -26,6 +26,29 @@ export default class Prospecting_Result extends Component<{}> {
         price:''}],
     };
   };
+
+
+  list_data() {
+    Actions.list_data()
+  }
+
+  CheckTextInputIsEmptyOrNot(){
+    const { leaderName }  = this.state ;
+    const { phoneNumber }  = this.state ;
+    const { groupFarmer }  = this.state ;
+    const { numberOfMembers }  = this.state ;
+    const { landArea }  = this.state ;
+    const { longTimeFarming }  = this.state ;
+    const { arr }  = this.state ;
+
+
+    if(leaderName == '' || phoneNumber == '' || groupFarmer == '' || numberOfMembers == '' || landArea == '' || longTimeFarming =='' || arr =='' ){
+      Alert.alert("Please Enter All the Values.");
+    }
+    else{
+    this.insertToServer();
+    }
+  }
 
   removeItem(index) {
     const list = this.state.arr;
@@ -59,7 +82,7 @@ export default class Prospecting_Result extends Component<{}> {
     };
     console.log(newProspecting);
     insertProspectingToServer(newProspecting);
-
+    this.list_data();
   }
 
   insertVal(data, index, key) {
@@ -85,7 +108,6 @@ export default class Prospecting_Result extends Component<{}> {
         commodity:'',
         capacity:'',
         price:'',
-        type:'textInput'
       }
     })
     this.setState({ arr:newList });
@@ -181,6 +203,7 @@ export default class Prospecting_Result extends Component<{}> {
           <TextInput style={styles.inputBox}
                   onChangeText={(phoneNumber) => this.setState({phoneNumber})}
                   value={this.state.phoneNumber}
+                  keyboardType="numeric"
           />
           <Text style={styles.text}>
             <Text>Kelompok Tani</Text>
@@ -195,6 +218,7 @@ export default class Prospecting_Result extends Component<{}> {
           <TextInput style={styles.inputBox}
                   onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
                   value={this.state.numberOfMembers}
+                  keyboardType="numeric"
           />
           <Text style={styles.text}>
             <Text>Luas Lahan</Text>
@@ -202,6 +226,7 @@ export default class Prospecting_Result extends Component<{}> {
           <TextInput style={styles.inputBox}
                   onChangeText={(landArea) => this.setState({landArea})}
                   value={this.state.landArea}
+                  keyboardType="numeric"
           />
           <Text style={styles.text}>
             <Text>Lama Bertani</Text>
@@ -209,6 +234,7 @@ export default class Prospecting_Result extends Component<{}> {
           <TextInput style={styles.inputBox}
                   onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
                   value={this.state.longTimeFarming}
+                  keyboardType="numeric"
           />
          <View>
             { arr }
@@ -220,7 +246,7 @@ export default class Prospecting_Result extends Component<{}> {
          </View>
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
-          <TouchableOpacity onPress={ () => { this.insertToServer() }}>
+          <TouchableOpacity onPress={ () => { this.CheckTextInputIsEmptyOrNot() }}>
             <Text style={styles.next}>Selanjutnya</Text>
           </TouchableOpacity>
         </View>
@@ -294,7 +320,7 @@ var styles = StyleSheet.create({
   },
   smallInputBox:{
     flex: 1,
-    width:97,
+    width:85,
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',

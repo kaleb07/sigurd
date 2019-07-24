@@ -24,6 +24,10 @@ export default class Create_Prospecting extends Component<{}>{
     Actions.kegiatan()
   }
 
+  laporkan_aktivitas() {
+    Actions.laporkan_aktivitas()
+  }
+
   constructor() {
     super();
     this.state = {
@@ -55,7 +59,6 @@ export default class Create_Prospecting extends Component<{}>{
     }
     else{
     this.insertToServer();
-    this.prospecting();
     }
   }
 
@@ -143,13 +146,14 @@ export default class Create_Prospecting extends Component<{}>{
  insertToServer(){
    const newActivity = {
      date: this.state.date,
-     activityOption: 'Prospecting',
+     activityOption: 'Lainnya',
      activityDesc: this.state.activityDesc,
      location: this.state.location,
      activityResult: this.state.activityResult,
      images:this.state.arr,
    };
    insertActivityToServer(newActivity);
+   this.laporkan_aktivitas();
    console.log(newActivity);
  }
 
@@ -259,10 +263,15 @@ export default class Create_Prospecting extends Component<{}>{
           </TouchableOpacity>
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
-          <TouchableOpacity
-              onPress={()=> {this.CheckTextInputIsEmptyOrNot() }}>
-            <Text style={styles.next}>Selanjutnya</Text>
-          </TouchableOpacity>
+          <View style={styles.imageGroup2}>
+              <TouchableOpacity onPress={this.kegiatan} >
+                <Text style={styles.cancel}>Batal</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => { this.CheckTextInputIsEmptyOrNot() }}>
+                <Text style={styles.next}>Simpan</Text>
+              </TouchableOpacity>
+          </View>
         </View>
       </View>
     )
@@ -271,45 +280,41 @@ export default class Create_Prospecting extends Component<{}>{
 
 const styles = StyleSheet.create({
   container:{
-    flex: 1,
     backgroundColor:'#FFFFFF',
     //width: wp('100%'),
     //height: hp('95%'),
+    flex: 1,
   },
   text:{
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
-    //paddingLeft:10,
+    // /paddingLeft:10,
     marginTop: 10,
-  },
- imageGroup2:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   paddingLeft:10,
-   paddingRight:10,
-   padding:5,
   },
   text1:{
     fontSize: 25,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:200,
+    paddingRight:165,
     marginBottom:30,
     marginTop:30
   },
   text2:{
-   color:'#FFFFFF',
-   fontSize:20,
-   padding:5,
-   borderRadius:30,
-   marginTop:3,
-   fontWeight: 'bold',
-   paddingRight:130
- },
+    color:'#FFFFFF',
+    fontSize:20,
+    padding:5,
+    borderRadius:30,
+    marginTop:3,
+    fontWeight: 'bold',
+    paddingRight:130
+  },
   textgroup:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    fontSize: 30,
+    fontWeight: '400',
+    color:'#000000',
+    paddingLeft:60,
+   marginBottom: 30,
   },
   dropdown:{
     // paddingVertical: 13,
@@ -321,23 +326,38 @@ const styles = StyleSheet.create({
   imageGroup:{
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingRight:20,
+  },
+  imageGroup2:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingRight:20,
+    paddingLeft:20,
+    marginTop:8,
   },
   imageGroup1:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight:70,
-    marginBottom:-5,
+    paddingRight:20,
     paddingLeft:20
   },
+  imageGroup5:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft:10,
+    paddingRight:10,
+    padding:5,
+  },
   cancel:{
-    backgroundColor:'#ff0000',
-    color:'#ffffff',
+    backgroundColor:'#FFC400',
+    color:'#000000',
     fontSize:16,
     padding:5,
     width: 150,
     height:35,
     textAlign:'center',
-    marginRight:20
+    marginRight:20,
+    borderRadius:30
   },
   save:{
     backgroundColor:'#FFC400',
@@ -354,13 +374,12 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFC400',
     color:'#000000',
     fontSize:16,
-    marginTop:8,
+    marginBottom:10,
     padding:5,
-    width: 200,
-    borderRadius:30,
+    width: 150,
     height:35,
     textAlign:'center',
-
+    borderRadius:30
   },
   inputDropdown:{
     borderWidth: 1,
@@ -424,7 +443,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor:'#3700B3',
     height:50,
-    alignItems:'center'
+    alignItems:'center',
   },
   close:{
     backgroundColor:'#E6B000',
@@ -436,12 +455,11 @@ const styles = StyleSheet.create({
     textAlign:'center',
     borderRadius:30,
     marginTop: 3
-
-    },
-    imageGroup4:{
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingLeft:280,
-      borderRadius:5,
+ },
+  imageGroup4:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft:280,
+    borderRadius:5,
   },
 });

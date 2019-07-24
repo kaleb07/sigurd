@@ -298,14 +298,14 @@ const styles = StyleSheet.create({
     marginBottom:30,
     marginTop:30
   },
-text2:{
- color:'#FFFFFF',
- fontSize:20,
- padding:5,
- borderRadius:30,
- marginTop:3,
- fontWeight: 'bold',
- paddingRight:130
+  text2:{
+   color:'#FFFFFF',
+   fontSize:20,
+   padding:5,
+   borderRadius:30,
+   marginTop:3,
+   fontWeight: 'bold',
+   paddingRight:130
   },
   textgroup:{
     flexDirection: 'row',
@@ -423,7 +423,7 @@ text2:{
     right: 0,
     bottom: 0,
     backgroundColor:'#3700B3',
-    height:50,
+    height:56,
     alignItems:'center'
   },
   close:{

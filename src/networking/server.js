@@ -66,7 +66,20 @@ async function insertProspectingToServer(params){
   }
 }
 
+async function getActivityProspecting(){
+  try{
+    let getById = apiActivity + '/' + id;
+    let response = await fetch(getById);
+    let responseJson = response.json();
+    console.log('get by id : ', responseJson);
+    return responseJson;
+  } catch(error){
+      console.log('Error is: ', error);
+  }
+}
+
 export {getActivityOptionFromServer};
 export {getActivityFromServer};
+export {getActivityProspecting};
 export {insertActivityToServer};
 export {insertProspectingToServer};
