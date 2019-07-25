@@ -5,9 +5,26 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 import { Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
+import { Dropdown } from 'react-native-material-dropdown';
+import { TextInputMask } from 'react-native-masked-text'
 import { insertProspectingToServer } from '../networking/server';
 
 let index = 0;
+let capacityUnit = [{
+value: 'ton',
+}, {
+value: 'kw',
+}, {
+value: 'kg',
+}];
+
+let priceUnit = [{
+value: '/ton',
+}, {
+value: '/kw',
+}, {
+value: '/kg',
+}];
 
 export default class Prospecting_Result extends Component<{}> {
   constructor(){
@@ -23,7 +40,10 @@ export default class Prospecting_Result extends Component<{}> {
         index:0,
         commodity:'',
         capacity:'',
-        price:''}],
+        price:''
+      }],
+      unitCapacity: '',
+      unitPrice: '',
     };
   };
 
@@ -96,7 +116,7 @@ export default class Prospecting_Result extends Component<{}> {
       }
       return listData
     })
-    this.setState({ arr:newList });
+    this.setState({ arr:newList});
   };
 
   clearVal() {
@@ -132,36 +152,65 @@ export default class Prospecting_Result extends Component<{}> {
                 <Text>Komoditas</Text>
               </Text>
               <TextInput
-                style={styles.smallInputBox}
+                style={styles.smallCommodity}
                 value={r.commodity}
                 onChangeText={commodity => this.insertVal(commodity, r.index, 'commodity')}
               />
            </View>
+
+
            <View style={styles.textInputWrapper}>
-              <Text style={styles.text}>
+              <Text style={styles.textCapacity}>
                 <Text>Kapasitas</Text>
               </Text>
               <TextInput
-                  style={styles.smallInputBox}
+                  style={styles.smallCapacity}
                   value={r.capacity}
                   onChangeText={capacity => this.insertVal(capacity, r.index, 'capacity')}
                   keyboardType="numeric"/>
             </View>
+            <View style={styles.textInputWrapper}>
+              <Dropdown label=' '
+                        containerStyle={{width:45, top: 10, left: 0}}
+                        fontSize={14}
+                        baseColor={"#000000"}
+                        data={capacityUnit}
+                        onChangeText={(unitCapacity) => this.setState({unitCapacity})}
+                        value={r.unitCapacity}>
+              </Dropdown>
+            </View>
+
            <View style={styles.textInputWrapper}>
-              <Text style={styles.text}>
+              <Text style={styles.textPrice}>
                 <Text>Harga</Text>
               </Text>
-              <TextInput
-                  style={styles.smallInputBox}
-                  value={r.price}
-                  onChangeText={price => this.insertVal(price, r.index, 'price')}
-                  keyboardType="numeric"/>
+              <TextInputMask
+                    style={styles.smallPrice}
+                    type={'money'}
+                    options={{
+                      precision: 0,
+                      separator: '.',
+                      delimiter: ',',
+                      unit: 'Rp ',
+                      suffixUnit: ''
+                    }}
+                    value={r.price}
+                    onChangeText={price => this.insertVal(price, r.index, 'price')}
+                    keyboardType="numeric"/>
            </View>
+           <Dropdown label=' '
+                     containerStyle={{width:50, top: 10, right: 25}}
+                     fontSize={14}
+                     baseColor={"#000000"}
+                     data={priceUnit}
+                     onChangeText={(unitPrice) => this.setState({unitPrice})}
+                     value={r.unitPrice}>
+           </Dropdown>
            <Icon
       				name="trash"
       				size={30}
       				color="red"
-      				style={{ marginLeft: 'auto', marginTop: 40,marginRight:20}}
+      				style={{ marginLeft: 'auto', marginTop: 40, right: 13}}
       				onPress={() => this.trashVal(r.index)}
       			/>
            </View>
@@ -171,16 +220,16 @@ export default class Prospecting_Result extends Component<{}> {
 
     return(
       <View style={styles.container}>
-      <View style = {{backgroundColor:'#3700B3', height:50}}>
-      <View style={styles.imageGroup}>
-      <Image style={{width:40, height:40,}}
-        source={require('../images/logo1.png')}/>
-        <Text style={styles.text2}>FO Activity</Text>
-      <TouchableOpacity onPress={this.prospecting}>
-        <Text style={styles.close}>keluar</Text>
-      </TouchableOpacity>
-      </View>
-      </View>
+        <View style = {{backgroundColor:'#3700B3', height:50}}>
+          <View style={styles.imageGroup}>
+            <Image style={{width:40, height:40,}}
+              source={require('../images/logo1.png')}/>
+              <Text style={styles.text2}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
             source={require('../images/prospecting.png')}/>
@@ -231,6 +280,7 @@ export default class Prospecting_Result extends Component<{}> {
           <Text style={styles.text}>
             <Text>Lama Bertani</Text>
           </Text>
+
           <TextInput style={styles.inputBox}
                   onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
                   value={this.state.longTimeFarming}
@@ -240,8 +290,8 @@ export default class Prospecting_Result extends Component<{}> {
             { arr }
            <TouchableOpacity
              onPress={ () => { this.insertSomeThing() }}
-             style={styles.button}>
-             <Text>Tambah Produk</Text>
+             style={styles.save}>
+             <Icon name="plus" size={35} color="black"/>
            </TouchableOpacity>
          </View>
         </KeyboardAwareScrollView>
@@ -261,6 +311,12 @@ var styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
     flex: 1,
   },
+  dropdown:{
+    width:15,
+    fontSize: 12,
+    color:'#000000',
+    marginRight: 15
+    },
   small:{
     flex: 1,
     flexDirection: 'row',
@@ -318,17 +374,40 @@ var styles = StyleSheet.create({
     color:'#000000',
     marginVertical: 5
   },
-  smallInputBox:{
+  smallCapacity:{
     flex: 1,
-    width:85,
+    width:65,
+    left:5,
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    //borderRadius: 25,
-    paddingVertical: 6,
-    fontSize:16,
+    paddingVertical: 4,
+    fontSize:12,
     color:'#000000',
-    marginVertical: 5
+    marginVertical: 5,
+  },
+  smallPrice:{
+    flex: 1,
+    width:65,
+    right:20,
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    paddingVertical: 4,
+    fontSize:12,
+    color:'#000000',
+    marginVertical: 5,
+  },
+  smallCommodity:{
+    flex: 1,
+    width:70,
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    paddingVertical: 4,
+    fontSize:12,
+    color:'#000000',
+    marginVertical: 5,
   },
   textInputWrapper: {
      flex:1,
@@ -353,12 +432,26 @@ var styles = StyleSheet.create({
      borderRadius:30,
      height:35,
      textAlign:'center',
- },
+   },
    text:{
-     fontSize: 16,
+     fontSize: 14,
      fontWeight: '400',
      color:'#000000',
      marginTop: 10
+   },
+   textCapacity:{
+     fontSize: 14,
+     fontWeight: '400',
+     color:'#000000',
+     marginTop: 10,
+     left: 5
+   },
+   textPrice:{
+     fontSize: 14,
+     fontWeight: '400',
+     color:'#000000',
+     marginTop: 10,
+     right: 20
    },
    close:{
      backgroundColor:'#E6B000',
@@ -371,10 +464,22 @@ var styles = StyleSheet.create({
      borderRadius:30,
      marginTop: 3
      },
-     imageGroup4:{
-       flexDirection: 'row',
-       justifyContent: 'space-between',
-       paddingLeft:280,
-       borderRadius:5,
+   imageGroup4:{
+     flexDirection: 'row',
+     justifyContent: 'space-between',
+     paddingLeft:280,
+     borderRadius:5,
+   },
+   save:{
+     backgroundColor:'#FFC400',
+     top: 10,
+     color:'#ffffff',
+     fontSize:16,
+     padding:3,
+     marginBottom: 25,
+     width: 40,
+     height:40,
+     borderRadius:8,
+     alignItems:'center',
    },
 });

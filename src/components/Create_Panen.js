@@ -22,6 +22,14 @@ var items = [
   {id: 4, name: 'Durian'},
 ];
 
+let unit = [{
+value: 'ton',
+}, {
+value: 'kw',
+}, {
+value: 'kg',
+}];
+
 const options={
   title: 'my pic app',
   takePhotoButtonTitle:'Take photo your camera',
@@ -42,7 +50,9 @@ export default class Create_Panen extends Component<{}>{
     this.state = {
       isLoading:false,
       date:'',
+      harvestQuantity: '',
       activityDesc:'',
+      unitHarvest:'',
       location:'',
       activityResult:'',
       arr: [{
@@ -56,6 +66,7 @@ export default class Create_Panen extends Component<{}>{
 
   CheckTextInputIsEmptyOrNot(){
     const {date}  = this.state ;
+    const {harvestQuantity} = this.state;
     const { activityDesc }  = this.state ;
     const { location }  = this.state ;
     const { activityResult }  = this.state ;
@@ -64,7 +75,7 @@ export default class Create_Panen extends Component<{}>{
     const { arr }  = this.state ;
 
 
-    if(date == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
+    if(date == '' || harvestQuantity == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
       Alert.alert("Please Enter All the Values.");
     }
     else{
@@ -133,6 +144,7 @@ export default class Create_Panen extends Component<{}>{
       activityOption: 'Panen',
       activityDesc: this.state.activityDesc,
       project: 'abc',
+      harvestQuantity: this.state.harvestQuantity + ' ' + this.state.unitHarvest,
       location: this.state.location,
       activityResult: this.state.activityResult,
       images:this.state.arr,
@@ -193,16 +205,16 @@ export default class Create_Panen extends Component<{}>{
 
     return (
       <View style={styles.container}>
-      <View style = {{backgroundColor:'#3700B3', height:50}}>
-      <View style={styles.imageGroup5}>
-      <Image style={{width:40, height:40,}}
-        source={require('../images/logo1.png')}/>
-        <Text style={styles.text2}>FO Activity</Text>
-      <TouchableOpacity onPress={this.prospecting}>
-        <Text style={styles.close}>keluar</Text>
-      </TouchableOpacity>
-      </View>
-      </View>
+        <View style = {{backgroundColor:'#3700B3', height:50}}>
+          <View style={styles.imageGroup5}>
+            <Image style={{width:40, height:40,}}
+              source={require('../images/logo1.png')}/>
+              <Text style={styles.text2}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
             source={require('../images/panen.png')}/>
@@ -238,6 +250,7 @@ export default class Create_Panen extends Component<{}>{
                 }
               }}
               onDateChange={(date) => {this.setState({date: date})}}/>
+
           <Text style={styles.text}>
             <Text>Deskripsi Kegiatan</Text>
           </Text>
@@ -246,6 +259,7 @@ export default class Create_Panen extends Component<{}>{
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
           />
+
 
           <Text style={styles.text}>
             <Text>Proyek</Text>
@@ -264,6 +278,26 @@ export default class Create_Panen extends Component<{}>{
               resetValue={false}
               underlineColorAndroid="transparent"
             />
+
+            <Text style={styles.text}>
+              <Text>Jumlah Panen</Text>
+            </Text>
+            <View style={styles.textInputWrapper}>
+              <TextInput style={styles.inputHarvest}
+                        multiline={true}
+                        onChangeText={(harvestQuantity) => this.setState({harvestQuantity})}
+                        value={this.state.harvestQuantity}
+                        keyboardType="numeric"
+              />
+              <Dropdown label=' '
+                        containerStyle={{width:95, bottom: 16, left: 24}}
+                        fontSize={16}
+                        baseColor={"#000000"}
+                        data={unit}
+                        onChangeText={(unitHarvest) => this.setState({unitHarvest})}
+                        value={this.state.unitHarvest}>
+              </Dropdown>
+            </View>
 
           <Text style={styles.text}>
             <Text>Lokasi</Text>
@@ -311,6 +345,9 @@ const styles = StyleSheet.create({
     //height: hp('95%'),
     flex: 1,
   },
+  textInputWrapper: {
+    flexDirection: 'row',
+   },
   text:{
     fontSize: 16,
     fontWeight: '400',
@@ -335,6 +372,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingRight:130
   },
+  inputHarvest:{
+    width:150,
+    height:45,
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    //borderRadius: 25,
+    paddingVertical: 6,
+    fontSize:16,
+    color:'#000000',
+    marginVertical: 5,
+  },
   textgroup:{
     fontSize: 30,
     fontWeight: '400',
@@ -343,9 +392,7 @@ const styles = StyleSheet.create({
    marginBottom: 30,
   },
   dropdown:{
-    // paddingVertical: 13,
-    // width: 250,
-    // paddingHorizontal:10,
+    width: 300,
     fontSize: 16,
     color:'#000000',
   },
@@ -407,7 +454,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     backgroundColor: '#FFFFFF',
     marginVertical: 10,
-
   },
   itemDropdown: {
     padding: 15,

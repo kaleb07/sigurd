@@ -15,8 +15,8 @@ export default class List_data extends Component <{}>{
     );
   }
 
-  kegiatan() {
-    Actions.kegiatan()
+  prospecting() {
+    Actions.prospecting()
   }
 
   laporkan_aktivitas() {
@@ -53,8 +53,15 @@ export default class List_data extends Component <{}>{
                   <Text>Jumlah anggota : {val.numberOfMembers}</Text>
                   <Text>Luas Lahan : {val.landArea}</Text>
                   <Text>Lama Bertani : {val.longTimeFarming}</Text>
+                  {val.product.map((vals, keys)=>
+                     <View key={keys}>
+                              <Text>Komoditas : {vals.commodity}</Text>
+                              <Text>Kapasitas : {vals.capacity}</Text>
+                              <Text>Harga : {vals.price}</Text>
+                           </View>
+                  )}
                </View>
-      });
+            })
       let images = activityProspecting.images.map((val, key) => {
         return <View key={key}>
                   <Text>Foto : {val.image.uri}</Text>
@@ -76,17 +83,21 @@ export default class List_data extends Component <{}>{
         <View>
           <Text> Tanggal : {activityProspecting.date} </Text>
           <Text> Deskripsi Kegiatan : {activityProspecting.activityDesc} </Text>
-          <Text> Lokasi : {activityProspecting.date} </Text>
-          <Text> Hasil Kegiatan : {activityProspecting.date} </Text>
+          <Text> Lokasi : {activityProspecting.location} </Text>
+          <Text> Hasil Kegiatan : {activityProspecting.activityResult} </Text>
           {images}
           <Text> Data Petani </Text>
           {farmers}
         </View>
 
         <View style={styles.footer}>
+        <TouchableOpacity onPress={this.prospecting} >
+          <Text style={styles.next}>Tambah</Text>
+        </TouchableOpacity>
           <TouchableOpacity onPress={this.laporkan_aktivitas} style = {styles.button}>
               <Text style = {styles.buttonText}> Selesai </Text>
           </TouchableOpacity>
+
         </View>
       </View>
     )
@@ -100,6 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     },
   footer: {
+    flexDirection: 'row',
     position: 'absolute',
     flex:0.1,
     left: 0,
@@ -112,7 +124,7 @@ const styles = StyleSheet.create({
     //justifyContent: 'space-between',
   },
   button: {
-    width: 200,
+    width: 100,
     backgroundColor: '#FFC400',
     borderRadius:5,
     marginVertical: 10,
