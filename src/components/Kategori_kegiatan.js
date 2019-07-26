@@ -54,8 +54,8 @@ export default class Kategori_kegiatan extends Component <{}>{
 
       if(this.state.isLoading){
         return(
-          <View style={{flex:1, padding:20,}}>
-          <Image style={{width:70, height:70}}
+          <View style={{flex:1, padding:100, marginTop:150,alignItems:'center'}}>
+          <Image style={{width:250, height:200}}
             source={require('../images/logo.png')}/>
           </View>
         )
@@ -68,10 +68,9 @@ export default class Kategori_kegiatan extends Component <{}>{
         });
       return (
         <View style={styles.container}>
-        <ScrollView>
-        <View style = {{backgroundColor:'#3700B3', height:50}}>
+        <View style = {{backgroundColor:'#284586', height:56}}>
         <View style={styles.imageGroup1}>
-        <Image style={{width:40, height:40,}}
+        <Image style={{width:40, height:40,left:16}}
           source={require('../images/logo1.png')}/>
           <Text style={styles.text1}>FO Activity</Text>
         <TouchableOpacity onPress={this.prospecting}>
@@ -124,7 +123,8 @@ export default class Kategori_kegiatan extends Component <{}>{
               {activityOptions[4]}
               {activityOptions[3]}
           </View>
-        </ScrollView>
+        <View style={styles.footer}>
+        </View>
         </View>
 
     )
@@ -137,12 +137,22 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
     flex: 1,
   },
+  footer: {
+    position: 'absolute',
+    flex:0.1,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor:'#284586',
+    height:56,
+    alignItems:'center'
+  },
 text:{
-  fontSize: 25,
+  fontSize: 24,
   fontWeight: '400',
   color:'#000000',
   marginTop:30,
-  paddingLeft:20
+  paddingLeft:30
 },
 text1:{
   color:'#FFFFFF',
@@ -151,7 +161,7 @@ text1:{
   borderRadius:30,
   marginTop:3,
   fontWeight: 'bold',
-  paddingRight:130
+  paddingRight:100
 
   },
  imageGroup:{
@@ -166,14 +176,14 @@ text1:{
    justifyContent: 'space-between',
    paddingLeft:10,
    paddingRight:10,
-   padding:5,
-},
-textGroup:{
-flexDirection: 'row',
- justifyContent: 'space-between',
- paddingLeft:46,
- paddingRight:50,
-  marginTop: 20,
+   padding:8,
+ },
+ textGroup:{
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+   paddingLeft:46,
+   paddingRight:50,
+   marginTop: 20,
 },
  textGroup2:{
    flexDirection: 'row',
@@ -187,18 +197,20 @@ flexDirection: 'row',
    justifyContent: 'space-between',
    marginTop: 20,
    paddingLeft:65,
-   paddingRight:60
+   paddingRight:60,
+
  },
  close:{
    backgroundColor:'#E6B000',
    color:'#000000',
    fontSize:16,
    padding:5,
-   width: 100,
+   width: 80,
    height:35,
    textAlign:'center',
    borderRadius:30,
-   marginTop: 3
+   marginTop: 3,
+   right:16
   },
    imageGroup4:{
      flexDirection: 'row',

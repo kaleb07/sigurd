@@ -12,9 +12,9 @@ export default class Laporkan_Aktivitas extends Component <{}>{
   render(){
     return (
       <View style={styles.container}>
-          <View style = {{backgroundColor:'#3700B3', height:50}}>
+          <View style = {{backgroundColor:'#284586', height:56}}>
           <View style={styles.imageGroup}>
-          <Image style={{width:40, height:40,}}
+          <Image style={{width:40, height:40, left:16}}
             source={require('../images/logo1.png')}/>
             <Text style={styles.text1}>FO Activity</Text>
           <TouchableOpacity onPress={this.prospecting}>
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     color:'black',
     textAlign:'center',
     fontWeight: 'bold',
+    fontFamily: 'work sans'
   },
   buttonText: {
     fontSize: 16,
@@ -79,11 +80,12 @@ const styles = StyleSheet.create({
     color:'#000000',
     fontSize:16,
     padding:5,
-    width: 100,
+    width: 80,
     height:35,
     textAlign:'center',
     borderRadius:30,
-    marginTop: 3
+    marginTop: 3,
+    right:16
   },
   text1:{
     color:'#FFFFFF',
@@ -92,14 +94,12 @@ const styles = StyleSheet.create({
     borderRadius:30,
     marginTop:3,
     fontWeight: 'bold',
-    paddingRight:130
+    paddingRight:110
   },
   imageGroup:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft:10,
-    paddingRight:10,
-    padding:5,
+    padding:8,
 
 
   }

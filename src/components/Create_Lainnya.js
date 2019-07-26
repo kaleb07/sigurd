@@ -163,7 +163,7 @@ export default class Create_Prospecting extends Component<{}>{
             <Icon name="trash"
                size={30}
                color="red"
-               style={{ marginLeft: 'auto', marginTop: 20, marginRight:25}}
+               style={{ marginLeft: 'auto', marginTop: 20, marginRight:5}}
                onPress={() => this.trashVal(r.index)}
             />
           </View>
@@ -173,9 +173,9 @@ export default class Create_Prospecting extends Component<{}>{
 
     return (
       <View style={styles.container}>
-      <View style = {{backgroundColor:'#3700B3', height:50}}>
-   <View style={styles.imageGroup2}>
-   <Image style={{width:40, height:40,}}
+      <View style = {{backgroundColor:'#284586', height:56}}>
+   <View style={styles.imageGroup5}>
+   <Image style={{width:40, height:40,left:16}}
      source={require('../images/logo1.png')}/>
      <Text style={styles.text2}>FO Activity</Text>
    <TouchableOpacity onPress={this.prospecting}>
@@ -213,8 +213,9 @@ export default class Create_Prospecting extends Component<{}>{
                   marginLeft: 60,
                   fontSize: 16,
                   borderRadius:5,
-                  borderWidth: 1,
+                  borderWidth: 0.5,
                   borderColor: '#000000',
+                  backgroundColor: '#F5F5F5',
                 }
               }}
               onDateChange={(date) => {this.setState({date: date})}}/>
@@ -280,10 +281,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   text1:{
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:165,
+    paddingRight:190,
     marginBottom:30,
     marginTop:30
   },
@@ -294,7 +295,7 @@ const styles = StyleSheet.create({
     borderRadius:30,
     marginTop:3,
     fontWeight: 'bold',
-    paddingRight:130
+    paddingRight:100
   },
   textgroup:{
     fontSize: 30,
@@ -318,8 +319,7 @@ const styles = StyleSheet.create({
   imageGroup2:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight:20,
-    paddingLeft:20,
+
     marginTop:8,
   },
   imageGroup1:{
@@ -331,19 +331,18 @@ const styles = StyleSheet.create({
   imageGroup5:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft:10,
-    paddingRight:10,
     padding:5,
+    marginTop:3
   },
   cancel:{
     backgroundColor:'#FFC400',
     color:'#000000',
     fontSize:16,
-    padding:5,
+    padding:8,
     width: 150,
-    height:35,
+    height:40,
     textAlign:'center',
-    marginRight:20,
+    marginRight:50,
     borderRadius:30
   },
   save:{
@@ -362,9 +361,9 @@ const styles = StyleSheet.create({
     color:'#000000',
     fontSize:16,
     marginBottom:10,
-    padding:5,
+    padding:8,
     width: 150,
-    height:35,
+    height:40,
     textAlign:'center',
     borderRadius:30
   },
@@ -373,14 +372,14 @@ const styles = StyleSheet.create({
     borderRadius:5,
     width:350,
     borderColor: '#000000',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F5F5F5',
     marginVertical: 10,
 
   },
   itemDropdown: {
     padding: 15,
     marginTop: 2,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F5F5F5',
     borderColor: '#000000',
     borderWidth: 1,
     borderRadius:5,
@@ -391,7 +390,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    //borderRadius: 25,
+    backgroundColor: '#F5F5F5',
     paddingVertical: 6,
     fontSize:16,
     color:'#000000',
@@ -404,7 +403,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    //borderRadius: 25,
+    backgroundColor: '#F5F5F5',
     paddingVertical: 6,
     fontSize:16,
     color:'#000000',
@@ -416,7 +415,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    //borderRadius: 25,
+    backgroundColor: '#F5F5F5',
     paddingVertical: 6,
     fontSize:16,
     color:'#000000',
@@ -428,19 +427,20 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor:'#3700B3',
-    height:50,
-    alignItems:'center',
+    backgroundColor:'#284586',
+    height:56,
+    alignItems:'center'
   },
   close:{
     backgroundColor:'#E6B000',
     color:'#000000',
     fontSize:16,
     padding:5,
-    width: 100,
+    width: 80,
     height:35,
     textAlign:'center',
     borderRadius:30,
+    right:16,
     marginTop: 3
  },
   imageGroup4:{
