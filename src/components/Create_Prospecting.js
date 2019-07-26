@@ -169,9 +169,9 @@ export default class Create_Prospecting extends Component<{}>{
 
     return (
       <View style={styles.container}>
-      <View style = {{backgroundColor:'#3700B3', height:50}}>
+      <View style = {{backgroundColor:'#284586', height:50}}>
    <View style={styles.imageGroup2}>
-   <Image style={{width:40, height:40,}}
+   <Image style={{width:40, height:40,left:16}}
      source={require('../images/logo1.png')}/>
      <Text style={styles.text2}>FO Activity</Text>
    <TouchableOpacity onPress={this.prospecting}>
@@ -186,7 +186,7 @@ export default class Create_Prospecting extends Component<{}>{
             <Text> Prospecting</Text>
           </Text>
         </View>
-        <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+        <KeyboardAwareScrollView style={{paddingLeft:20,}}>
           <DatePicker
               style={{width: 350}}
               date={this.state.date} //initial date from state
@@ -209,13 +209,14 @@ export default class Create_Prospecting extends Component<{}>{
                   marginLeft: 60,
                   fontSize: 16,
                   borderRadius:5,
-                  borderWidth: 1,
+                  borderWidth: 0.5,
+                  backgroundColor:'#F5F5F5',
                   borderColor: '#000000',
                 }
               }}
               onDateChange={(date) => {this.setState({date: date})}}/>
           <Text style={styles.text}>
-            <Text>Deskripsi Kegiatan</Text>
+            <Text>Deskripsi Kegiatan </Text>
           </Text>
           <TextInput style={styles.inputBox}
                     multiline={true}
@@ -240,7 +241,7 @@ export default class Create_Prospecting extends Component<{}>{
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
           </Text>
-          {arr}
+            {arr}
           <TouchableOpacity style={styles.save} onPress={() => { this.insertSomeThing('')}}>
             <Icon name="plus" size={40} color="black"/>
           </TouchableOpacity>
@@ -267,18 +268,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
-    //paddingLeft:10,
     marginTop: 10,
+
   },
  imageGroup2:{
    flexDirection: 'row',
    justifyContent: 'space-between',
-   paddingLeft:10,
-   paddingRight:10,
    padding:5,
   },
   text1:{
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: '400',
     color:'#000000',
     paddingRight:100,
@@ -292,7 +291,7 @@ const styles = StyleSheet.create({
    borderRadius:30,
    marginTop:3,
    fontWeight: 'bold',
-   paddingRight:130
+   paddingRight:100
   },
   textgroup:{
     flexDirection: 'row',
@@ -331,22 +330,22 @@ const styles = StyleSheet.create({
     color:'#ffffff',
     fontSize:16,
     padding:5,
-    marginBottom: 25,
+    marginBottom:70,
     width: 50,
     height:50,
     borderRadius:8,
     alignItems:'center',
   },
   next:{
-    backgroundColor:'#FFC400',
-    color:'#000000',
-    fontSize:16,
+    color:'#ffffff',
+    fontSize:20,
     marginTop:8,
     padding:5,
-    width: 200,
+    width:200,
     borderRadius:30,
     height:35,
     textAlign:'center',
+    fontWeight: 'bold',
 
   },
   inputDropdown:{
@@ -372,7 +371,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    //borderRadius: 25,
+    backgroundColor:'#F5F5F5',
     paddingVertical: 6,
     fontSize:16,
     color:'#000000',
@@ -385,7 +384,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    //borderRadius: 25,
+    backgroundColor:'#F5F5F5',
     paddingVertical: 6,
     fontSize:16,
     color:'#000000',
@@ -397,7 +396,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    //borderRadius: 25,
+    backgroundColor:'#F5F5F5',
     paddingVertical: 6,
     fontSize:16,
     color:'#000000',
@@ -409,7 +408,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor:'#3700B3',
+    backgroundColor:'#284586',
     height:56,
     alignItems:'center'
   },
@@ -418,11 +417,12 @@ const styles = StyleSheet.create({
     color:'#000000',
     fontSize:16,
     padding:5,
-    width: 100,
+    width: 80,
     height:35,
     textAlign:'center',
     borderRadius:30,
-    marginTop: 3
+    marginTop: 3,
+    right:16
 
     },
     imageGroup4:{

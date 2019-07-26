@@ -16,7 +16,7 @@ render() {
   return (
     <View style={styles.container}>
       <StatusBar
-        backgroundColor="navy"
+        backgroundColor='#1A237E'
         barStyle="light-content"
       />
       <Routes/>

@@ -234,16 +234,16 @@ export default class Prospecting_Result extends Component<{}> {
 
     return(
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#3700B3', height:50}}>
-          <View style={styles.imageGroup}>
-            <Image style={{width:40, height:40,}}
-              source={require('../images/logo1.png')}/>
-              <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting}>
-              <Text style={styles.close}>keluar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+      <View style = {{backgroundColor:'#284586', height:50}}>
+      <View style={styles.imageGroup}>
+      <Image style={{width:40, height:40,left:16}}
+        source={require('../images/logo1.png')}/>
+        <Text style={styles.text2}>FO Activity</Text>
+      <TouchableOpacity onPress={this.prospecting}>
+        <Text style={styles.close}>keluar</Text>
+      </TouchableOpacity>
+      </View>
+      </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
             source={require('../images/prospecting.png')}/>
@@ -364,13 +364,11 @@ var styles = StyleSheet.create({
     borderRadius:30,
     marginTop:3,
     fontWeight: 'bold',
-    paddingRight:130
+    paddingRight:100
   },
   imageGroup:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft:10,
-    paddingRight:10,
     padding:5,
   },
   imageGroup1:{
@@ -382,13 +380,12 @@ var styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    justifyContent: 'center',
-    height:55,
+    height:40,
     width:120,
     backgroundColor: '#FFC400',
     marginVertical: 10,
     paddingVertical: 13,
-    marginBottom:35,
+    marginBottom:20,
     borderRadius:30,
   },
   inputBox:{
@@ -396,7 +393,7 @@ var styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    //borderRadius: 25,
+    backgroundColor:'#F5F5F5',
     paddingVertical: 6,
     fontSize:16,
     color:'#000000',
@@ -409,8 +406,9 @@ var styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    paddingVertical: 4,
-    fontSize:12,
+    backgroundColor:'#F5F5F5',
+    paddingVertical: 6,
+    fontSize:16,
     color:'#000000',
     marginVertical: 5,
   },
@@ -461,21 +459,21 @@ var styles = StyleSheet.create({
      left: 0,
      right: 0,
      bottom: 0,
-     backgroundColor:'#3700B3',
+     backgroundColor:'#284586',
      height:50,
      alignItems:'center',
    },
    next:{
-     backgroundColor:'#FFC400',
-     color:'#000000',
-     fontSize:16,
+     color:'#ffffff',
+     fontSize:20,
      marginTop:8,
      padding:5,
-     width: 200,
+     width:200,
      borderRadius:30,
      height:35,
      textAlign:'center',
-   },
+     fontWeight: 'bold',
+ },
    text:{
      fontSize: 14,
      fontWeight: '400',
@@ -501,11 +499,12 @@ var styles = StyleSheet.create({
      color:'#000000',
      fontSize:16,
      padding:5,
-     width: 100,
+     width: 80,
      height:35,
      textAlign:'center',
      borderRadius:30,
-     marginTop: 3
+     marginTop:3,
+     right:16
      },
    imageGroup4:{
      flexDirection: 'row',
