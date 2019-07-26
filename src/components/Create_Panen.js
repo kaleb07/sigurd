@@ -22,13 +22,21 @@ var items = [
   {id: 4, name: 'Durian'},
 ];
 
+let unit = [{
+value: 'ton',
+}, {
+value: 'kw',
+}, {
+value: 'kg',
+}];
+
 const options={
   title: 'my pic app',
   takePhotoButtonTitle:'Take photo your camera',
   chooseFromLibraryButtonTitle:'Choose photo from library',
 }
 
-export default class Form extends Component<{}>{
+export default class Create_Panen extends Component<{}>{
   kegiatan() {
     Actions.kegiatan()
   }
@@ -42,7 +50,9 @@ export default class Form extends Component<{}>{
     this.state = {
       isLoading:false,
       date:'',
+      harvestQuantity: '',
       activityDesc:'',
+      unitHarvest:'',
       location:'',
       activityResult:'',
       arr: [{
@@ -53,24 +63,6 @@ export default class Form extends Component<{}>{
     }
     this.selectImage = this.selectImage.bind(this);
   };
-
-  CheckTextInputIsEmptyOrNot(){
-    const {date}  = this.state ;
-    const { activityDesc }  = this.state ;
-    const { location }  = this.state ;
-    const { activityResult }  = this.state ;
-    const { image }  = this.state.arr ;
-    const { caption }  = this.state.arr ;
-    const { arr }  = this.state ;
-
-
-    if(date == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
-      Alert.alert("Please Enter All the Values.");
-    }
-    else{
-    this.insertToServer();
-    }
-  }
 
   removeItem(index) {
     const list = this.state.arr;
@@ -107,7 +99,6 @@ export default class Form extends Component<{}>{
   selectImage(index){
     ImagePicker.showImagePicker(options, (response) => {
       const list = this.state.arr;
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -131,9 +122,10 @@ export default class Form extends Component<{}>{
   insertToServer(){
     const newActivity = {
       date: this.state.date,
-      activityOption: 'Konsultasi',
+      activityOption: 'Panen',
       activityDesc: this.state.activityDesc,
       project: 'abc',
+      harvestQuantity: this.state.harvestQuantity + ' ' + this.state.unitHarvest,
       location: this.state.location,
       activityResult: this.state.activityResult,
       images:this.state.arr,
@@ -145,7 +137,6 @@ export default class Form extends Component<{}>{
         this.laporkan_aktivitas();
       }
     })
-    //
     console.log(newActivity);
   }
 
@@ -200,21 +191,21 @@ export default class Form extends Component<{}>{
 
     return (
       <View style={styles.container}>
-      <View style = {{backgroundColor:'#3700B3', height:50}}>
-      <View style={styles.imageGroup5}>
-      <Image style={{width:40, height:40,}}
-        source={require('../images/logo1.png')}/>
-        <Text style={styles.text2}>FO Activity</Text>
-      <TouchableOpacity onPress={this.prospecting}>
-        <Text style={styles.close}>keluar</Text>
-      </TouchableOpacity>
-      </View>
-      </View>
+        <View style = {{backgroundColor:'#3700B3', height:50}}>
+          <View style={styles.imageGroup5}>
+            <Image style={{width:40, height:40,}}
+              source={require('../images/logo1.png')}/>
+              <Text style={styles.text2}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
-            source={require('../images/konsultasi.png')}/>
+            source={require('../images/panen.png')}/>
           <Text style={styles.text1}>
-            <Text>Konsultasi</Text>
+            <Text> Panen</Text>
           </Text>
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
@@ -245,6 +236,7 @@ export default class Form extends Component<{}>{
                 }
               }}
               onDateChange={(date) => {this.setState({date: date})}}/>
+
           <Text style={styles.text}>
             <Text>Deskripsi Kegiatan</Text>
           </Text>
@@ -253,6 +245,7 @@ export default class Form extends Component<{}>{
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
           />
+
 
           <Text style={styles.text}>
             <Text>Proyek</Text>
@@ -270,7 +263,28 @@ export default class Form extends Component<{}>{
               placeholder="Proyek"
               resetValue={false}
               underlineColorAndroid="transparent"
-          />
+            />
+
+            <Text style={styles.text}>
+              <Text>Jumlah Panen</Text>
+            </Text>
+            <View style={styles.textInputWrapper}>
+              <TextInput style={styles.inputHarvest}
+                        multiline={true}
+                        onChangeText={(harvestQuantity) => this.setState({harvestQuantity})}
+                        value={this.state.harvestQuantity}
+                        keyboardType="numeric"
+              />
+              <Dropdown label=' '
+                        containerStyle={{width:95, bottom: 16, left: 24}}
+                        fontSize={16}
+                        baseColor={"#000000"}
+                        data={unit}
+                        onChangeText={(unitHarvest) => this.setState({unitHarvest})}
+                        value={this.state.unitHarvest}>
+              </Dropdown>
+            </View>
+
           <Text style={styles.text}>
             <Text>Lokasi</Text>
           </Text>
@@ -296,13 +310,13 @@ export default class Form extends Component<{}>{
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <View style={styles.imageGroup2}>
-            <TouchableOpacity onPress={this.kegiatan} >
-              <Text style={styles.cancel}>Batal</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={this.kegiatan} >
+                <Text style={styles.cancel}>Batal</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { this.insertToServer(); }}>
-              <Text style={styles.next}>Simpan</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => { this.insertToServer() }}>
+                <Text style={styles.next}>Simpan</Text>
+              </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -317,6 +331,9 @@ const styles = StyleSheet.create({
     //height: hp('95%'),
     flex: 1,
   },
+  textInputWrapper: {
+    flexDirection: 'row',
+   },
   text:{
     fontSize: 16,
     fontWeight: '400',
@@ -328,7 +345,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:165,
+    paddingRight:220,
     marginBottom:30,
     marginTop:30
   },
@@ -341,6 +358,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingRight:130
   },
+  inputHarvest:{
+    width:150,
+    height:45,
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    //borderRadius: 25,
+    paddingVertical: 6,
+    fontSize:16,
+    color:'#000000',
+    marginVertical: 5,
+  },
   textgroup:{
     fontSize: 30,
     fontWeight: '400',
@@ -349,9 +378,7 @@ const styles = StyleSheet.create({
    marginBottom: 30,
   },
   dropdown:{
-    // paddingVertical: 13,
-    // width: 250,
-    // paddingHorizontal:10,
+    width: 300,
     fontSize: 16,
     color:'#000000',
   },
@@ -372,13 +399,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingRight:20,
     paddingLeft:20
-  },
-  imageGroup5:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft:10,
-    paddingRight:10,
-    padding:5,
   },
   cancel:{
     backgroundColor:'#FFC400',
@@ -420,7 +440,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     backgroundColor: '#FFFFFF',
     marginVertical: 10,
-
   },
   itemDropdown: {
     padding: 15,
@@ -487,6 +506,13 @@ const styles = StyleSheet.create({
     textAlign:'center',
     borderRadius:30,
     marginTop: 3
+  },
+  imageGroup5:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft:10,
+    paddingRight:10,
+    padding:5,
  },
   imageGroup4:{
     flexDirection: 'row',

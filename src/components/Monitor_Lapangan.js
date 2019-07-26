@@ -28,7 +28,7 @@ const options={
   chooseFromLibraryButtonTitle:'Choose photo from library',
 }
 
-export default class Form extends Component<{}>{
+export default class Monitor_Lapangan extends Component<{}>{
   kegiatan() {
     Actions.kegiatan()
   }
@@ -53,24 +53,6 @@ export default class Form extends Component<{}>{
     }
     this.selectImage = this.selectImage.bind(this);
   };
-
-  CheckTextInputIsEmptyOrNot(){
-    const {date}  = this.state ;
-    const { activityDesc }  = this.state ;
-    const { location }  = this.state ;
-    const { activityResult }  = this.state ;
-    const { image }  = this.state.arr ;
-    const { caption }  = this.state.arr ;
-    const { arr }  = this.state ;
-
-
-    if(date == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
-      Alert.alert("Please Enter All the Values.");
-    }
-    else{
-    this.insertToServer();
-    }
-  }
 
   removeItem(index) {
     const list = this.state.arr;
@@ -107,7 +89,6 @@ export default class Form extends Component<{}>{
   selectImage(index){
     ImagePicker.showImagePicker(options, (response) => {
       const list = this.state.arr;
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -131,7 +112,7 @@ export default class Form extends Component<{}>{
   insertToServer(){
     const newActivity = {
       date: this.state.date,
-      activityOption: 'Konsultasi',
+      activityOption: 'Monitor Lapangan',
       activityDesc: this.state.activityDesc,
       project: 'abc',
       location: this.state.location,
@@ -144,8 +125,7 @@ export default class Form extends Component<{}>{
       }else{
         this.laporkan_aktivitas();
       }
-    })
-    //
+    })    
     console.log(newActivity);
   }
 
@@ -212,9 +192,9 @@ export default class Form extends Component<{}>{
       </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
-            source={require('../images/konsultasi.png')}/>
+            source={require('../images/monitoring.png')}/>
           <Text style={styles.text1}>
-            <Text>Konsultasi</Text>
+            <Text> Monitor Lapangan</Text>
           </Text>
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
@@ -253,7 +233,6 @@ export default class Form extends Component<{}>{
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
           />
-
           <Text style={styles.text}>
             <Text>Proyek</Text>
           </Text>
@@ -270,7 +249,7 @@ export default class Form extends Component<{}>{
               placeholder="Proyek"
               resetValue={false}
               underlineColorAndroid="transparent"
-          />
+            />
           <Text style={styles.text}>
             <Text>Lokasi</Text>
           </Text>
@@ -296,13 +275,13 @@ export default class Form extends Component<{}>{
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <View style={styles.imageGroup2}>
-            <TouchableOpacity onPress={this.kegiatan} >
-              <Text style={styles.cancel}>Batal</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={this.kegiatan} >
+                <Text style={styles.cancel}>Batal</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { this.insertToServer(); }}>
-              <Text style={styles.next}>Simpan</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => { this.insertToServer() }}>
+                <Text style={styles.next}>Simpan</Text>
+              </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -328,7 +307,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:165,
+    paddingRight:100,
     marginBottom:30,
     marginTop:30
   },
@@ -372,13 +351,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingRight:20,
     paddingLeft:20
-  },
-  imageGroup5:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft:10,
-    paddingRight:10,
-    padding:5,
   },
   cancel:{
     backgroundColor:'#FFC400',
@@ -493,5 +465,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingLeft:280,
     borderRadius:5,
+  },
+  imageGroup5:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft:10,
+    paddingRight:10,
+    padding:5,
   },
 });

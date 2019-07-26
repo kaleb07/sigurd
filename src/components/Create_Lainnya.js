@@ -9,18 +9,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
-// import { create } from '../data/api';
-// import axios from 'axios';
 import { insertActivityToServer } from '../networking/server';
 //import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-
-var items = [
-  {id: 1, name: 'Cabe Merah'},
-  {id: 2, name: 'Cabe Hijau'},
-  {id: 3, name: 'Cabe Rawit'},
-  {id: 4, name: 'Durian'},
-];
 
 const options={
   title: 'my pic app',
@@ -28,7 +19,7 @@ const options={
   chooseFromLibraryButtonTitle:'Choose photo from library',
 }
 
-export default class Form extends Component<{}>{
+export default class Create_Prospecting extends Component<{}>{
   kegiatan() {
     Actions.kegiatan()
   }
@@ -40,12 +31,11 @@ export default class Form extends Component<{}>{
   constructor() {
     super();
     this.state = {
-      isLoading:false,
       date:'',
       activityDesc:'',
       location:'',
       activityResult:'',
-      arr: [{
+       arr: [{
         index:0,
         image:'',
         caption:''
@@ -54,23 +44,9 @@ export default class Form extends Component<{}>{
     this.selectImage = this.selectImage.bind(this);
   };
 
-  CheckTextInputIsEmptyOrNot(){
-    const {date}  = this.state ;
-    const { activityDesc }  = this.state ;
-    const { location }  = this.state ;
-    const { activityResult }  = this.state ;
-    const { image }  = this.state.arr ;
-    const { caption }  = this.state.arr ;
-    const { arr }  = this.state ;
-
-
-    if(date == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
-      Alert.alert("Please Enter All the Values.");
-    }
-    else{
-    this.insertToServer();
-    }
-  }
+  prospecting() {
+    Actions.prospecting()
+  };
 
   removeItem(index) {
     const list = this.state.arr;
@@ -107,7 +83,6 @@ export default class Form extends Component<{}>{
   selectImage(index){
     ImagePicker.showImagePicker(options, (response) => {
       const list = this.state.arr;
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -127,27 +102,6 @@ export default class Form extends Component<{}>{
         this.setState({ arr:newList });
     }});
   };
-
-  insertToServer(){
-    const newActivity = {
-      date: this.state.date,
-      activityOption: 'Konsultasi',
-      activityDesc: this.state.activityDesc,
-      project: 'abc',
-      location: this.state.location,
-      activityResult: this.state.activityResult,
-      images:this.state.arr,
-    };
-    insertActivityToServer(newActivity).then((responseJson)=> {
-      if(responseJson.err){
-        Alert.alert(responseJson.err);
-      }else{
-        this.laporkan_aktivitas();
-      }
-    })
-    //
-    console.log(newActivity);
-  }
 
   clearVal() {
     const list = this.state.arr;
@@ -171,7 +125,26 @@ export default class Form extends Component<{}>{
    };
  }
 
-  render(){
+ insertToServer(){
+   const newActivity = {
+     date: this.state.date,
+     activityOption: 'Lainnya',
+     activityDesc: this.state.activityDesc,
+     location: this.state.location,
+     activityResult: this.state.activityResult,
+     images:this.state.arr,
+   };
+   insertActivityToServer(newActivity).then((responseJson)=> {
+     if(responseJson.err){
+       Alert.alert(responseJson.err);
+     }else{
+       this.laporkan_aktivitas();
+     }
+   })
+   console.log(newActivity);
+ }
+
+ render(){
     const  search  = this.state;
     let arr = this.state.arr.map((r, index) => {
       return (
@@ -190,7 +163,7 @@ export default class Form extends Component<{}>{
             <Icon name="trash"
                size={30}
                color="red"
-               style={{ marginLeft: 'auto', marginTop: 20, marginRight:5}}
+               style={{ marginLeft: 'auto', marginTop: 20, marginRight:25}}
                onPress={() => this.trashVal(r.index)}
             />
           </View>
@@ -201,20 +174,20 @@ export default class Form extends Component<{}>{
     return (
       <View style={styles.container}>
       <View style = {{backgroundColor:'#3700B3', height:50}}>
-      <View style={styles.imageGroup5}>
-      <Image style={{width:40, height:40,}}
-        source={require('../images/logo1.png')}/>
-        <Text style={styles.text2}>FO Activity</Text>
-      <TouchableOpacity onPress={this.prospecting}>
-        <Text style={styles.close}>keluar</Text>
-      </TouchableOpacity>
-      </View>
-      </View>
+   <View style={styles.imageGroup2}>
+   <Image style={{width:40, height:40,}}
+     source={require('../images/logo1.png')}/>
+     <Text style={styles.text2}>FO Activity</Text>
+   <TouchableOpacity onPress={this.prospecting}>
+     <Text style={styles.close}>keluar</Text>
+   </TouchableOpacity>
+   </View>
+   </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
-            source={require('../images/konsultasi.png')}/>
+            source={require('../images/lainnya.png')}/>
           <Text style={styles.text1}>
-            <Text>Konsultasi</Text>
+            <Text> Lainnya</Text>
           </Text>
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
@@ -253,24 +226,6 @@ export default class Form extends Component<{}>{
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
           />
-
-          <Text style={styles.text}>
-            <Text>Proyek</Text>
-          </Text>
-          <SearchableDropdown
-              onTextChange={text => console.log(text)}
-              onItemSelect={items => console.log(items)}
-              containerStyle={{ padding: 1 }}
-              textInputStyle={styles.inputDropdown}
-              itemStyle={styles.itemDropdown}
-              itemTextStyle={{ color: '#222' }}
-              itemsContainerStyle={{ maxHeight: 140 }}
-              items={items}
-              defaultIndex={2}
-              placeholder="Proyek"
-              resetValue={false}
-              underlineColorAndroid="transparent"
-          />
           <Text style={styles.text}>
             <Text>Lokasi</Text>
           </Text>
@@ -296,13 +251,13 @@ export default class Form extends Component<{}>{
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <View style={styles.imageGroup2}>
-            <TouchableOpacity onPress={this.kegiatan} >
-              <Text style={styles.cancel}>Batal</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={this.kegiatan} >
+                <Text style={styles.cancel}>Batal</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { this.insertToServer(); }}>
-              <Text style={styles.next}>Simpan</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => { this.insertToServer() }}>
+                <Text style={styles.next}>Simpan</Text>
+              </TouchableOpacity>
           </View>
         </View>
       </View>

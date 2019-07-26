@@ -13,16 +13,16 @@ import Routes from './src/Routes';
 
 export default class App extends Component<{}> {
 render() {
-return (
-<View style={styles.container}>
-<StatusBar
-backgroundColor="#1c313a"
-barStyle="light-content"
-/>
- <Routes/>
-</View>
-);
-}
+  return (
+    <View style={styles.container}>
+      <StatusBar
+        backgroundColor="navy"
+        barStyle="light-content"
+      />
+      <Routes/>
+    </View>
+  );
+  }
 }
 
 const styles = StyleSheet.create({

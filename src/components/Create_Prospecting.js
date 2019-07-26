@@ -9,18 +9,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
-// import { create } from '../data/api';
-// import axios from 'axios';
 import { insertActivityToServer } from '../networking/server';
 //import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-
-var items = [
-  {id: 1, name: 'Cabe Merah'},
-  {id: 2, name: 'Cabe Hijau'},
-  {id: 3, name: 'Cabe Rawit'},
-  {id: 4, name: 'Durian'},
-];
 
 const options={
   title: 'my pic app',
@@ -28,24 +19,19 @@ const options={
   chooseFromLibraryButtonTitle:'Choose photo from library',
 }
 
-export default class Form extends Component<{}>{
+export default class Create_Prospecting extends Component<{}>{
   kegiatan() {
     Actions.kegiatan()
-  }
-
-  laporkan_aktivitas() {
-    Actions.laporkan_aktivitas()
   }
 
   constructor() {
     super();
     this.state = {
-      isLoading:false,
       date:'',
       activityDesc:'',
       location:'',
       activityResult:'',
-      arr: [{
+       arr: [{
         index:0,
         image:'',
         caption:''
@@ -54,23 +40,9 @@ export default class Form extends Component<{}>{
     this.selectImage = this.selectImage.bind(this);
   };
 
-  CheckTextInputIsEmptyOrNot(){
-    const {date}  = this.state ;
-    const { activityDesc }  = this.state ;
-    const { location }  = this.state ;
-    const { activityResult }  = this.state ;
-    const { image }  = this.state.arr ;
-    const { caption }  = this.state.arr ;
-    const { arr }  = this.state ;
-
-
-    if(date == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
-      Alert.alert("Please Enter All the Values.");
-    }
-    else{
-    this.insertToServer();
-    }
-  }
+  prospecting() {
+    Actions.prospecting()
+  };
 
   removeItem(index) {
     const list = this.state.arr;
@@ -107,7 +79,6 @@ export default class Form extends Component<{}>{
   selectImage(index){
     ImagePicker.showImagePicker(options, (response) => {
       const list = this.state.arr;
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -127,27 +98,6 @@ export default class Form extends Component<{}>{
         this.setState({ arr:newList });
     }});
   };
-
-  insertToServer(){
-    const newActivity = {
-      date: this.state.date,
-      activityOption: 'Konsultasi',
-      activityDesc: this.state.activityDesc,
-      project: 'abc',
-      location: this.state.location,
-      activityResult: this.state.activityResult,
-      images:this.state.arr,
-    };
-    insertActivityToServer(newActivity).then((responseJson)=> {
-      if(responseJson.err){
-        Alert.alert(responseJson.err);
-      }else{
-        this.laporkan_aktivitas();
-      }
-    })
-    //
-    console.log(newActivity);
-  }
 
   clearVal() {
     const list = this.state.arr;
@@ -171,7 +121,26 @@ export default class Form extends Component<{}>{
    };
  }
 
-  render(){
+ insertToServer(){
+   const newActivity = {
+     date: this.state.date,
+     activityOption: 'Prospecting',
+     activityDesc: this.state.activityDesc,
+     location: this.state.location,
+     activityResult: this.state.activityResult,
+     images:this.state.arr,
+   };
+   insertActivityToServer(newActivity).then((responseJson)=> {
+     if(responseJson.err){
+       Alert.alert(responseJson.err);
+     }else{
+       this.prospecting();
+     }
+   })
+   console.log(newActivity);
+ }
+
+ render(){
     const  search  = this.state;
     let arr = this.state.arr.map((r, index) => {
       return (
@@ -190,7 +159,7 @@ export default class Form extends Component<{}>{
             <Icon name="trash"
                size={30}
                color="red"
-               style={{ marginLeft: 'auto', marginTop: 20, marginRight:5}}
+               style={{ marginLeft: 'auto', marginTop: 20, marginRight:25}}
                onPress={() => this.trashVal(r.index)}
             />
           </View>
@@ -201,20 +170,20 @@ export default class Form extends Component<{}>{
     return (
       <View style={styles.container}>
       <View style = {{backgroundColor:'#3700B3', height:50}}>
-      <View style={styles.imageGroup5}>
-      <Image style={{width:40, height:40,}}
-        source={require('../images/logo1.png')}/>
-        <Text style={styles.text2}>FO Activity</Text>
-      <TouchableOpacity onPress={this.prospecting}>
-        <Text style={styles.close}>keluar</Text>
-      </TouchableOpacity>
-      </View>
-      </View>
+   <View style={styles.imageGroup2}>
+   <Image style={{width:40, height:40,}}
+     source={require('../images/logo1.png')}/>
+     <Text style={styles.text2}>FO Activity</Text>
+   <TouchableOpacity onPress={this.prospecting}>
+     <Text style={styles.close}>keluar</Text>
+   </TouchableOpacity>
+   </View>
+   </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:60, height:60, marginTop:15}}
-            source={require('../images/konsultasi.png')}/>
+            source={require('../images/prospecting.png')}/>
           <Text style={styles.text1}>
-            <Text>Konsultasi</Text>
+            <Text> Prospecting</Text>
           </Text>
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
@@ -253,24 +222,6 @@ export default class Form extends Component<{}>{
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
           />
-
-          <Text style={styles.text}>
-            <Text>Proyek</Text>
-          </Text>
-          <SearchableDropdown
-              onTextChange={text => console.log(text)}
-              onItemSelect={items => console.log(items)}
-              containerStyle={{ padding: 1 }}
-              textInputStyle={styles.inputDropdown}
-              itemStyle={styles.itemDropdown}
-              itemTextStyle={{ color: '#222' }}
-              itemsContainerStyle={{ maxHeight: 140 }}
-              items={items}
-              defaultIndex={2}
-              placeholder="Proyek"
-              resetValue={false}
-              underlineColorAndroid="transparent"
-          />
           <Text style={styles.text}>
             <Text>Lokasi</Text>
           </Text>
@@ -295,15 +246,10 @@ export default class Form extends Component<{}>{
           </TouchableOpacity>
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
-          <View style={styles.imageGroup2}>
-            <TouchableOpacity onPress={this.kegiatan} >
-              <Text style={styles.cancel}>Batal</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => { this.insertToServer(); }}>
-              <Text style={styles.next}>Simpan</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+              onPress={()=> {this.insertToServer() }}>
+            <Text style={styles.next}>Selanjutnya</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )
@@ -312,41 +258,45 @@ export default class Form extends Component<{}>{
 
 const styles = StyleSheet.create({
   container:{
+    flex: 1,
     backgroundColor:'#FFFFFF',
     //width: wp('100%'),
     //height: hp('95%'),
-    flex: 1,
   },
   text:{
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
-    // /paddingLeft:10,
+    //paddingLeft:10,
     marginTop: 10,
+  },
+ imageGroup2:{
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+   paddingLeft:10,
+   paddingRight:10,
+   padding:5,
   },
   text1:{
     fontSize: 25,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:165,
+    paddingRight:100,
     marginBottom:30,
     marginTop:30
   },
   text2:{
-    color:'#FFFFFF',
-    fontSize:20,
-    padding:5,
-    borderRadius:30,
-    marginTop:3,
-    fontWeight: 'bold',
-    paddingRight:130
+   color:'#FFFFFF',
+   fontSize:20,
+   padding:5,
+   borderRadius:30,
+   marginTop:3,
+   fontWeight: 'bold',
+   paddingRight:130
   },
   textgroup:{
-    fontSize: 30,
-    fontWeight: '400',
-    color:'#000000',
-    paddingLeft:60,
-   marginBottom: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   dropdown:{
     // paddingVertical: 13,
@@ -358,38 +308,23 @@ const styles = StyleSheet.create({
   imageGroup:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight:20,
-  },
-  imageGroup2:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingRight:20,
-    paddingLeft:20,
-    marginTop:8,
   },
   imageGroup1:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingRight:20,
+    paddingRight:70,
+    marginBottom:-5,
     paddingLeft:20
   },
-  imageGroup5:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft:10,
-    paddingRight:10,
-    padding:5,
-  },
   cancel:{
-    backgroundColor:'#FFC400',
-    color:'#000000',
+    backgroundColor:'#ff0000',
+    color:'#ffffff',
     fontSize:16,
     padding:5,
     width: 150,
     height:35,
     textAlign:'center',
-    marginRight:20,
-    borderRadius:30
+    marginRight:20
   },
   save:{
     backgroundColor:'#FFC400',
@@ -406,12 +341,13 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFC400',
     color:'#000000',
     fontSize:16,
-    marginBottom:10,
+    marginTop:8,
     padding:5,
-    width: 150,
+    width: 200,
+    borderRadius:30,
     height:35,
     textAlign:'center',
-    borderRadius:30
+
   },
   inputDropdown:{
     borderWidth: 1,
@@ -474,8 +410,8 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor:'#3700B3',
-    height:50,
-    alignItems:'center',
+    height:56,
+    alignItems:'center'
   },
   close:{
     backgroundColor:'#E6B000',
@@ -487,11 +423,12 @@ const styles = StyleSheet.create({
     textAlign:'center',
     borderRadius:30,
     marginTop: 3
- },
-  imageGroup4:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft:280,
-    borderRadius:5,
+
+    },
+    imageGroup4:{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingLeft:280,
+      borderRadius:5,
   },
 });

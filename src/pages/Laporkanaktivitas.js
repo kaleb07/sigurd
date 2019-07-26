@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import Create_Activity from '../components/Create_Activity';
+import Laporkan_Aktivitas from '../components/Laporkan_Aktivitas';
 import {Actions} from 'react-native-router-flux';
 
 
-export default class Create_Function extends Component<{}> {
+export default class Laporkanaktivitas extends Component<{}> {
 render(){
 return(
     <View style={styles.container}>
-      <Create_Activity/>
+      <Laporkan_Aktivitas/>
     </View>
     )
   }
