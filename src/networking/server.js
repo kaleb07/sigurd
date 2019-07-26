@@ -57,7 +57,6 @@ async function insertProspectingToServer(params){
         },
         body: JSON.stringify(params)
     });
-
     let responseJson = await response.json();
     console.log('respon: ', responseJson);
     return responseJson;
@@ -71,7 +70,6 @@ async function getActivityProspecting(){
     let getById = apiActivity + '/' + id;
     let response = await fetch(getById);
     let responseJson = response.json();
-    console.log('get by id : ', responseJson);
     return responseJson;
   } catch(error){
       console.log('Error is: ', error);

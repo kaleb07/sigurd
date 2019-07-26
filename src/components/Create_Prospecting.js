@@ -40,25 +40,6 @@ export default class Create_Prospecting extends Component<{}>{
     this.selectImage = this.selectImage.bind(this);
   };
 
-  CheckTextInputIsEmptyOrNot(){
-    const {date}  = this.state ;
-    const { activityDesc }  = this.state ;
-    const { location }  = this.state ;
-    const { activityResult }  = this.state ;
-    const { image }  = this.state.arr ;
-    const { caption }  = this.state.arr ;
-    const { arr }  = this.state ;
-
-
-    if(date == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
-      Alert.alert("Please Enter All the Values.");
-    }
-    else{
-    this.insertToServer();
-    this.prospecting();
-    }
-  }
-
   prospecting() {
     Actions.prospecting()
   };
@@ -149,7 +130,13 @@ export default class Create_Prospecting extends Component<{}>{
      activityResult: this.state.activityResult,
      images:this.state.arr,
    };
-   insertActivityToServer(newActivity);
+   insertActivityToServer(newActivity).then((responseJson)=> {
+     if(responseJson.err){
+       Alert.alert(responseJson.err);
+     }else{
+       this.prospecting();
+     }
+   })
    console.log(newActivity);
  }
 
@@ -260,7 +247,7 @@ export default class Create_Prospecting extends Component<{}>{
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <TouchableOpacity
-              onPress={()=> {this.CheckTextInputIsEmptyOrNot() }}>
+              onPress={()=> {this.insertToServer() }}>
             <Text style={styles.next}>Selanjutnya</Text>
           </TouchableOpacity>
         </View>

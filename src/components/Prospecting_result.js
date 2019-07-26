@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Image} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity,Image} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
@@ -26,6 +26,14 @@ value: '/kw',
 value: '/kg',
 }];
 
+let landAreaUnit = [{
+value: 'hektar',
+}, {
+value: 'm2',
+}, {
+value: 'rante',
+}];
+
 export default class Prospecting_Result extends Component<{}> {
   constructor(){
     super();
@@ -36,38 +44,21 @@ export default class Prospecting_Result extends Component<{}> {
       numberOfMembers:'',
       landArea:'',
       longTimeFarming:'',
+      unitLandArea:'',
       arr: [{
         index:0,
         commodity:'',
         capacity:'',
-        price:''
+        price:'',
+        unitCapacity: '',
+        unitPrice: '',
       }],
-      unitCapacity: '',
-      unitPrice: '',
+      products:[]
     };
   };
 
-
   list_data() {
     Actions.list_data()
-  }
-
-  CheckTextInputIsEmptyOrNot(){
-    const { leaderName }  = this.state ;
-    const { phoneNumber }  = this.state ;
-    const { groupFarmer }  = this.state ;
-    const { numberOfMembers }  = this.state ;
-    const { landArea }  = this.state ;
-    const { longTimeFarming }  = this.state ;
-    const { arr }  = this.state ;
-
-
-    if(leaderName == '' || phoneNumber == '' || groupFarmer == '' || numberOfMembers == '' || landArea == '' || longTimeFarming =='' || arr =='' ){
-      Alert.alert("Please Enter All the Values.");
-    }
-    else{
-    this.insertToServer();
-    }
   }
 
   removeItem(index) {
@@ -85,7 +76,8 @@ export default class Prospecting_Result extends Component<{}> {
       commodity:'',
       capacity: '',
       price: '',
-      type:'textInput'
+      unitCapacity: '',
+      unitPrice: '',
     });
     this.setState({ arr: this.state.arr });
   };
@@ -96,13 +88,18 @@ export default class Prospecting_Result extends Component<{}> {
       phoneNumber: this.state.phoneNumber,
       groupFarmer: this.state.groupFarmer,
       numberOfMembers: this.state.numberOfMembers,
-      landArea: this.state.landArea,
+      landArea: this.state.landArea + this.state.unitLandArea,
       longTimeFarming: this.state.longTimeFarming,
-      product: this.state.arr,
+      product: this.state.products
     };
+    insertProspectingToServer(newProspecting).then((responseJson)=> {
+       if(responseJson.err){
+         Alert.alert(responseJson.err);
+       }else{
+         this.list_data();
+       }
+     })
     console.log(newProspecting);
-    insertProspectingToServer(newProspecting);
-    this.list_data();
   }
 
   insertVal(data, index, key) {
@@ -117,7 +114,20 @@ export default class Prospecting_Result extends Component<{}> {
       return listData
     })
     this.setState({ arr:newList});
+    this.productVal();
   };
+
+  productVal(){
+    const products = this.state.arr.map((r, index) => {
+      return {
+        commodity : r.commodity,
+        capacity : r.capacity + r.unitCapacity,
+        price : r.price + r.unitPrice
+      }
+    })
+    this.setState({ products: products});
+    console.log('product: ', products);
+  }
 
   clearVal() {
     const list = this.state.arr;
@@ -128,6 +138,8 @@ export default class Prospecting_Result extends Component<{}> {
         commodity:'',
         capacity:'',
         price:'',
+        unitCapacity: '',
+        unitPrice: '',
       }
     })
     this.setState({ arr:newList });
@@ -158,16 +170,16 @@ export default class Prospecting_Result extends Component<{}> {
               />
            </View>
 
-
            <View style={styles.textInputWrapper}>
               <Text style={styles.textCapacity}>
                 <Text>Kapasitas</Text>
               </Text>
-              <TextInput
-                  style={styles.smallCapacity}
-                  value={r.capacity}
-                  onChangeText={capacity => this.insertVal(capacity, r.index, 'capacity')}
-                  keyboardType="numeric"/>
+              <TextInputMask
+                style={styles.smallCapacity}
+                type={'only-numbers'}
+                value={r.capacity}
+                onChangeText={capacity => this.insertVal(capacity, r.index, 'capacity')}
+              />
             </View>
             <View style={styles.textInputWrapper}>
               <Dropdown label=' '
@@ -175,24 +187,25 @@ export default class Prospecting_Result extends Component<{}> {
                         fontSize={14}
                         baseColor={"#000000"}
                         data={capacityUnit}
-                        onChangeText={(unitCapacity) => this.setState({unitCapacity})}
-                        value={r.unitCapacity}>
+                        onChangeText={unitCapacity => this.insertVal(unitCapacity, r.index, 'unitCapacity')}
+                        value={r.unitCapacity}
+                        >
               </Dropdown>
             </View>
 
            <View style={styles.textInputWrapper}>
               <Text style={styles.textPrice}>
-                <Text>Harga</Text>
+                <Text>{r.unitCapacity}</Text>
               </Text>
               <TextInputMask
                     style={styles.smallPrice}
                     type={'money'}
                     options={{
                       precision: 0,
-                      separator: '.',
+                      separator: ' ',
                       delimiter: ',',
-                      unit: 'Rp ',
-                      suffixUnit: ''
+                      unit: 'Rp',
+                      suffixUnit: this.state.unitPrice
                     }}
                     value={r.price}
                     onChangeText={price => this.insertVal(price, r.index, 'price')}
@@ -203,8 +216,9 @@ export default class Prospecting_Result extends Component<{}> {
                      fontSize={14}
                      baseColor={"#000000"}
                      data={priceUnit}
-                     onChangeText={(unitPrice) => this.setState({unitPrice})}
-                     value={r.unitPrice}>
+                     onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
+                     value={r.unitPrice}
+                     >
            </Dropdown>
            <Icon
       				name="trash"
@@ -239,7 +253,7 @@ export default class Prospecting_Result extends Component<{}> {
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
           <Text style={styles.text}>
-              <Text>Nama Ketua</Text>
+              <Text>Nama Lengkap Ketua</Text>
           </Text>
           <TextInput style={styles.inputBox}
                     onChangeText={(leaderName) => this.setState({leaderName})}
@@ -249,10 +263,11 @@ export default class Prospecting_Result extends Component<{}> {
           <Text style={styles.text}>
               <Text>Nomor Telepon</Text>
           </Text>
-          <TextInput style={styles.inputBox}
-                  onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-                  value={this.state.phoneNumber}
-                  keyboardType="numeric"
+          <TextInputMask
+            style={styles.inputBox}
+            type={'only-numbers'}
+            onChangeText={(phoneNumber) => this.setState({phoneNumber})}
+            value={this.state.phoneNumber}
           />
           <Text style={styles.text}>
             <Text>Kelompok Tani</Text>
@@ -264,27 +279,40 @@ export default class Prospecting_Result extends Component<{}> {
           <Text style={styles.text}>
             <Text>Jumlah Anggota</Text>
           </Text>
-          <TextInput style={styles.inputBox}
-                  onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
-                  value={this.state.numberOfMembers}
-                  keyboardType="numeric"
+          <TextInputMask
+            style={styles.inputBox}
+            type={'only-numbers'}
+            onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
+            value={this.state.numberOfMembers}
           />
           <Text style={styles.text}>
             <Text>Luas Lahan</Text>
           </Text>
-          <TextInput style={styles.inputBox}
-                  onChangeText={(landArea) => this.setState({landArea})}
-                  value={this.state.landArea}
-                  keyboardType="numeric"
-          />
+          <View style={styles.dropdownWrapper}>
+              <TextInputMask
+                style={styles.inputBox4}
+                type={'only-numbers'}
+                onChangeText={(landArea) => this.setState({landArea})}
+                value={this.state.landArea}
+              />
+
+            <Dropdown label=' '
+                      containerStyle={{width:95, bottom: 16, left: 24}}
+                      fontSize={16}
+                      baseColor={"#000000"}
+                      data={landAreaUnit}
+                      onChangeText={(unitLandArea) => this.setState({unitLandArea})}
+                      value={this.state.unitLandArea}>
+            </Dropdown>
+          </View>
+
           <Text style={styles.text}>
             <Text>Lama Bertani</Text>
           </Text>
-
           <TextInput style={styles.inputBox}
-                  onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
-                  value={this.state.longTimeFarming}
-                  keyboardType="numeric"
+              placeholder= "*contoh '1 tahun 12 bulan 30 hari'"
+              onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
+              value={this.state.longTimeFarming}
           />
          <View>
             { arr }
@@ -296,7 +324,7 @@ export default class Prospecting_Result extends Component<{}> {
          </View>
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
-          <TouchableOpacity onPress={ () => { this.CheckTextInputIsEmptyOrNot() }}>
+          <TouchableOpacity onPress={ () => { this.insertToServer(); }}>
             <Text style={styles.next}>Selanjutnya</Text>
           </TouchableOpacity>
         </View>
@@ -411,6 +439,21 @@ var styles = StyleSheet.create({
   },
   textInputWrapper: {
      flex:1,
+   },
+   dropdownWrapper: {
+      flexDirection:'row',
+    },
+   inputBox4:{
+     width:200,
+     height:45,
+     borderRadius:5,
+     borderWidth: 0.5,
+     borderColor: '#000000',
+     //borderRadius: 25,
+     paddingVertical: 6,
+     fontSize:16,
+     color:'#000000',
+     marginVertical: 5,
    },
    footer: {
      position: 'absolute',

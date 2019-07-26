@@ -138,8 +138,14 @@ export default class Form extends Component<{}>{
       activityResult: this.state.activityResult,
       images:this.state.arr,
     };
-    insertActivityToServer(newActivity);
-    this.laporkan_aktivitas();
+    insertActivityToServer(newActivity).then((responseJson)=> {
+      if(responseJson.err){
+        Alert.alert(responseJson.err);
+      }else{
+        this.laporkan_aktivitas();
+      }
+    })
+    //
     console.log(newActivity);
   }
 
@@ -294,7 +300,7 @@ export default class Form extends Component<{}>{
               <Text style={styles.cancel}>Batal</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { this.CheckTextInputIsEmptyOrNot() }}>
+            <TouchableOpacity onPress={() => { this.insertToServer(); }}>
               <Text style={styles.next}>Simpan</Text>
             </TouchableOpacity>
           </View>

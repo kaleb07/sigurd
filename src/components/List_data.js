@@ -80,24 +80,27 @@ export default class List_data extends Component <{}>{
           </View>
         </View>
 
-        <View>
-          <Text> Tanggal : {activityProspecting.date} </Text>
-          <Text> Deskripsi Kegiatan : {activityProspecting.activityDesc} </Text>
-          <Text> Lokasi : {activityProspecting.location} </Text>
-          <Text> Hasil Kegiatan : {activityProspecting.activityResult} </Text>
-          {images}
-          <Text> Data Petani </Text>
-          {farmers}
-        </View>
+          <View>
+            <Text> Tanggal : {activityProspecting.date} </Text>
+            <Text> Deskripsi Kegiatan : {activityProspecting.activityDesc} </Text>
+            <Text> Lokasi : {activityProspecting.location} </Text>
+            <Text> Hasil Kegiatan : {activityProspecting.activityResult} </Text>
+            {images}
+
+            <Text> Data Petani </Text>
+            <ScrollView>
+            {farmers}
+            </ScrollView>
+          </View>
+
 
         <View style={styles.footer}>
-        <TouchableOpacity onPress={this.prospecting} >
-          <Text style={styles.next}>Tambah</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={this.prospecting} >
+            <Text style={styles.next}>Tambah</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={this.laporkan_aktivitas} style = {styles.button}>
               <Text style = {styles.buttonText}> Selesai </Text>
           </TouchableOpacity>
-
         </View>
       </View>
     )
