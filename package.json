@@ -12,6 +12,7 @@
     "react": "16.8.3",
     "react-native": "^0.59.9",
     "react-native-datepicker": "^1.7.2",
+    "react-native-drop-down-item": "^1.0.5",
     "react-native-dynamic-search-bar": "^0.1.11",
     "react-native-dynamic-vector-icons": "0.0.4",
     "react-native-elements": "^1.1.0",
