@@ -6,7 +6,7 @@ import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 import { Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { Dropdown } from 'react-native-material-dropdown';
-import { TextInputMask } from 'react-native-masked-text'
+import { TextInputMask } from 'react-native-masked-text';
 import { insertProspectingToServer } from '../networking/server';
 
 let index = 0;
@@ -202,10 +202,10 @@ export default class Prospecting_Result extends Component<{}> {
                     type={'money'}
                     options={{
                       precision: 0,
-                      separator: ' ',
+                      separator: '',
                       delimiter: ',',
                       unit: 'Rp',
-                      suffixUnit: this.state.unitPrice
+                      suffixUnit:''
                     }}
                     value={r.price}
                     onChangeText={price => this.insertVal(price, r.index, 'price')}
