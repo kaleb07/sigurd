@@ -3,13 +3,11 @@ import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image, Al
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {Actions} from 'react-native-router-flux';
-import { getActivityProspecting, deleteProspectingResult } from '../networking/server';
+import { getActivityProspecting, deleteProspectingResult, sendIdFarmer } from '../networking/server';
 import DropDownItem from 'react-native-drop-down-item';
 
 const IC_ARR_DOWN = require('../images/ic_arr_down.png');
 const IC_ARR_UP = require('../images/ic_arr_up.png');
-
-
 
 export default class List_data extends Component <{}>{
   constructor() {
@@ -17,6 +15,10 @@ export default class List_data extends Component <{}>{
     this.state = ({
       isLoading:true,
     });
+  }
+
+  edit_prospecting() {
+    Actions.edit_prospecting()
   }
 
   prospecting() {
@@ -31,7 +33,7 @@ export default class List_data extends Component <{}>{
     return ( getActivityProspecting().then((responseJson) => {
       this.setState({
         dataSource: responseJson,
-        isLoading:false
+        isLoading: false
       }, function(){ });
       console.log('ok', responseJson);
     }).catch((error)=> {
@@ -62,8 +64,6 @@ export default class List_data extends Component <{}>{
     } else {
       let activityProspecting = this.state.dataSource;
       let farmers = activityProspecting.farmer.map((val, key) => {
-        let params = val.id;
-        console.log('params:', params);
         return <DropDownItem
                   key={key}
                   style={styles.dropDownItem}
@@ -87,13 +87,13 @@ export default class List_data extends Component <{}>{
                     {val.product.map((vals, keys)=>
                        <View key={keys}>
                           <Text>Komoditas : {vals.commodity}</Text>
-                          <Text>Kapasitas : {vals.capacity}</Text>
-                          <Text>Harga : {vals.price}</Text>
+                          <Text>Kapasitas : {vals.capacity} {vals.unitCapacity}</Text>
+                          <Text>Harga : {vals.price} {vals.unitPrice}</Text>
                        </View>
                     )}
 
                     <View style={styles.listButton}>
-                      <TouchableOpacity style = {styles.button}>
+                      <TouchableOpacity style = {styles.button} onPress={() => {sendIdFarmer(val.id); this.edit_prospecting()}}>
                         <Text style={styles.buttonText}>Edit</Text>
                       </TouchableOpacity>
                       <TouchableOpacity style = {styles.button}

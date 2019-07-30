@@ -35,7 +35,7 @@ export default class Create_Prospecting extends Component<{}>{
         index:0,
         image:'',
         caption:''
-      }]
+      }],
     }
     this.selectImage = this.selectImage.bind(this);
   };
@@ -132,7 +132,7 @@ export default class Create_Prospecting extends Component<{}>{
    };
    insertActivityToServer(newActivity).then((responseJson)=> {
      if(responseJson.err){
-       Alert.alert(responseJson.err);
+        Alert.alert(responseJson.err);
      }else{
        this.prospecting();
      }
