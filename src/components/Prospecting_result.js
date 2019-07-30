@@ -53,7 +53,6 @@ export default class Prospecting_Result extends Component<{}> {
         unitCapacity: '',
         unitPrice: '',
       }],
-      products:[]
     };
   };
 
@@ -88,9 +87,19 @@ export default class Prospecting_Result extends Component<{}> {
       phoneNumber: this.state.phoneNumber,
       groupFarmer: this.state.groupFarmer,
       numberOfMembers: this.state.numberOfMembers,
-      landArea: this.state.landArea + this.state.unitLandArea,
+      landArea: this.state.landArea,
+      unitLandArea: this.state.unitLandArea,
       longTimeFarming: this.state.longTimeFarming,
-      product: this.state.products
+      product: this.state.arr.map((val, index) => {
+        return {
+          id : val.index,
+          commodity : val.commodity,
+          capacity : val.capacity,
+          unitCapacity : val.unitCapacity,
+          price : val.price,
+          unitPrice : val.unitPrice
+        }
+      })
     };
     insertProspectingToServer(newProspecting).then((responseJson)=> {
        if(responseJson.err){
@@ -114,20 +123,7 @@ export default class Prospecting_Result extends Component<{}> {
       return listData
     })
     this.setState({ arr:newList});
-    this.productVal();
   };
-
-  productVal(){
-    const products = this.state.arr.map((r, index) => {
-      return {
-        commodity : r.commodity,
-        capacity : r.capacity + r.unitCapacity,
-        price : r.price + r.unitPrice
-      }
-    })
-    this.setState({ products: products});
-    console.log('product: ', products);
-  }
 
   clearVal() {
     const list = this.state.arr;
@@ -195,7 +191,7 @@ export default class Prospecting_Result extends Component<{}> {
 
            <View style={styles.textInputWrapper}>
               <Text style={styles.textPrice}>
-                <Text>{r.unitCapacity}</Text>
+                <Text>Harga</Text>
               </Text>
               <TextInputMask
                     style={styles.smallPrice}

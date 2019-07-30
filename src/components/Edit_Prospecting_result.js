@@ -78,7 +78,10 @@ export default class Prospecting_Result extends Component<{}> {
               unitPrice : r.unitPrice
           }
         }),
-    }, function(){});
+    }, function(){
+
+    });
+    console.log('oks', this.state.arr);
     }).catch((error)=> {
     console.log('Error : ', error);
   }))
@@ -94,8 +97,8 @@ export default class Prospecting_Result extends Component<{}> {
       return data.index !== index;
     })
      this.setState({ arr:newList });
-     console.log('arr :', list);
      console.log('hapus :', newList);
+     console.log('arr :', list)
   };
 
   insertSomeThing(){
