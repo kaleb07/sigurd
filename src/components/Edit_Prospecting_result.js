@@ -7,7 +7,7 @@ import { Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { Dropdown } from 'react-native-material-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
-import { insertProspectingToServer } from '../networking/server';
+import { getProspecting, updateProspectingResult } from '../networking/server';
 
 let index = 0;
 let capacityUnit = [{
@@ -38,7 +38,7 @@ export default class Prospecting_Result extends Component<{}> {
   constructor(){
     super();
     this.state = {
-      leaderName:'',
+      leaderName: '',
       phoneNumber:'',
       groupFarmer:'',
       numberOfMembers:'',
@@ -53,9 +53,36 @@ export default class Prospecting_Result extends Component<{}> {
         unitCapacity: '',
         unitPrice: '',
       }],
-      products:[]
+      isLoading: true,
     };
   };
+
+  componentDidMount(){
+    return ( getProspecting().then((responseJson) => {
+      this.setState({
+        isLoading:false,
+        leaderName: responseJson.leaderName,
+        phoneNumber: responseJson.phoneNumber,
+        groupFarmer: responseJson.groupFarmer,
+        numberOfMembers: responseJson.numberOfMembers,
+        landArea: responseJson.landArea,
+        longTimeFarming: responseJson.longTimeFarming,
+        unitLandArea: responseJson.unitLandArea,
+        arr: responseJson.product.map((r, index) => {
+            return {
+              index : r.id,
+              commodity : r.commodity,
+              capacity : r.capacity,
+              unitCapacity : r.unitCapacity,
+              price : r.price,
+              unitPrice : r.unitPrice
+          }
+        }),
+    }, function(){});
+    }).catch((error)=> {
+    console.log('Error : ', error);
+  }))
+  }
 
   list_data() {
     Actions.list_data()
@@ -67,6 +94,8 @@ export default class Prospecting_Result extends Component<{}> {
       return data.index !== index;
     })
      this.setState({ arr:newList });
+     console.log('arr :', list);
+     console.log('hapus :', newList);
   };
 
   insertSomeThing(){
@@ -88,11 +117,21 @@ export default class Prospecting_Result extends Component<{}> {
       phoneNumber: this.state.phoneNumber,
       groupFarmer: this.state.groupFarmer,
       numberOfMembers: this.state.numberOfMembers,
-      landArea: this.state.landArea + this.state.unitLandArea,
+      landArea: this.state.landArea,
+      unitLandArea: this.state.unitLandArea,
       longTimeFarming: this.state.longTimeFarming,
-      product: this.state.products
+      product: this.state.arr.map((val, index) => {
+          return {
+            id : val.index,
+            commodity : val.commodity,
+            capacity : val.capacity,
+            unitCapacity : val.unitCapacity,
+            price : val.price,
+            unitPrice : val.unitPrice
+         }
+      })
     };
-    insertProspectingToServer(newProspecting).then((responseJson)=> {
+    updateProspectingResult(newProspecting).then((responseJson)=> {
        if(responseJson.err){
          Alert.alert(responseJson.err);
        }else{
@@ -114,20 +153,7 @@ export default class Prospecting_Result extends Component<{}> {
       return listData
     })
     this.setState({ arr:newList});
-    this.productVal();
   };
-
-  productVal(){
-    const products = this.state.arr.map((r, index) => {
-      return {
-        commodity : r.commodity,
-        capacity : r.capacity + r.unitCapacity,
-        price : r.price + r.unitPrice
-      }
-    })
-    this.setState({ products: products});
-    console.log('product: ', products);
-  }
 
   clearVal() {
     const list = this.state.arr;
@@ -325,7 +351,7 @@ export default class Prospecting_Result extends Component<{}> {
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <TouchableOpacity onPress={ () => { this.insertToServer(); }}>
-            <Text style={styles.next}>Selanjutnya</Text>
+            <Text style={styles.next}>Update</Text>
           </TouchableOpacity>
         </View>
       </View>

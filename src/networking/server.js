@@ -76,8 +76,23 @@ async function getActivityProspecting(){
   }
 }
 
+async function deleteProspectingResult(params){
+  try{
+    let deleteById = apiProspecting + '/' + params;
+    let response = await fetch(deleteById, {
+        method: 'DELETE',
+    });
+    let responseJson = await response.json();
+    console.log('deleteById: ', deleteById);
+    return responseJson;
+  } catch(error){
+    console.log('Error is: ', error);
+  }
+}
+
 export {getActivityOptionFromServer};
 export {getActivityFromServer};
 export {getActivityProspecting};
 export {insertActivityToServer};
 export {insertProspectingToServer};
+export {deleteProspectingResult};

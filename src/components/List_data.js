@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image} from 'react-native';
+import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {Actions} from 'react-native-router-flux';
-import { getActivityProspecting } from '../networking/server';
+import { getActivityProspecting, deleteProspectingResult } from '../networking/server';
 import DropDownItem from 'react-native-drop-down-item';
 
 const IC_ARR_DOWN = require('../images/ic_arr_down.png');
@@ -16,21 +16,7 @@ export default class List_data extends Component <{}>{
     super();
     this.state = ({
       isLoading:true,
-      contents: [
-      {
-        title: 'Title 1',
-        body: 'Hi. I love this component. What do you think?',
-      },
-      {
-        title: 'See this one too',
-        body: 'Yes. You can have more items.',
-      },
-      {
-        title: 'Thrid thing',
-        body: 'What about very long text? What about very long text? What about very long text? What about very long text? What about very long text? What about very long text? What about very long text? What about very long text? What about very long text? What about very long text? What about very long text? What about very long text?',
-      },
-    ],
-  } );
+    });
   }
 
   prospecting() {
@@ -53,18 +39,31 @@ export default class List_data extends Component <{}>{
     }))
   }
 
+  deleteFarmer(id){
+    return (
+      deleteProspectingResult(id).then((responseJson) => {
+        this.setState({
+          isLoading:true
+        })
+    }).catch((error)=> {
+      console.log('Error : ', error);
+    })
+
+  )}
+
   render(){
     if(this.state.isLoading){
       return(
         <View style={{flex:1, padding:20}}>
-          <Image style={{width:70, height:70}}
-            source={require('../images/tanam.png')}/>
+        <Image style={{width:250, height:200}}
+          source={require('../images/logo.png')}/>
         </View>
       )
     } else {
       let activityProspecting = this.state.dataSource;
       let farmers = activityProspecting.farmer.map((val, key) => {
-<<<<<<< Updated upstream
+        let params = val.id;
+        console.log('params:', params);
         return <DropDownItem
                   key={key}
                   style={styles.dropDownItem}
@@ -78,8 +77,7 @@ export default class List_data extends Component <{}>{
                         color: 'blue',
                       }}>Nama ketua : {val.leaderName}</Text>
                     </View>
-                  }
-                >
+                  }>
                   <ScrollView>
                     <Text>Nomor Telepon : {val.phoneNumber}</Text>
                     <Text>Kelompok Tani : {val.groupFarmer}</Text>
@@ -88,39 +86,49 @@ export default class List_data extends Component <{}>{
                     <Text>Lama Bertani : {val.longTimeFarming}</Text>
                     {val.product.map((vals, keys)=>
                        <View key={keys}>
-                                <Text>Komoditas : {vals.commodity}</Text>
-                                <Text>Kapasitas : {vals.capacity}</Text>
-                                <Text>Harga : {vals.price}</Text>
-                             </View>
+                          <Text>Komoditas : {vals.commodity}</Text>
+                          <Text>Kapasitas : {vals.capacity}</Text>
+                          <Text>Harga : {vals.price}</Text>
+                       </View>
                     )}
+
                     <View style={styles.listButton}>
-                      <TouchableOpacity>
-                        <Text style={styles.next}>Edit</Text>
-                      </TouchableOpacity>
                       <TouchableOpacity style = {styles.button}>
+                        <Text style={styles.buttonText}>Edit</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style = {styles.button}
+                          onPress={() => {this.deleteFarmer(val.id); this.componentDidMount()}}>
                           <Text style = {styles.buttonText}>Delete</Text>
                       </TouchableOpacity>
                   </View>
-                  </ScrollView>
-                </DropDownItem>
+                </ScrollView>
+              </DropDownItem>
             })
-=======
-        return <View key={key}>
-                  <Text>Nama ketua     : {val.leaderName}</Text>
-                  <Text>Nomor Telepon  : {val.phoneNumber}</Text>
-                  <Text>Kelompok Tani  : {val.groupFarmer}</Text>
-                  <Text>Jumlah anggota : {val.numberOfMembers}</Text>
-                  <Text>Luas Lahan : {val.landArea}</Text>
-                  <Text>Lama Bertani : {val.longTimeFarming}</Text>
-               </View>
-      });
->>>>>>> Stashed changes
-      let images = activityProspecting.images.map((val, key) => {
-        return <View key={key}>
-                  <Text>Foto : {val.image.uri}</Text>
-                  <Text>Keterangan : {val.caption}</Text>
-               </View>
 
+      let images = activityProspecting.images.map((val, key) => {
+        return <View key={key}  style={{flex: 1, flexDirection: 'row'}}>
+                  <View style={styles.textInputWrapper}>
+                    <Text>Foto</Text>
+                    <Text>Keterangan</Text>
+                  </View>
+                  <View style={styles.textInputWrapper3}>
+                     <Text>:</Text>
+                     <Text>:</Text>
+                   </View>
+                   <View style={styles.textInputWrapper2}>
+                     <Image
+                      source = {{uri: val.image.uri}}
+                      style={{
+                         height: 100,
+                         width:100,
+                         alignSelf: "stretch",
+                         justifyContent: "center",
+                         alignItems: "center"
+                      }}
+                      />
+                      <Text>{val.caption}</Text>
+                   </View>
+               </View>
       });
 
     return (
@@ -129,105 +137,49 @@ export default class List_data extends Component <{}>{
           <View style={styles.imageGroup2}>
             <Image style={{width:40, height:40,left:16}}
             source={require('../images/logo1.png')}/>
-        <Text style={styles.text2}>FO Activity</Text>
-        <TouchableOpacity onPress={this.prospecting}>
-          <Text style={styles.close}>keluar</Text>
-        </TouchableOpacity>
+            <Text style={styles.text2}>FO Activity</Text>
+          <TouchableOpacity onPress={this.prospecting}>
+            <Text style={styles.close}>keluar</Text>
+          </TouchableOpacity>
           </View>
         </View>
-<<<<<<< Updated upstream
-
-          <View style={{flex: 1, flexDirection: 'row'}}>
-            <View style={styles.textInputWrapper}>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={styles.textInputWrapper}>
             <Text>Tanggal</Text>
             <Text>Deskripsi Kegiatan</Text>
             <Text>Lokasi</Text>
             <Text>Hasil Kegiatan</Text>
-
-
-            </View>
-
-
-
+          </View>
           <View style={styles.textInputWrapper}>
             <Text>:</Text>
             <Text>:</Text>
             <Text>:</Text>
             <Text>:</Text>
-
-            </View>
-
-
-
+          </View>
           <View style={styles.textInputWrapper2}>
             <Text>{activityProspecting.date} </Text>
             <Text>{activityProspecting.activityDesc} </Text>
             <Text>{activityProspecting.location} </Text>
             <Text>{activityProspecting.activityResult} </Text>
-            </View>
-
-
-
-
-
           </View>
-
-
-            {images}
-
-            <Text> Data Petani </Text>
-            <ScrollView>
-            {farmers}
-            </ScrollView>
-
-
-
+        </View>
+        {images}
+        <Text> Data Petani </Text>
+        <ScrollView>
+          {farmers}
+        </ScrollView>
 
         <View style={styles.footer}>
-          <TouchableOpacity onPress={this.prospecting} >
+          <TouchableOpacity onPress={this.prospecting}>
             <Text style={styles.next}>Tambah</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.laporkan_aktivitas} style = {styles.button}>
-              <Text style = {styles.buttonText}> Selesai </Text>
-=======
-        <ScrollView style={{paddingLeft:50,paddingRight:50}}>
-        <View>
-          <View style={{justifyContent: 'space-between', flexDirection: 'row',flex:1,}}>
-            <Text style={{color:'black'}}>Tanggal </Text>
-            <Text style={{color:'black',left:2}}>:</Text>
-            <Text style={{color:'black',}}> {activityProspecting.date}</Text>
-          </View>
-          <View style={{justifyContent: 'space-between', flexDirection: 'row',flex:1}}>
-            <Text style={{color:'black'}}>Deskripsi Kegiatan</Text>
-            <Text style={{color:'black',right:60}}>:</Text>
-            <Text style={{color:'black',}}> {activityProspecting.activityDesc} </Text>
-          </View>
-          <View style={{justifyContent: 'space-between', flexDirection: 'row',flex:1}}>
-            <Text style={{color:'black'}}>Lokasi</Text>
-            <Text style={{color:'black',right:21}}>:</Text>
-            <Text style={{color:'black' }}> {activityProspecting.location} </Text>
-          </View>
-          <View style={{justifyContent: 'space-between', flexDirection: 'row',flex:1}}>
-          <Text style={{color:'black'}}>Hasil Kegiatan</Text>
-          <Text style={{color:'black',right:46}}>:</Text>
-          <Text style={{color:'black',right:130 }}>{activityProspecting.activityResult} </Text>
-        </View>
-          {images}
-          <Text> Data Petani </Text>
-          {farmers}
-        </View>
-        </ScrollView>
-        <View style={styles.footer}>
-          <TouchableOpacity
-            onPress={this.laporkan_aktivitas}>
-              <Text style={styles.next}>Selesai</Text>
->>>>>>> Stashed changes
+          <TouchableOpacity onPress={this.laporkan_aktivitas}>
+            <Text style={styles.next}>Selesai</Text>
           </TouchableOpacity>
         </View>
       </View>
-    )
+    )};
   }
-}
 }
 
 const styles = StyleSheet.create({
@@ -235,7 +187,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
     flex: 1,
     },
-<<<<<<< Updated upstream
   footer: {
     flexDirection: 'row',
     position: 'absolute',
@@ -263,11 +214,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     textAlign: 'center',
   },
-  next:{
-=======
-
   close:{
->>>>>>> Stashed changes
     backgroundColor:'#E6B000',
     color:'#000000',
     fontSize:16,
@@ -295,7 +242,6 @@ const styles = StyleSheet.create({
    justifyContent: 'space-between',
    padding:5,
   },
-<<<<<<< Updated upstream
   imageGroup:{
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -307,13 +253,12 @@ const styles = StyleSheet.create({
   },
   textInputWrapper: {
      flex:1,
-     paddingRight: 30
+
    },
    textInputWrapper2: {
      right:110,
       flex:1,
     },
-=======
   text2:{
    color:'#FFFFFF',
    fontSize:20,
@@ -332,8 +277,5 @@ const styles = StyleSheet.create({
    backgroundColor:'#284586',
    height:56,
    alignItems:'center'
-
-
   }
->>>>>>> Stashed changes
 });
