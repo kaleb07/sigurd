@@ -222,7 +222,7 @@ export default class Prospecting_Result extends Component<{}> {
              </Dropdown>
            </View>
 
-          <View style={styles.textInputWrapper}>
+           <View style={styles.textInputWrapper}>
              <Text style={styles.textPrice}>
                <Text>Harga</Text>
              </Text>
@@ -266,14 +266,14 @@ export default class Prospecting_Result extends Component<{}> {
      <View style={styles.container}>
       <View style = {{backgroundColor:'#284586', height:50}}>
         <View style={styles.imageGroup}>
-          <Image style={{width:40, height:40,left:16}}
+          <Image style={{width:40, height:40,left:8}}
             source={require('../images/logo1.png')}/>
           <Text style={styles.text2}>FO Activity</Text>
           <TouchableOpacity onPress={this.prospecting}>
             <Text style={styles.close}>keluar</Text>
           </TouchableOpacity>
         </View>
-     </View>
+      </View>
       <View style={styles.imageGroup1}>
          <Image style={{width:64, height:64, marginTop:16}}
            source={require('../images/prospecting.png')}/>
@@ -345,15 +345,15 @@ export default class Prospecting_Result extends Component<{}> {
              value={this.state.longTimeFarming}
          />
         <View>
-           { arr }
-             <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
-               <Icon name="plus-square" size={48} color="#284586"/>
-             </TouchableOpacity>
+         { arr }
+           <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+             <Icon name="plus-square" size={48} color="#284586"/>
+           </TouchableOpacity>
         </View>
        </KeyboardAwareScrollView>
-         <TouchableOpacity onPress={ () => { this.insertToServer(); }}  style={styles.footer}>
-           <Text style={styles.next}>Simpan</Text>
-         </TouchableOpacity>
+       <TouchableOpacity onPress={ () => { this.insertToServer(); }}  style={styles.footer}>
+         <Text style={styles.next}>Simpan</Text>
+       </TouchableOpacity>
      </View>
    );
  }

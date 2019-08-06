@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
      marginTop:-80,
   },
   text1:{
-    fontSize: 20,
+    fontSize: 24,
     color:'#284586',
     textAlign:'center',
     fontWeight: 'bold',
@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 300,
     alignItems: 'center',
-    marginVertical:150
+    marginVertical:135
   }
 });

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-//import {Container, Header, Title, Content, Footer, FooterTab,Left, Right, Body, Icon,} from 'native-base';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,13 +9,11 @@ import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
-//import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
 
 const options={
-  title: 'my pic app',
-  takePhotoButtonTitle:'Take photo your camera',
-  chooseFromLibraryButtonTitle:'Choose photo from library',
+  title: 'Choose photo',
+  takePhotoButtonTitle:'Take from my camera',
+  chooseFromLibraryButtonTitle:'Take from my library',
 }
 
 export default class Create_Prospecting extends Component<{}>{
@@ -148,7 +145,8 @@ export default class Create_Prospecting extends Component<{}>{
  }
 
  render(){
-    const  search  = this.state;
+   const now = new Date();
+   const prevMonths = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
     let arr = this.state.arr.map((r, index) => {
       return (
         <View key={ index }>
@@ -178,7 +176,7 @@ export default class Create_Prospecting extends Component<{}>{
       <View style={styles.container}>
         <View style = {{backgroundColor:'#284586', height:56}}>
          <View style={styles.imageGroup5}>
-           <Image style={{width:40, height:40,left:16}}
+           <Image style={{width:40, height:40,left:8}}
              source={require('../images/logo1.png')}/>
              <Text style={styles.text2}>FO Activity</Text>
            <TouchableOpacity onPress={this.prospecting}>
@@ -196,12 +194,12 @@ export default class Create_Prospecting extends Component<{}>{
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
           <DatePicker
               style={{width: 350}}
-              date={this.state.date} //initial date from state
-              mode="date" //The enum of date, datetime and time
+              date={this.state.date}
+              mode="date"
               placeholder="pilih tanggal"
               format="DD-MM-YYYY"
-              minDate="01-01-2018"
-              maxDate="01-01-2050"
+              minDate={prevMonths}
+              maxDate={now}
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               customStyles={{
@@ -273,15 +271,12 @@ export default class Create_Prospecting extends Component<{}>{
 const styles = StyleSheet.create({
   container:{
     backgroundColor:'#FFFFFF',
-    //width: wp('100%'),
-    //height: hp('95%'),
     flex: 1,
   },
   text:{
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
-    // /paddingLeft:10,
     marginTop:8,
   },
   text1:{
@@ -309,9 +304,6 @@ const styles = StyleSheet.create({
    marginBottom: 30,
   },
   dropdown:{
-    // paddingVertical: 13,
-    // width: 250,
-    // paddingHorizontal:10,
     fontSize: 16,
     color:'#000000',
   },

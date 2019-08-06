@@ -10,7 +10,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
 
-
 var items = [
   {id: 1, name: 'Cabe Merah'},
   {id: 2, name: 'Cabe Hijau'},
@@ -19,9 +18,9 @@ var items = [
 ];
 
 const options={
-  title: 'my pic app',
-  takePhotoButtonTitle:'Take photo your camera',
-  chooseFromLibraryButtonTitle:'Choose photo from library',
+  title: 'Choose photo',
+  takePhotoButtonTitle:'Take from my camera',
+  chooseFromLibraryButtonTitle:'Take from my library',
 }
 
 export default class Monitor_Lapangan extends Component<{}>{
@@ -151,7 +150,8 @@ export default class Monitor_Lapangan extends Component<{}>{
  }
 
   render(){
-    const  search  = this.state;
+    const now = new Date();
+    const prevMonths = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
     let arr = this.state.arr.map((r, index) => {
       return (
         <View key={ index }>
@@ -181,14 +181,14 @@ export default class Monitor_Lapangan extends Component<{}>{
       <View style={styles.container}>
         <View style = {{backgroundColor:'#284586', height:56}}>
           <View style={styles.imageGroup5}>
-            <Image style={{width:40, height:40,left:16}}
+            <Image style={{width:40, height:40,left:8}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
             <TouchableOpacity onPress={this.prospecting}>
               <Text style={styles.close}>keluar</Text>
             </TouchableOpacity>
+          </View>
         </View>
-      </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:64, height:64, marginTop:16}}
             source={require('../images/monitoring.png')}/>
@@ -203,8 +203,8 @@ export default class Monitor_Lapangan extends Component<{}>{
               mode="date"
               placeholder="pilih tanggal"
               format="DD-MM-YYYY"
-              minDate="01-01-2018"
-              maxDate="01-01-2050"
+              minDate={prevMonths}
+              maxDate={now}
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               customStyles={{
@@ -277,13 +277,13 @@ export default class Monitor_Lapangan extends Component<{}>{
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <View style={styles.imageGroup2}>
-              <TouchableOpacity onPress={this.kegiatan} >
-                <Text style={styles.cancel}>Batal</Text>
-              </TouchableOpacity>
+            <TouchableOpacity onPress={this.kegiatan} >
+              <Text style={styles.cancel}>Batal</Text>
+            </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => { this.insertToServer() }}>
-                <Text style={styles.next}>Simpan</Text>
-              </TouchableOpacity>
+            <TouchableOpacity onPress={() => { this.insertToServer() }}>
+              <Text style={styles.next}>Simpan</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -388,7 +388,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     backgroundColor: '#F5F5F5',
     marginVertical: 10,
-
   },
   itemDropdown: {
     padding: 15,

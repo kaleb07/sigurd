@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {Actions} from 'react-native-router-flux';
 
-
 export default class Laporkan_Aktivitas extends Component <{}>{
   kegiatan() {
     Actions.kegiatan()
@@ -14,7 +13,7 @@ export default class Laporkan_Aktivitas extends Component <{}>{
       <View style={styles.container}>
           <View style = {{backgroundColor:'#284586', height:56}}>
             <View style={styles.imageGroup}>
-              <Image style={{width:40, height:40, left:16}}
+              <Image style={{width:40, height:40, left:8}}
                 source={require('../images/logo1.png')}/>
               <Text style={styles.text1}>FO Activity</Text>
               <TouchableOpacity onPress={this.prospecting}>
@@ -22,7 +21,7 @@ export default class Laporkan_Aktivitas extends Component <{}>{
               </TouchableOpacity>
             </View>
           </View>
-          <ImageBackground   source={require('../images/background.jpg')} style={{width: '100%', alignItems: 'center',height: '100%'}}>
+          <ImageBackground source={require('../images/background.jpg')} style={{width: '100%', alignItems: 'center',height: '100%'}}>
             <View style={styles.textGroup2}>
               <Text style={styles.text}>
                 <Text>Selamat Bergabung</Text>
@@ -37,10 +36,10 @@ export default class Laporkan_Aktivitas extends Component <{}>{
                 <Text>Lakukan</Text>
             </Text>
           </View>
-            <TouchableOpacity onPress={this.kegiatan} style = {styles.button}>
-                <Text style = {styles.buttonText}> Laporkan Aktivitas </Text>
-            </TouchableOpacity>
-          </ImageBackground>
+          <TouchableOpacity onPress={this.kegiatan} style = {styles.button}>
+              <Text style = {styles.buttonText}> Laporkan Aktivitas </Text>
+          </TouchableOpacity>
+        </ImageBackground>
       </View>
     )
   }
@@ -72,7 +71,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#000000',
     textAlign: 'center',
-
   },
   close:{
     backgroundColor:'#E6B000',

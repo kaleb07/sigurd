@@ -11,9 +11,9 @@ import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
 
 const options={
-  title: 'my pic app',
-  takePhotoButtonTitle:'Take photo your camera',
-  chooseFromLibraryButtonTitle:'Choose photo from library',
+  title: 'Choose photo',
+  takePhotoButtonTitle:'Take from my camera',
+  chooseFromLibraryButtonTitle:'Take from my library',
 }
 
 export default class Create_Prospecting extends Component<{}>{
@@ -138,37 +138,38 @@ export default class Create_Prospecting extends Component<{}>{
  }
 
  render(){
-    const  search  = this.state;
-    let arr = this.state.arr.map((r, index) => {
-      return (
-        <View key={ index }>
-          <View style={styles.imageGroup}>
-            <TouchableOpacity onPress={() => this.selectImage(r.index)}>
-              <Image source={r.image !=='' ? r.image :
-                require('../images/add.png')}
-                style={{width:48, height:48,marginRight:8,marginTop:10, paddingLeft:8}}/>
-            </TouchableOpacity>
-            <TextInput
-              style={styles.inputBox2}
-              value={r.caption}
-              onChangeText={data => this.insertVal(data, r.index)}
-            />
-            <Icon name="trash"
-               size={32}
-               color="red"
-               style={{ marginLeft: 'auto', marginTop: 20, marginRight:25}}
-               onPress={() => this.trashVal(r.index)}
-            />
-          </View>
+   const now = new Date();
+   const prevMonths = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
+   let arr = this.state.arr.map((r, index) => {
+    return (
+      <View key={ index }>
+        <View style={styles.imageGroup}>
+          <TouchableOpacity onPress={() => this.selectImage(r.index)}>
+            <Image source={r.image !=='' ? r.image :
+              require('../images/add.png')}
+              style={{width:48, height:48,marginRight:8,marginTop:10, paddingLeft:8}}/>
+          </TouchableOpacity>
+          <TextInput
+            style={styles.inputBox2}
+            value={r.caption}
+            onChangeText={data => this.insertVal(data, r.index)}
+          />
+          <Icon name="trash"
+             size={32}
+             color="red"
+             style={{ marginLeft: 'auto', marginTop: 20, marginRight:25}}
+             onPress={() => this.trashVal(r.index)}
+          />
         </View>
-      );
-    });
+      </View>
+    );
+  });
 
     return (
       <View style={styles.container}>
         <View style = {{backgroundColor:'#284586', height:50}}>
           <View style={styles.imageGroup2}>
-            <Image style={{width:40, height:40,left:16}}
+            <Image style={{width:40, height:40,left:8}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
             <TouchableOpacity onPress={this.prospecting}>
@@ -190,8 +191,8 @@ export default class Create_Prospecting extends Component<{}>{
               mode="date"
               placeholder="pilih tanggal"
               format="DD-MM-YYYY"
-              minDate="01-01-2018"
-              maxDate="01-01-2050"
+              minDate={prevMonths}
+              maxDate={now}
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               customStyles={{
@@ -238,16 +239,16 @@ export default class Create_Prospecting extends Component<{}>{
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
           </Text>
-            {arr}
-        <View style={{paddingBottom:80 }}>
-          <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
-            <Icon name="plus-square" size={48} color="#284586"/>
-          </TouchableOpacity>
-        </View>
+          {arr}
+          <View style={{paddingBottom:80 }}>
+            <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+              <Icon name="plus-square" size={48} color="#284586"/>
+            </TouchableOpacity>
+          </View>
         </KeyboardAwareScrollView>
-          <TouchableOpacity onPress={()=>{this.insertToServer()}} style={styles.footer}>
-            <Text style={styles.next}>Selanjutnya</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={()=>{this.insertToServer()}} style={styles.footer}>
+          <Text style={styles.next}>Selanjutnya</Text>
+        </TouchableOpacity>
       </View>
     )
   };

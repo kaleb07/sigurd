@@ -45,123 +45,120 @@ export default class List_data extends Component <{}>{
   }
 
   deleteFarmer(id){
-     return (
-       deleteProspectingResult(id).then((responseJson) => {
-         this.setState({
-           isLoading:true
-         })
+   return (
+     deleteProspectingResult(id).then((responseJson) => {
+       this.setState({
+         isLoading:true
+       })
      }).catch((error)=> {
        console.log('Error : ', error);
      })
-
-   )}
-
-
+   )
+ }
 
   render(){
     if(this.state.isLoading){
       return(
-        <View style={{flex:1, padding:100, marginTop:150,alignItems:'center'}}>
-        <Image style={{width:250, height:200}}
-          source={require('../images/logo.png')}/>
+        <View style={{flex:1, padding:100, marginTop:100,alignItems:'center'}}>
+          <Image style={{width:150, height:150}}
+            source={require('../images/logo.png')}/>
+          <Text style={{fontSize: 30, color: '#aaaaaa', paddingTop: 15, fontWeight: 'bold'}}>Loading...</Text>
         </View>
       )
     } else {
       let activityProspecting = this.state.dataSource;
       let farmers = activityProspecting.farmer.map((val, key) => {
-
-      return <View style = {{marginTop:10,backgroundColor:'#E0E0E0'}}>
-              <DropDownItem
-                key={key}
-                style={styles.dropDownItem}
-                contentVisible={false}
-                invisibleImage={IC_ARR_DOWN}
-                visibleImage={IC_ARR_UP}
-                header={
-                  <View>
-                    <Text style={{
-                      fontSize:18,
-                      color: '#000000',backgroundColor:'#BDBDBD',padding:8
-                    }}>Nama ketua : {val.leaderName}</Text>
-                  </View>
-                }>
-                  <View style={{flex:1,flexDirection: 'row'}}>
+        return <View style = {{marginTop:10,backgroundColor:'#E0E0E0'}}>
+                <DropDownItem
+                  key={key}
+                  style={styles.dropDownItem}
+                  contentVisible={false}
+                  invisibleImage={IC_ARR_DOWN}
+                  visibleImage={IC_ARR_UP}
+                  header={
                     <View>
-                      <Text style={styles.text3}>Nomor Telepon</Text>
-                      <Text style={styles.text3}>Kelompok Tani</Text>
-                      <Text style={styles.text3}>Jumlah anggota</Text>
-                      <Text style={styles.text3}>Luas Lahan</Text>
-                      <Text style={styles.text3}>Lama Bertani</Text>
+                      <Text style={{
+                        fontSize:18,
+                        color: '#000000',backgroundColor:'#BDBDBD',padding:8
+                      }}>Nama ketua : {val.leaderName}</Text>
                     </View>
-                    <View style={styles.textInputWrapper4}>
-                      <Text style={styles.text3}>:</Text>
-                      <Text style={styles.text3}>:</Text>
-                      <Text style={styles.text3}>:</Text>
-                      <Text style={styles.text3}>:</Text>
-                      <Text style={styles.text3}>:</Text>
-                    </View>
-                    <View style={styles.textInputWrapper5}>
-                        <Text style={styles.text3}>{val.phoneNumber}</Text>
-                        <Text style={styles.text3} numberOfLines={1}>{val.groupFarmer}</Text>
-                        <Text style={styles.text3} numberOfLines={1}>{val.numberOfMembers} </Text>
-                        <Text style={styles.text3} numberOfLines={1}>{val.landArea}</Text>
-                        <Text style={styles.text3} numberOfLines={1}> {val.longTimeFarming}</Text>
-                    </View>
-                    </View>
-                    <Text style={{color:'#000000',marginTop:16,fontSize:18,fontWeight: 'bold',}}>Daftar Produk</Text>
-                    <View style={{flexDirection:'row'}}>
-                        <Text style={styles.text5}>Komoditas</Text>
-                        <Text style={styles.text5}>Kapasitas</Text>
-                        <Text style={{  color:'#000000',fontSize:16,}}>Harga</Text>
+                  }>
+                    <View style={{flex:1,flexDirection: 'row'}}>
+                      <View>
+                        <Text style={styles.text3}>Nomor Telepon</Text>
+                        <Text style={styles.text3}>Kelompok Tani</Text>
+                        <Text style={styles.text3}>Jumlah anggota</Text>
+                        <Text style={styles.text3}>Luas Lahan</Text>
+                        <Text style={styles.text3}>Lama Bertani</Text>
                       </View>
-                    {val.product.map((vals, keys)=>
-                      <View  style={{flexDirection:'row'}} key={keys}>
-                        <Text style={{flex:1,fontSize:14,color:'#000000'}}>{vals.commodity}</Text>
-                        <Text style={{flex:1,left:45,fontSize:14,color:'#000000'}}>{vals.capacity} {vals.unitCapacity}</Text>
-                        <Text style={{flex:2,left:90,fontSize:14,color:'#000000'}}>{vals.price}/{vals.unitPrice}</Text>
+                      <View style={styles.textInputWrapper4}>
+                        <Text style={styles.text3}>:</Text>
+                        <Text style={styles.text3}>:</Text>
+                        <Text style={styles.text3}>:</Text>
+                        <Text style={styles.text3}>:</Text>
+                        <Text style={styles.text3}>:</Text>
                       </View>
-                   )}
-                   <View style={styles.listButton}>
-                     <Icon name="edit"
-                        size={24}
-                        color='#284586'
-                     />
-                    <TouchableOpacity style = {styles.button} onPress={() => {sendIdFarmer(val.id); this.edit_prospecting()}}>
-                              <Text style = {styles.buttonText}>Edit</Text>
-                    </TouchableOpacity>
-                    <Icon name='trash'
-                       size={24}
-                       color='red'
-                       style={{paddingLeft:20}}
-                    />
-                    <TouchableOpacity style = {styles.button}
-                      onPress={() => {this.deleteFarmer(val.id); this.componentDidMount()}}>
-                        <Text style = {styles.buttonText1}>Delete</Text>
-                    </TouchableOpacity>
+                      <View style={styles.textInputWrapper5}>
+                          <Text style={styles.text3}>{val.phoneNumber}</Text>
+                          <Text style={styles.text3} numberOfLines={1}>{val.groupFarmer}</Text>
+                          <Text style={styles.text3} numberOfLines={1}>{val.numberOfMembers} </Text>
+                          <Text style={styles.text3} numberOfLines={1}>{val.landArea}</Text>
+                          <Text style={styles.text3} numberOfLines={1}> {val.longTimeFarming}</Text>
+                      </View>
+                      </View>
+                      <Text style={{color:'#000000',marginTop:16,fontSize:18,fontWeight: 'bold',}}>Daftar Produk</Text>
+                      <View style={{flexDirection:'row'}}>
+                          <Text style={styles.text5}>Komoditas</Text>
+                          <Text style={styles.text5}>Kapasitas</Text>
+                          <Text style={{  color:'#000000',fontSize:16,}}>Harga</Text>
+                        </View>
+                      {val.product.map((vals, keys)=>
+                        <View  style={{flexDirection:'row'}} key={keys}>
+                          <Text style={{flex:1,fontSize:14,color:'#000000'}}>{vals.commodity}</Text>
+                          <Text style={{flex:1,left:45,fontSize:14,color:'#000000'}}>{vals.capacity} {vals.unitCapacity}</Text>
+                          <Text style={{flex:2,left:90,fontSize:14,color:'#000000'}}>{vals.price}/{vals.unitPrice}</Text>
+                        </View>
+                     )}
+                     <View style={styles.listButton}>
+                       <Icon name="edit"
+                          size={24}
+                          color='#284586'
+                       />
+                      <TouchableOpacity style = {styles.button} onPress={() => {sendIdFarmer(val.id); this.edit_prospecting()}}>
+                                <Text style = {styles.buttonText}>Edit</Text>
+                      </TouchableOpacity>
+                      <Icon name='trash'
+                         size={24}
+                         color='red'
+                         style={{paddingLeft:20}}
+                      />
+                      <TouchableOpacity style = {styles.button}
+                        onPress={() => {this.deleteFarmer(val.id); this.componentDidMount()}}>
+                          <Text style = {styles.buttonText1}>Delete</Text>
+                      </TouchableOpacity>
                     </View>
-              </DropDownItem>
-              </View>
-
-      })
+                </DropDownItem>
+               </View>
+        })
 
       let images = activityProspecting.images.map((val, key) => {
         return <View key={key} style={{flexDirection: 'row', paddingTop:5}}>
-                   <Image source = {{uri: val.image.uri}}
-                    style={{height:60,width:55,}}/>
-                   <Text numberOfLines={3} style={{left:10, color:'#000000',fontSize:16}}>{val.caption}</Text>
-                   </View>
+                 <Image source = {{uri: val.image.uri}}
+                  style={{height:60,width:55,}}/>
+                 <Text numberOfLines={3} style={{left:10, color:'#000000',fontSize:16}}>{val.caption}</Text>
+               </View>
       });
 
     return (
       <View style={styles.container}>
         <View style = {{backgroundColor:'#284586', height:50}}>
           <View style={styles.imageGroup2}>
-            <Image style={{width:40, height:40,left:16}}
+            <Image style={{width:40, height:40,left:8}}
             source={require('../images/logo1.png')}/>
-        <Text style={styles.text2}>FO Activity</Text>
-        <TouchableOpacity onPress={this.prospecting}>
-          <Text style={styles.close}>keluar</Text>
-        </TouchableOpacity>
+            <Text style={styles.text2}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.imageGroup1}>
@@ -171,56 +168,54 @@ export default class List_data extends Component <{}>{
             <Text> Prospecting</Text>
           </Text>
         </View>
-      <ScrollView style={{paddingRight:16}}>
-        <View style={{flex:1,paddingBottom:20 ,flexDirection: 'row'}}>
-          <View style={styles.textInputWrapper}>
+        <ScrollView style={{paddingRight:16}}>
+          <View style={{flex:1,paddingBottom:20 ,flexDirection: 'row'}}>
+            <View style={styles.textInputWrapper}>
               <Text style={{color:'#000000',fontSize:16}}>Tanggal</Text>
               <Text style={styles.text3}>Deskripsi Kegiatan</Text>
               <Text style={styles.text3}>Lokasi</Text>
               <Text style={styles.text3}>Hasil Kegiatan</Text>
               <Text style={{color:'#000000', paddingTop:15,fontSize:16}}>Foto kegiatan</Text>
               <View>{images}</View>
-          </View>
+            </View>
               <View style={styles.textInputWrapper3}>
                 <Text style={styles.text3}>:</Text>
                 <Text style={styles.text3}>:</Text>
                 <Text style={styles.text3}>:</Text>
                 <Text style={styles.text3}>:</Text>
               </View>
-          <View style={styles.textInputWrapper2}>
+            <View style={styles.textInputWrapper2}>
               <Text style={styles.text4}>{activityProspecting.date}</Text>
               <Text style={styles.text4} numberOfLines={3}>{activityProspecting.activityDesc}</Text>
               <Text style={styles.text4} numberOfLines={1}>{activityProspecting.location} </Text>
               <Text style={styles.text4} numberOfLines={1}>{activityProspecting.activityResult} </Text>
-          </View>
+            </View>
           </View>
           <View style={styles.imageGroup3}>
-          <Image style={{width:48, height:48,left:10}}
-          source={require('../images/data.jpg')}/>
-          <Text style={{right:24,marginTop:12,fontSize:20,color:'#000000' }}> Detail Data Petani </Text>
-          <TouchableOpacity onPress={this.prospecting}>
-            <Text style={styles.tambah}>Tambah</Text>
-          </TouchableOpacity>
-
+            <Image style={{width:48, height:48,left:10}}
+            source={require('../images/data.jpg')}/>
+            <Text style={{right:24,marginTop:12,fontSize:20,color:'#000000' }}> Detail Data Petani </Text>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.tambah}>Tambah</Text>
+            </TouchableOpacity>
           </View>
-            <ScrollView style={{flex:1,alignSelf: 'stretch', paddingBottom:150,paddingLeft:16}}>
+          <ScrollView style={{flex:1,alignSelf: 'stretch', paddingBottom:150,paddingLeft:16}}>
             {farmers}
-            </ScrollView>
           </ScrollView>
+        </ScrollView>
         <TouchableOpacity onPress={this.success_page} style={styles.footer}>
           <Text style={styles.next}>Selesai</Text>
         </TouchableOpacity>
       </View>
-    )
+    )}
   }
-}
 }
 
 const styles = StyleSheet.create({
   container:{
     backgroundColor:'#FFFFFF',
     flex: 1,
-    },
+  },
   footer: {
     flexDirection: 'row',
     position: 'absolute',
@@ -308,7 +303,6 @@ const styles = StyleSheet.create({
     textAlign:'center',
     borderRadius:5,
     marginTop:10,
-
   },
   next:{
     color:'#ffffff',

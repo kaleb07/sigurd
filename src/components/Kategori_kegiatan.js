@@ -52,85 +52,82 @@ export default class Kategori_kegiatan extends Component <{}>{
   }
 
   render(){
-
-      if(this.state.isLoading){
-        return(
-          <View style={{flex:1,marginTop:150,alignItems:'center'}}>
-          <Image style={{width:250, height:200}}
+    if(this.state.isLoading){
+      return(
+        <View style={{flex:1, padding:100, marginTop:100,alignItems:'center'}}>
+          <Image style={{width:150, height:150}}
             source={require('../images/logo.png')}/>
-          </View>
-        )
-      } else {
-        let activityOptions = this.state.dataSource.map((val, key) => {
-          return <View key={key}>
-                    <Text>{val.name}</Text>
-                 </View>
-
-        });
-      return (
-        <View style={styles.container}>
-          <View style = {{backgroundColor:'#284586', height:56}}>
-            <View style={styles.imageGroup1}>
-              <Image style={{width:40, height:40,left:16}}
-              source={require('../images/logo1.png')}/>
-              <Text style={styles.text1}>FO Activity</Text>
-              <TouchableOpacity onPress={this.prospecting}>
-                <Text style={styles.close}>keluar</Text>
-              </TouchableOpacity>
-            </View>
+          <Text style={{fontSize: 30, color: '#aaaaaa', paddingTop: 15, fontWeight: 'bold'}}>Loading...</Text>
         </View>
-          <Text style={styles.text}>
-              <Text>Kategori Kegiatan</Text>
-          </Text>
-          <View style={styles.imageGroup}>
-              <TouchableOpacity  onPress={this.create_prospecting}>
-                <Image style={{width:72, height:72}}
-                source={require('../images/prospecting.png')}/>
-              </TouchableOpacity>
-              <TouchableOpacity  onPress={this.register}>
-              <Image style={{width:72, height:72}}
-                source={require('../images/konsultasi.png')}/>
+      )
+    } else {
+      let activityOptions = this.state.dataSource.map((val, key) => {
+        return <View key={key}>
+                  <Text>{val.name}</Text>
+               </View>
+      });
+      return (
+      <View style={styles.container}>
+        <View style = {{backgroundColor:'#284586', height:56}}>
+          <View style={styles.imageGroup1}>
+            <Image style={{width:40, height:40,left:8}}
+            source={require('../images/logo1.png')}/>
+            <Text style={styles.text1}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <Text style={styles.text}>
+            <Text>Kategori Kegiatan</Text>
+        </Text>
+        <View style={styles.imageGroup}>
+          <TouchableOpacity  onPress={this.create_prospecting}>
+            <Image style={{width:72, height:72}}
+            source={require('../images/prospecting.png')}/>
           </TouchableOpacity>
-          </View>
-          <View style={styles.textGroup}>
-              {activityOptions[0]}
-              {activityOptions[1]}
-          </View>
-          <View style={styles.imageGroup}>
+          <TouchableOpacity  onPress={this.register}>
+            <Image style={{width:72, height:72}}
+              source={require('../images/konsultasi.png')}/>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.textGroup}>
+          {activityOptions[0]}
+          {activityOptions[1]}
+        </View>
+        <View style={styles.imageGroup}>
           <TouchableOpacity  onPress={this.monitor_lapangan}>
-          <Image style={{width:72, height:72}}
-            source={require('../images/monitoring.png')}/>
+            <Image style={{width:72, height:72}}
+              source={require('../images/monitoring.png')}/>
           </TouchableOpacity>
           <TouchableOpacity  onPress={this.tanam_perdana}>
-          <Image style={{width:72, height:72}}
-            source={require('../images/tanam.png')}/>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.textGroup2}>
-            {activityOptions[5]}
-            {activityOptions[2]}
-          </View>
-          <View style={styles.imageGroup}>
-            <TouchableOpacity  onPress={this.create_panen}>
+            <Image style={{width:72, height:72}}
+              source={require('../images/tanam.png')}/>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.textGroup2}>
+          {activityOptions[5]}
+          {activityOptions[2]}
+        </View>
+        <View style={styles.imageGroup}>
+          <TouchableOpacity  onPress={this.create_panen}>
             <Image style={{width:72, height:72}}
               source={require('../images/panen.png')}/>
-            </TouchableOpacity>
-            <TouchableOpacity  onPress={this.create_lainnya}>
+          </TouchableOpacity>
+          <TouchableOpacity  onPress={this.create_lainnya}>
             <Image style={{width:72, height:72}}
               source={require('../images/lainnya.png')}/>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.textGroup3}>
-              {activityOptions[4]}
-              {activityOptions[3]}
-          </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.textGroup3}>
+          {activityOptions[4]}
+          {activityOptions[3]}
+        </View>
         <View style={styles.footer}>
         </View>
-        </View>
-
-    )
+      </View>
+    )}
   }
-}
 }
 
 const styles = StyleSheet.create({
@@ -199,7 +196,6 @@ text1:{
    marginTop: 20,
    paddingLeft:65,
    paddingRight:60,
-
  },
  close:{
    backgroundColor:'#E6B000',
@@ -212,12 +208,11 @@ text1:{
    borderRadius:5,
    marginTop: 3,
    right:16
-  },
-   imageGroup4:{
-     flexDirection: 'row',
-     justifyContent: 'space-between',
-     paddingLeft:280,
-     borderRadius:5,
+},
+ imageGroup4:{
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+   paddingLeft:280,
+   borderRadius:5,
   }
 });
-  
