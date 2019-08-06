@@ -3,7 +3,6 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import Create_Panen from '../components/Create_Panen';
 import { Actions } from 'react-native-router-flux';
 
-
 export default class Createpanen extends Component<{}> {
   render(){
     return(

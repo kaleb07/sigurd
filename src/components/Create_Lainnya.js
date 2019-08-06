@@ -27,6 +27,9 @@ export default class Create_Prospecting extends Component<{}>{
   laporkan_aktivitas() {
     Actions.laporkan_aktivitas()
   }
+  success_page(){
+    Actions.success_page()
+  }
 
   constructor() {
     super();
@@ -138,7 +141,7 @@ export default class Create_Prospecting extends Component<{}>{
      if(responseJson.err){
        Alert.alert(responseJson.err);
      }else{
-       this.laporkan_aktivitas();
+       this.success_page();
      }
    })
    console.log(newActivity);
@@ -153,7 +156,7 @@ export default class Create_Prospecting extends Component<{}>{
             <TouchableOpacity onPress={() => this.selectImage(r.index)}>
               <Image source={r.image !=='' ? r.image :
                 require('../images/add.png')}
-                style={{width:50, height:50,  marginRight:10,marginTop:10, paddingLeft:10}}/>
+                style={{width:48, height:48,  marginRight:8,marginTop:8, paddingLeft:8}}/>
             </TouchableOpacity>
             <TextInput
               style={styles.inputBox2}
@@ -161,9 +164,9 @@ export default class Create_Prospecting extends Component<{}>{
               onChangeText={data => this.insertVal(data, r.index)}
             />
             <Icon name="trash"
-               size={30}
+               size={32}
                color="red"
-               style={{ marginLeft: 'auto', marginTop: 20, marginRight:5}}
+               style={{ marginLeft: 'auto', marginTop:16, marginRight:8}}
                onPress={() => this.trashVal(r.index)}
             />
           </View>
@@ -173,18 +176,18 @@ export default class Create_Prospecting extends Component<{}>{
 
     return (
       <View style={styles.container}>
-      <View style = {{backgroundColor:'#284586', height:56}}>
-   <View style={styles.imageGroup5}>
-   <Image style={{width:40, height:40,left:16}}
-     source={require('../images/logo1.png')}/>
-     <Text style={styles.text2}>FO Activity</Text>
-   <TouchableOpacity onPress={this.prospecting}>
-     <Text style={styles.close}>keluar</Text>
-   </TouchableOpacity>
-   </View>
-   </View>
+        <View style = {{backgroundColor:'#284586', height:56}}>
+         <View style={styles.imageGroup5}>
+           <Image style={{width:40, height:40,left:16}}
+             source={require('../images/logo1.png')}/>
+             <Text style={styles.text2}>FO Activity</Text>
+           <TouchableOpacity onPress={this.prospecting}>
+             <Text style={styles.close}>keluar</Text>
+           </TouchableOpacity>
+         </View>
+        </View>
         <View style={styles.imageGroup1}>
-          <Image style={{width:60, height:60, marginTop:15}}
+          <Image style={{width:64, height:64, marginTop:14}}
             source={require('../images/lainnya.png')}/>
           <Text style={styles.text1}>
             <Text> Lainnya</Text>
@@ -206,11 +209,11 @@ export default class Create_Prospecting extends Component<{}>{
                   position: 'absolute',
                   left: 0,
                   marginLeft: 0,
-                  width:50,
-                  height:50
+                  width:48,
+                  height:48
                 },
                 dateInput: {
-                  marginLeft: 60,
+                  marginLeft: 64,
                   fontSize: 16,
                   borderRadius:5,
                   borderWidth: 0.5,
@@ -240,25 +243,26 @@ export default class Create_Prospecting extends Component<{}>{
           <TextInput style={styles.inputBox}
                     multiline={true}
                     onChangeText={(activityResult) => this.setState({activityResult})}
-                    value={this.state.activityResult}
-          />
+                    value={this.state.activityResult}/>
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
           </Text>
           {arr}
-          <TouchableOpacity style={styles.save} onPress={() => { this.insertSomeThing('')}}>
-            <Icon name="plus" size={40} color="black"/>
-          </TouchableOpacity>
+          <View style={{paddingBottom:32}}>
+            <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+              <Icon name="plus-square" size={48} color="#284586"/>
+            </TouchableOpacity>
+          </View>
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <View style={styles.imageGroup2}>
-              <TouchableOpacity onPress={this.kegiatan} >
-                <Text style={styles.cancel}>Batal</Text>
-              </TouchableOpacity>
+            <TouchableOpacity onPress={this.kegiatan} >
+              <Text style={styles.cancel}>Batal</Text>
+            </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => { this.insertToServer() }}>
-                <Text style={styles.next}>Simpan</Text>
-              </TouchableOpacity>
+            <TouchableOpacity onPress={() => { this.insertToServer() }}>
+              <Text style={styles.next}>Simpan</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -278,15 +282,15 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color:'#000000',
     // /paddingLeft:10,
-    marginTop: 10,
+    marginTop:8,
   },
   text1:{
     fontSize: 24,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:190,
-    marginBottom:30,
-    marginTop:30
+    paddingRight:184,
+    marginBottom:32,
+    marginTop:32
   },
   text2:{
     color:'#FFFFFF',
@@ -319,7 +323,6 @@ const styles = StyleSheet.create({
   imageGroup2:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-
     marginTop:8,
   },
   imageGroup1:{
@@ -339,11 +342,11 @@ const styles = StyleSheet.create({
     color:'#000000',
     fontSize:16,
     padding:8,
-    width: 150,
+    width: 144,
     height:40,
     textAlign:'center',
-    marginRight:50,
-    borderRadius:30
+    marginRight:48,
+    borderRadius:5
   },
   save:{
     backgroundColor:'#FFC400',
@@ -360,12 +363,12 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFC400',
     color:'#000000',
     fontSize:16,
-    marginBottom:10,
+    marginBottom:8,
     padding:8,
-    width: 150,
+    width: 144,
     height:40,
     textAlign:'center',
-    borderRadius:30
+    borderRadius:5
   },
   inputDropdown:{
     borderWidth: 1,
@@ -374,7 +377,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     backgroundColor: '#F5F5F5',
     marginVertical: 10,
-
   },
   itemDropdown: {
     padding: 15,
@@ -386,12 +388,11 @@ const styles = StyleSheet.create({
   },
   inputBox:{
     width:350,
-    height:100,
+    height:104,
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
     backgroundColor: '#F5F5F5',
-    paddingVertical: 6,
     fontSize:16,
     color:'#000000',
     marginVertical: 5,
@@ -399,7 +400,7 @@ const styles = StyleSheet.create({
   },
   inputBox3:{
     width:350,
-    height:45,
+    height:48,
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -410,16 +411,15 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   inputBox2:{
-    width:260,
-    height:45,
+    width:256,
+    height:48,
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
     backgroundColor: '#F5F5F5',
-    paddingVertical: 6,
     fontSize:16,
     color:'#000000',
-    marginVertical: 12
+    marginVertical:8
   },
   footer: {
     position: 'absolute',
@@ -435,11 +435,11 @@ const styles = StyleSheet.create({
     backgroundColor:'#E6B000',
     color:'#000000',
     fontSize:16,
-    padding:5,
+    padding:4,
     width: 80,
-    height:35,
+    height:32,
     textAlign:'center',
-    borderRadius:30,
+    borderRadius:5,
     right:16,
     marginTop: 3
  },

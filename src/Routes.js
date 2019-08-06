@@ -12,6 +12,7 @@ import Createlainnya from './pages/Createlainnya';
 import Laporkanaktivitas from './pages/Laporkanaktivitas';
 import Listdata from './pages/Listdata';
 import Editprospecting from './pages/Editprospecting';
+import SuccessPage from './pages/SuccessPage';
 
 export default class Routes extends Component < {} > {
   render() {
@@ -30,6 +31,7 @@ export default class Routes extends Component < {} > {
           <Scene key = "laporkan_aktivitas"component = {Laporkanaktivitas}title = "Laporkan Aktivitas" / >
           <Scene key = "list_data"component = {Listdata}title = "List Data" / >
           <Scene key = "edit_prospecting"component = {Editprospecting}title = "Edit Prospecting" / >
+          <Scene key = "success_page"component = {SuccessPage}title = "Success Page" / >
         </Stack>
       </Router>
     )

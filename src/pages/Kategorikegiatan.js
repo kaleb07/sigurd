@@ -3,7 +3,6 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import Kategori_kegiatan from '../components/Kategori_kegiatan';
 import { Actions } from 'react-native-router-flux';
 
-
 export default class Kategorikegiatan extends Component<{}> {
   render(){
     return(

@@ -19,11 +19,11 @@ value: 'kg',
 }];
 
 let priceUnit = [{
-value: '/ton',
+value: 'ton',
 }, {
-value: '/kw',
+value: 'kw',
 }, {
-value: '/kg',
+value: 'kg',
 }];
 
 let landAreaUnit = [{
@@ -183,374 +183,379 @@ export default class Prospecting_Result extends Component<{}> {
    };
  }
 
-  render(){
-    let arr = this.state.arr.map((r, index) => {
-      return (
-        <View key={ index }>
-          <View style={styles.small}>
-           <View style={styles.textInputWrapper}>
-              <Text style={styles.text}>
-                <Text>Komoditas</Text>
-              </Text>
-              <TextInput
-                style={styles.smallCommodity}
-                value={r.commodity}
-                onChangeText={commodity => this.insertVal(commodity, r.index, 'commodity')}
-              />
-           </View>
-
-           <View style={styles.textInputWrapper}>
-              <Text style={styles.textCapacity}>
-                <Text>Kapasitas</Text>
-              </Text>
-              <TextInputMask
-                style={styles.smallCapacity}
-                type={'only-numbers'}
-                value={r.capacity}
-                onChangeText={capacity => this.insertVal(capacity, r.index, 'capacity')}
-              />
-            </View>
-            <View style={styles.textInputWrapper}>
-              <Dropdown label=' '
-                        containerStyle={{width:45, top: 10, left: 0}}
-                        fontSize={14}
-                        baseColor={"#000000"}
-                        data={capacityUnit}
-                        onChangeText={unitCapacity => this.insertVal(unitCapacity, r.index, 'unitCapacity')}
-                        value={r.unitCapacity}
-                        >
-              </Dropdown>
-            </View>
-
-           <View style={styles.textInputWrapper}>
-              <Text style={styles.textPrice}>
-                <Text>{r.unitCapacity}</Text>
-              </Text>
-              <TextInputMask
-                    style={styles.smallPrice}
-                    type={'money'}
-                    options={{
-                      precision: 0,
-                      separator: '',
-                      delimiter: ',',
-                      unit: 'Rp',
-                      suffixUnit:''
-                    }}
-                    value={r.price}
-                    onChangeText={price => this.insertVal(price, r.index, 'price')}
-                    keyboardType="numeric"/>
-           </View>
-           <Dropdown label=' '
-                     containerStyle={{width:50, top: 10, right: 25}}
-                     fontSize={14}
-                     baseColor={"#000000"}
-                     data={priceUnit}
-                     onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
-                     value={r.unitPrice}
-                     >
-           </Dropdown>
-           <Icon
-      				name="trash"
-      				size={30}
-      				color="red"
-      				style={{ marginLeft: 'auto', marginTop: 40, right: 13}}
-      				onPress={() => this.trashVal(r.index)}
-      			/>
-           </View>
-        </View>
-      );
-    });
-
-    return(
-      <View style={styles.container}>
-      <View style = {{backgroundColor:'#284586', height:50}}>
-      <View style={styles.imageGroup}>
-      <Image style={{width:40, height:40,left:16}}
-        source={require('../images/logo1.png')}/>
-        <Text style={styles.text2}>FO Activity</Text>
-      <TouchableOpacity onPress={this.prospecting}>
-        <Text style={styles.close}>keluar</Text>
-      </TouchableOpacity>
-      </View>
-      </View>
-        <View style={styles.imageGroup1}>
-          <Image style={{width:60, height:60, marginTop:15}}
-            source={require('../images/prospecting.png')}/>
-          <Text style={styles.text1}>
-            <Text>Prospecting</Text>
-          </Text>
-        </View>
-        <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
-          <Text style={styles.text}>
-              <Text>Nama Lengkap Ketua</Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-                    onChangeText={(leaderName) => this.setState({leaderName})}
-                    value={this.state.leaderName}
-          />
-
-          <Text style={styles.text}>
-              <Text>Nomor Telepon</Text>
-          </Text>
-          <TextInputMask
-            style={styles.inputBox}
-            type={'only-numbers'}
-            onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-            value={this.state.phoneNumber}
-          />
-          <Text style={styles.text}>
-            <Text>Kelompok Tani</Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-                    onChangeText={(groupFarmer) => this.setState({groupFarmer})}
-                    value={this.state.groupFarmer}
-          />
-          <Text style={styles.text}>
-            <Text>Jumlah Anggota</Text>
-          </Text>
-          <TextInputMask
-            style={styles.inputBox}
-            type={'only-numbers'}
-            onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
-            value={this.state.numberOfMembers}
-          />
-          <Text style={styles.text}>
-            <Text>Luas Lahan</Text>
-          </Text>
-          <View style={styles.dropdownWrapper}>
-              <TextInputMask
-                style={styles.inputBox4}
-                type={'only-numbers'}
-                onChangeText={(landArea) => this.setState({landArea})}
-                value={this.state.landArea}
-              />
-
-            <Dropdown label=' '
-                      containerStyle={{width:95, bottom: 16, left: 24}}
-                      fontSize={16}
-                      baseColor={"#000000"}
-                      data={landAreaUnit}
-                      onChangeText={(unitLandArea) => this.setState({unitLandArea})}
-                      value={this.state.unitLandArea}>
-            </Dropdown>
+ render(){
+   let arr = this.state.arr.map((r, index) => {
+     return (
+       <View key={ index }>
+         <View style={styles.small}>
+          <View style={styles.textInputWrapper}>
+             <Text style={styles.text}>
+               <Text>Komoditas</Text>
+             </Text>
+             <TextInput
+               style={styles.smallCommodity}
+               value={r.commodity}
+               onChangeText={commodity => this.insertVal(commodity, r.index, 'commodity')}
+             />
           </View>
 
-          <Text style={styles.text}>
-            <Text>Lama Bertani</Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-              placeholder= "*contoh '1 tahun 12 bulan 30 hari'"
-              onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
-              value={this.state.longTimeFarming}
-          />
-         <View>
-            { arr }
-           <TouchableOpacity
-             onPress={ () => { this.insertSomeThing() }}
-             style={styles.save}>
-             <Icon name="plus" size={35} color="black"/>
-           </TouchableOpacity>
-         </View>
-        </KeyboardAwareScrollView>
-        <View style={styles.footer}>
-          <TouchableOpacity onPress={ () => { this.insertToServer(); }}>
-            <Text style={styles.next}>Update</Text>
+          <View style={styles.textInputWrapper}>
+             <Text style={styles.textCapacity}>
+               <Text>Kapasitas</Text>
+             </Text>
+             <TextInputMask
+               style={styles.smallCapacity}
+               type={'only-numbers'}
+               value={r.capacity}
+               onChangeText={capacity => this.insertVal(capacity, r.index, 'capacity')}
+             />
+           </View>
+           <View style={styles.textInputWrapper}>
+             <Dropdown label=' '
+                       containerStyle={{width:45, top: 10, left: 0}}
+                       fontSize={14}
+                       baseColor={"#000000"}
+                       data={capacityUnit}
+                       onChangeText={unitCapacity => this.insertVal(unitCapacity, r.index, 'unitCapacity')}
+                       value={r.unitCapacity}
+                       >
+             </Dropdown>
+           </View>
+
+          <View style={styles.textInputWrapper}>
+             <Text style={styles.textPrice}>
+               <Text>Harga</Text>
+             </Text>
+             <TextInputMask
+                   style={styles.smallPrice}
+                   type={'money'}
+                   options={{
+                     precision: 0,
+                     separator: '',
+                     delimiter: ',',
+                     unit: 'Rp',
+                     suffixUnit:''
+                   }}
+                   value={r.price}
+                   onChangeText={price => this.insertVal(price, r.index, 'price')}
+                   keyboardType="numeric"/>
+          </View>
+          <Text style={{paddingTop:46,right:24}}>/</Text>
+          <Dropdown label=' '
+                    containerStyle={{width:46, top: 10, right:16}}
+                    fontSize={16}
+                    baseColor={"#000000"}
+                    data={priceUnit}
+                    onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
+                    value={r.unitPrice}
+                    >
+          </Dropdown>
+          <Icon
+             name="trash"
+             size={32}
+             color="red"
+             style={{ marginLeft: 'auto', marginTop: 40, right: 16}}
+             onPress={() => this.trashVal(r.index)}
+           />
+          </View>
+       </View>
+     );
+   });
+
+   return(
+     <View style={styles.container}>
+      <View style = {{backgroundColor:'#284586', height:50}}>
+        <View style={styles.imageGroup}>
+          <Image style={{width:40, height:40,left:16}}
+            source={require('../images/logo1.png')}/>
+          <Text style={styles.text2}>FO Activity</Text>
+          <TouchableOpacity onPress={this.prospecting}>
+            <Text style={styles.close}>keluar</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    );
-  }
+     </View>
+      <View style={styles.imageGroup1}>
+         <Image style={{width:64, height:64, marginTop:16}}
+           source={require('../images/prospecting.png')}/>
+         <Text style={styles.text1}>
+           <Text>Prospecting</Text>
+         </Text>
+       </View>
+       <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+         <Text style={styles.text}>
+             <Text>Nama Lengkap Ketua</Text>
+         </Text>
+         <TextInput style={styles.inputBox}
+                   onChangeText={(leaderName) => this.setState({leaderName})}
+                   value={this.state.leaderName}
+         />
+
+         <Text style={styles.text}>
+             <Text>Nomor Telepon</Text>
+         </Text>
+         <TextInputMask
+           style={styles.inputBox}
+           type={'only-numbers'}
+           onChangeText={(phoneNumber) => this.setState({phoneNumber})}
+           value={this.state.phoneNumber}
+         />
+         <Text style={styles.text}>
+           <Text>Kelompok Tani</Text>
+         </Text>
+         <TextInput style={styles.inputBox}
+                   onChangeText={(groupFarmer) => this.setState({groupFarmer})}
+                   value={this.state.groupFarmer}
+         />
+         <Text style={styles.text}>
+           <Text>Jumlah Anggota</Text>
+         </Text>
+         <TextInputMask
+           style={styles.inputBox}
+           type={'only-numbers'}
+           onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
+           value={this.state.numberOfMembers}
+         />
+         <Text style={styles.text}>
+           <Text>Luas Lahan</Text>
+         </Text>
+         <View style={styles.dropdownWrapper}>
+             <TextInputMask
+               style={styles.inputBox4}
+               type={'only-numbers'}
+               onChangeText={(landArea) => this.setState({landArea})}
+               value={this.state.landArea}
+             />
+
+           <Dropdown label=' '
+                     containerStyle={{width:95, bottom: 16, left: 24}}
+                     fontSize={16}
+                     baseColor={"#000000"}
+                     data={landAreaUnit}
+                     onChangeText={(unitLandArea) => this.setState({unitLandArea})}
+                     value={this.state.unitLandArea}>
+           </Dropdown>
+         </View>
+
+         <Text style={styles.text3}>
+           <Text>Lama Bertani</Text>
+         </Text>
+         <TextInput style={styles.inputBox}
+             placeholder= "*contoh '1 tahun 12 bulan 30 hari'"
+             onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
+             value={this.state.longTimeFarming}
+         />
+        <View>
+           { arr }
+             <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+               <Icon name="plus-square" size={48} color="#284586"/>
+             </TouchableOpacity>
+        </View>
+       </KeyboardAwareScrollView>
+         <TouchableOpacity onPress={ () => { this.insertToServer(); }}  style={styles.footer}>
+           <Text style={styles.next}>Simpan</Text>
+         </TouchableOpacity>
+     </View>
+   );
+ }
 };
 
 var styles = StyleSheet.create({
-  container:{
-    //marginTop:35,
-    backgroundColor:'#FFFFFF',
-    flex: 1,
+ container:{
+   backgroundColor:'#FFFFFF',
+   flex: 1,
+ },
+ dropdown:{
+   width:15,
+   fontSize: 12,
+   color:'#000000',
+   marginRight: 15
+   },
+ small:{
+   flex: 1,
+   flexDirection: 'row',
+ },
+ text1:{
+   fontSize: 24,
+   fontWeight: '400',
+   color:'#000000',
+   paddingRight:144,
+   marginBottom:32,
+   marginTop:32
+ },
+ text2:{
+   color:'#FFFFFF',
+   fontSize:20,
+   padding:5,
+   borderRadius:30,
+   marginTop:3,
+   fontWeight: 'bold',
+   paddingRight:100
+ },
+ imageGroup:{
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+   padding:5,
+ },
+ imageGroup1:{
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+   paddingRight:20,
+   marginBottom:-5,
+   paddingLeft:20
+ },
+ button: {
+   alignItems: 'center',
+   height:40,
+   width:120,
+   backgroundColor: '#FFC400',
+   marginVertical: 10,
+   paddingVertical: 13,
+   marginBottom:20,
+   borderRadius:30,
+ },
+ inputBox:{
+   width:350,
+   height:48,
+   borderRadius:5,
+   borderWidth: 0.5,
+   borderColor: '#000000',
+   backgroundColor:'#F5F5F5',
+   paddingVertical: 6,
+   fontSize:16,
+   color:'#000000',
+   marginVertical: 5
+ },
+ smallCapacity:{
+   flex: 1,
+   width:65,
+   left:5,
+   borderRadius:5,
+   borderWidth: 0.5,
+   borderColor: '#000000',
+   backgroundColor:'#F5F5F5',
+   paddingVertical: 6,
+   fontSize:16,
+   color:'#000000',
+   marginVertical: 5,
+ },
+ smallPrice:{
+   flex: 1,
+   width:65,
+   right:20,
+   borderRadius:5,
+   borderWidth: 0.5,
+   borderColor: '#000000',
+   paddingVertical: 4,
+   backgroundColor:'#F5F5F5',
+   fontSize:12,
+   color:'#000000',
+   marginVertical: 5,
+ },
+ smallCommodity:{
+   flex: 1,
+   width:70,
+   borderRadius:5,
+   borderWidth: 0.5,
+   borderColor: '#000000',
+   paddingVertical: 4,
+   fontSize:12,
+   backgroundColor:'#F5F5F5',
+   color:'#000000',
+   marginVertical: 5,
+ },
+ textInputWrapper: {
+    flex:1,
   },
-  dropdown:{
-    width:15,
-    fontSize: 12,
+  dropdownWrapper: {
+     flexDirection:'row',
+   },
+  inputBox4:{
+    width:200,
+    height:45,
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    backgroundColor:'#F5F5F5',
+    paddingVertical: 6,
+    fontSize:16,
     color:'#000000',
-    marginRight: 15
-    },
-  small:{
-    flex: 1,
-    flexDirection: 'row',
+    marginVertical: 5,
   },
-  text1:{
-    fontSize: 25,
+  footer: {
+    position: 'absolute',
+    flex:0.1,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor:'#284586',
+    height:50,
+    alignItems:'center',
+  },
+  next:{
+    color:'#ffffff',
+    fontSize:20,
+    marginTop:5,
+    padding:5,
+    width:200,
+    borderRadius:30,
+    height:35,
+    textAlign:'center',
+    fontWeight: 'bold',
+  },
+  text:{
+    fontSize:14,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:150,
-    marginBottom:30,
-    marginTop:30
+    marginTop:8
   },
-  text2:{
-    color:'#FFFFFF',
-    fontSize:20,
-    padding:5,
-    borderRadius:30,
-    marginTop:3,
-    fontWeight: 'bold',
-    paddingRight:100
-  },
-  imageGroup:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding:5,
-  },
-  imageGroup1:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingRight:20,
-    marginBottom:-5,
-    paddingLeft:20
-  },
-  button: {
-    alignItems: 'center',
-    height:40,
-    width:120,
-    backgroundColor: '#FFC400',
-    marginVertical: 10,
-    paddingVertical: 13,
-    marginBottom:20,
-    borderRadius:30,
-  },
-  inputBox:{
-    width:350,
-    borderRadius:5,
-    borderWidth: 0.5,
-    borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
+  text3:{
     fontSize:16,
+    fontWeight: '400',
     color:'#000000',
-    marginVertical: 5
+    marginBottom:4,
   },
-  smallCapacity:{
-    flex: 1,
-    width:65,
-    left:5,
-    borderRadius:5,
-    borderWidth: 0.5,
-    borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
+  textCapacity:{
+    fontSize: 14,
+    fontWeight: '400',
+    color:'#000000',
+    marginTop: 10,
+    left: 5
+  },
+  textPrice:{
+    fontSize: 14,
+    fontWeight: '400',
+    color:'#000000',
+    marginTop: 10,
+    right: 20
+  },
+  close:{
+    backgroundColor:'#E6B000',
+    color:'#000000',
     fontSize:16,
-    color:'#000000',
-    marginVertical: 5,
-  },
-  smallPrice:{
-    flex: 1,
-    width:65,
-    right:20,
+    padding:5,
+    width: 80,
+    height:32,
+    textAlign:'center',
     borderRadius:5,
-    borderWidth: 0.5,
-    borderColor: '#000000',
-    paddingVertical: 4,
-    fontSize:12,
-    color:'#000000',
-    marginVertical: 5,
-  },
-  smallCommodity:{
-    flex: 1,
-    width:70,
-    borderRadius:5,
-    borderWidth: 0.5,
-    borderColor: '#000000',
-    paddingVertical: 4,
-    fontSize:12,
-    color:'#000000',
-    marginVertical: 5,
-  },
-  textInputWrapper: {
-     flex:1,
-   },
-   dropdownWrapper: {
-      flexDirection:'row',
+    marginTop:4,
+    right:16
     },
-   inputBox4:{
-     width:200,
-     height:45,
-     borderRadius:5,
-     borderWidth: 0.5,
-     borderColor: '#000000',
-     //borderRadius: 25,
-     paddingVertical: 6,
-     fontSize:16,
-     color:'#000000',
-     marginVertical: 5,
-   },
-   footer: {
-     position: 'absolute',
-     flex:0.1,
-     left: 0,
-     right: 0,
-     bottom: 0,
-     backgroundColor:'#284586',
-     height:50,
-     alignItems:'center',
-   },
-   next:{
-     color:'#ffffff',
-     fontSize:20,
-     marginTop:8,
-     padding:5,
-     width:200,
-     borderRadius:30,
-     height:35,
-     textAlign:'center',
-     fontWeight: 'bold',
- },
-   text:{
-     fontSize: 14,
-     fontWeight: '400',
-     color:'#000000',
-     marginTop: 10
-   },
-   textCapacity:{
-     fontSize: 14,
-     fontWeight: '400',
-     color:'#000000',
-     marginTop: 10,
-     left: 5
-   },
-   textPrice:{
-     fontSize: 14,
-     fontWeight: '400',
-     color:'#000000',
-     marginTop: 10,
-     right: 20
-   },
-   close:{
-     backgroundColor:'#E6B000',
-     color:'#000000',
-     fontSize:16,
-     padding:5,
-     width: 80,
-     height:35,
-     textAlign:'center',
-     borderRadius:30,
-     marginTop:3,
-     right:16
-     },
-   imageGroup4:{
-     flexDirection: 'row',
-     justifyContent: 'space-between',
-     paddingLeft:280,
-     borderRadius:5,
-   },
-   save:{
-     backgroundColor:'#FFC400',
-     top: 10,
-     color:'#ffffff',
-     fontSize:16,
-     padding:3,
-     marginBottom: 25,
-     width: 40,
-     height:40,
-     borderRadius:8,
-     alignItems:'center',
-   },
+  imageGroup4:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft:280,
+    borderRadius:5,
+  },
+  save:{
+    backgroundColor:'#FFC400',
+    top: 10,
+    color:'#ffffff',
+    fontSize:16,
+    padding:3,
+    marginBottom: 25,
+    width: 40,
+    height:40,
+    borderRadius:8,
+    alignItems:'center',
+  },
 });

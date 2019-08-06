@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import List_data from '../components/List_data';
+import Success_Page from '../components/Success_Page';
 import { Actions } from 'react-native-router-flux';
 
-export default class Listdata extends Component<{}> {
+export default class SuccessPage extends Component<{}> {
   render(){
     return(
       <View style={styles.container}>
-        <List_data/>
+        <Success_Page/>
       </View>
     )
   }
