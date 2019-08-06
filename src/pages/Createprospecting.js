@@ -3,7 +3,6 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import Create_Prospecting from '../components/Create_Prospecting';
 import { Actions } from 'react-native-router-flux';
 
-
 export default class Createprospecting extends Component<{}> {
   render(){
     return(

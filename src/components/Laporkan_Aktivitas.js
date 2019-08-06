@@ -13,21 +13,20 @@ export default class Laporkan_Aktivitas extends Component <{}>{
     return (
       <View style={styles.container}>
           <View style = {{backgroundColor:'#284586', height:56}}>
-          <View style={styles.imageGroup}>
-          <Image style={{width:40, height:40, left:16}}
-            source={require('../images/logo1.png')}/>
-            <Text style={styles.text1}>FO Activity</Text>
-          <TouchableOpacity onPress={this.prospecting}>
-            <Text style={styles.close}>keluar</Text>
-          </TouchableOpacity>
+            <View style={styles.imageGroup}>
+              <Image style={{width:40, height:40, left:16}}
+                source={require('../images/logo1.png')}/>
+              <Text style={styles.text1}>FO Activity</Text>
+              <TouchableOpacity onPress={this.prospecting}>
+                <Text style={styles.close}>keluar</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          </View>
-
           <ImageBackground   source={require('../images/background.jpg')} style={{width: '100%', alignItems: 'center',height: '100%'}}>
-          <View style={styles.textGroup2}>
-            <Text style={styles.text}>
+            <View style={styles.textGroup2}>
+              <Text style={styles.text}>
                 <Text>Selamat Bergabung</Text>
-            </Text>
+              </Text>
             <Text style={styles.text}>
                 <Text>Kami Akan Membantu Anda Dalam</Text>
             </Text>
@@ -52,14 +51,14 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
     flex: 1,
   },
-   textGroup2:{
-     marginVertical: 150,
+  textGroup2:{
+   marginVertical: 144,
   },
   button: {
-    width: 250,
+    width: 248,
     backgroundColor: '#FFC400',
-    borderRadius:30,
-    paddingVertical: 13,
+    borderRadius:5,
+    paddingVertical: 16,
   },
   text:{
     fontSize: 20,
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
     width: 80,
     height:35,
     textAlign:'center',
-    borderRadius:30,
+    borderRadius:5,
     marginTop: 3,
     right:16
   },
@@ -100,7 +99,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding:8,
-
-
   }
 });

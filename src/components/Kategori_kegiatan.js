@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {Actions} from 'react-native-router-flux';
 import { getActivityOptionFromServer } from '../networking/server';
 
+
 export default class Kategori_kegiatan extends Component <{}>{
   constructor() {
     super();
@@ -54,7 +55,7 @@ export default class Kategori_kegiatan extends Component <{}>{
 
       if(this.state.isLoading){
         return(
-          <View style={{flex:1, padding:100, marginTop:150,alignItems:'center'}}>
+          <View style={{flex:1,marginTop:150,alignItems:'center'}}>
           <Image style={{width:250, height:200}}
             source={require('../images/logo.png')}/>
           </View>
@@ -68,26 +69,26 @@ export default class Kategori_kegiatan extends Component <{}>{
         });
       return (
         <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height:56}}>
-        <View style={styles.imageGroup1}>
-        <Image style={{width:40, height:40,left:16}}
-          source={require('../images/logo1.png')}/>
-          <Text style={styles.text1}>FO Activity</Text>
-        <TouchableOpacity onPress={this.prospecting}>
-          <Text style={styles.close}>keluar</Text>
-        </TouchableOpacity>
-        </View>
+          <View style = {{backgroundColor:'#284586', height:56}}>
+            <View style={styles.imageGroup1}>
+              <Image style={{width:40, height:40,left:16}}
+              source={require('../images/logo1.png')}/>
+              <Text style={styles.text1}>FO Activity</Text>
+              <TouchableOpacity onPress={this.prospecting}>
+                <Text style={styles.close}>keluar</Text>
+              </TouchableOpacity>
+            </View>
         </View>
           <Text style={styles.text}>
               <Text>Kategori Kegiatan</Text>
           </Text>
           <View style={styles.imageGroup}>
-          <TouchableOpacity  onPress={this.create_prospecting}>
-          <Image style={{width:70, height:70}}
-            source={require('../images/prospecting.png')}/>
-          </TouchableOpacity>
-          <TouchableOpacity  onPress={this.register}>
-              <Image style={{width:70, height:70}}
+              <TouchableOpacity  onPress={this.create_prospecting}>
+                <Image style={{width:72, height:72}}
+                source={require('../images/prospecting.png')}/>
+              </TouchableOpacity>
+              <TouchableOpacity  onPress={this.register}>
+              <Image style={{width:72, height:72}}
                 source={require('../images/konsultasi.png')}/>
           </TouchableOpacity>
           </View>
@@ -97,25 +98,25 @@ export default class Kategori_kegiatan extends Component <{}>{
           </View>
           <View style={styles.imageGroup}>
           <TouchableOpacity  onPress={this.monitor_lapangan}>
-          <Image style={{width:70, height:70}}
+          <Image style={{width:72, height:72}}
             source={require('../images/monitoring.png')}/>
           </TouchableOpacity>
           <TouchableOpacity  onPress={this.tanam_perdana}>
-          <Image style={{width:70, height:70}}
+          <Image style={{width:72, height:72}}
             source={require('../images/tanam.png')}/>
             </TouchableOpacity>
           </View>
           <View style={styles.textGroup2}>
-              {activityOptions[5]}
-              {activityOptions[2]}
+            {activityOptions[5]}
+            {activityOptions[2]}
           </View>
           <View style={styles.imageGroup}>
             <TouchableOpacity  onPress={this.create_panen}>
-            <Image style={{width:70, height:70}}
+            <Image style={{width:72, height:72}}
               source={require('../images/panen.png')}/>
             </TouchableOpacity>
             <TouchableOpacity  onPress={this.create_lainnya}>
-            <Image style={{width:70, height:70}}
+            <Image style={{width:72, height:72}}
               source={require('../images/lainnya.png')}/>
             </TouchableOpacity>
           </View>
@@ -204,11 +205,11 @@ text1:{
    backgroundColor:'#E6B000',
    color:'#000000',
    fontSize:16,
-   padding:5,
+   padding:4,
    width: 80,
-   height:35,
+   height:32,
    textAlign:'center',
-   borderRadius:30,
+   borderRadius:5,
    marginTop: 3,
    right:16
   },
@@ -219,3 +220,4 @@ text1:{
      borderRadius:5,
   }
 });
+  

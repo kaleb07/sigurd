@@ -3,7 +3,6 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 import Laporkan_Aktivitas from '../components/Laporkan_Aktivitas';
 import {Actions} from 'react-native-router-flux';
 
-
 export default class Laporkanaktivitas extends Component<{}> {
 render(){
 return(
@@ -13,11 +12,10 @@ return(
     )
   }
 }
+
 const styles = StyleSheet.create({
-container : {
-backgroundColor:'#FFFFFF',
-flex: 1,
-//alignItems:'center',
-//justifyContent:'center',
-}
+  container : {
+    backgroundColor:'#FFFFFF',
+    flex: 1,
+  }
 });

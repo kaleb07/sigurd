@@ -19,11 +19,11 @@ value: 'kg',
 }];
 
 let priceUnit = [{
-value: '/ton',
+value: 'ton',
 }, {
-value: '/kw',
+value: 'kw',
 }, {
-value: '/kg',
+value: 'kg',
 }];
 
 let landAreaUnit = [{
@@ -179,7 +179,7 @@ export default class Prospecting_Result extends Component<{}> {
             </View>
             <View style={styles.textInputWrapper}>
               <Dropdown label=' '
-                        containerStyle={{width:45, top: 10, left: 0}}
+                        containerStyle={{width:45, top: 10, left:4}}
                         fontSize={14}
                         baseColor={"#000000"}
                         data={capacityUnit}
@@ -188,7 +188,6 @@ export default class Prospecting_Result extends Component<{}> {
                         >
               </Dropdown>
             </View>
-
            <View style={styles.textInputWrapper}>
               <Text style={styles.textPrice}>
                 <Text>Harga</Text>
@@ -207,9 +206,10 @@ export default class Prospecting_Result extends Component<{}> {
                     onChangeText={price => this.insertVal(price, r.index, 'price')}
                     keyboardType="numeric"/>
            </View>
+           <Text style={{paddingTop:46,right:24}}>/</Text>
            <Dropdown label=' '
-                     containerStyle={{width:50, top: 10, right: 25}}
-                     fontSize={14}
+                     containerStyle={{width:46,top:10, right:20}}
+                     fontSize={16}
                      baseColor={"#000000"}
                      data={priceUnit}
                      onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
@@ -218,9 +218,9 @@ export default class Prospecting_Result extends Component<{}> {
            </Dropdown>
            <Icon
       				name="trash"
-      				size={30}
+      				size={32}
       				color="red"
-      				style={{ marginLeft: 'auto', marginTop: 40, right: 13}}
+      				style={{ marginLeft: 'auto', marginTop: 40, right: 16}}
       				onPress={() => this.trashVal(r.index)}
       			/>
            </View>
@@ -230,18 +230,18 @@ export default class Prospecting_Result extends Component<{}> {
 
     return(
       <View style={styles.container}>
-      <View style = {{backgroundColor:'#284586', height:50}}>
-      <View style={styles.imageGroup}>
-      <Image style={{width:40, height:40,left:16}}
-        source={require('../images/logo1.png')}/>
-        <Text style={styles.text2}>FO Activity</Text>
-      <TouchableOpacity onPress={this.prospecting}>
-        <Text style={styles.close}>keluar</Text>
-      </TouchableOpacity>
-      </View>
+        <View style = {{backgroundColor:'#284586', height:50}}>
+          <View style={styles.imageGroup}>
+            <Image style={{width:40, height:40,left:16}}
+              source={require('../images/logo1.png')}/>
+          <Text style={styles.text2}>FO Activity</Text>
+          <TouchableOpacity onPress={this.prospecting}>
+            <Text style={styles.close}>keluar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
         <View style={styles.imageGroup1}>
-          <Image style={{width:60, height:60, marginTop:15}}
+          <Image style={{width:64, height:64, marginTop:16}}
             source={require('../images/prospecting.png')}/>
           <Text style={styles.text1}>
             <Text>Prospecting</Text>
@@ -291,7 +291,6 @@ export default class Prospecting_Result extends Component<{}> {
                 onChangeText={(landArea) => this.setState({landArea})}
                 value={this.state.landArea}
               />
-
             <Dropdown label=' '
                       containerStyle={{width:95, bottom: 16, left: 24}}
                       fontSize={16}
@@ -302,7 +301,7 @@ export default class Prospecting_Result extends Component<{}> {
             </Dropdown>
           </View>
 
-          <Text style={styles.text}>
+          <Text style={styles.text3}>
             <Text>Lama Bertani</Text>
           </Text>
           <TextInput style={styles.inputBox}
@@ -312,18 +311,14 @@ export default class Prospecting_Result extends Component<{}> {
           />
          <View>
             { arr }
-           <TouchableOpacity
-             onPress={ () => { this.insertSomeThing() }}
-             style={styles.save}>
-             <Icon name="plus" size={35} color="black"/>
-           </TouchableOpacity>
+              <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+                <Icon name="plus-square" size={48} color="#284586"/>
+              </TouchableOpacity>
          </View>
         </KeyboardAwareScrollView>
-        <View style={styles.footer}>
-          <TouchableOpacity onPress={ () => { this.insertToServer(); }}>
-            <Text style={styles.next}>Selanjutnya</Text>
+          <TouchableOpacity onPress={ () => { this.insertToServer(); }}  style={styles.footer}>
+            <Text style={styles.next}>Simpan</Text>
           </TouchableOpacity>
-        </View>
       </View>
     );
   }
@@ -340,18 +335,18 @@ var styles = StyleSheet.create({
     fontSize: 12,
     color:'#000000',
     marginRight: 15
-    },
+  },
   small:{
     flex: 1,
     flexDirection: 'row',
   },
   text1:{
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:150,
-    marginBottom:30,
-    marginTop:30
+    paddingRight:144,
+    marginBottom:32,
+    marginTop:32
   },
   text2:{
     color:'#FFFFFF',
@@ -386,6 +381,7 @@ var styles = StyleSheet.create({
   },
   inputBox:{
     width:350,
+    height:48,
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -411,11 +407,12 @@ var styles = StyleSheet.create({
   smallPrice:{
     flex: 1,
     width:65,
-    right:20,
+    right:18,
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
     paddingVertical: 4,
+    backgroundColor:'#F5F5F5',
     fontSize:12,
     color:'#000000',
     marginVertical: 5,
@@ -428,6 +425,7 @@ var styles = StyleSheet.create({
     borderColor: '#000000',
     paddingVertical: 4,
     fontSize:12,
+    backgroundColor:'#F5F5F5',
     color:'#000000',
     marginVertical: 5,
   },
@@ -443,7 +441,7 @@ var styles = StyleSheet.create({
      borderRadius:5,
      borderWidth: 0.5,
      borderColor: '#000000',
-     //borderRadius: 25,
+     backgroundColor:'#F5F5F5',
      paddingVertical: 6,
      fontSize:16,
      color:'#000000',
@@ -462,19 +460,25 @@ var styles = StyleSheet.create({
    next:{
      color:'#ffffff',
      fontSize:20,
-     marginTop:8,
+     marginTop:5,
      padding:5,
      width:200,
      borderRadius:30,
      height:35,
      textAlign:'center',
      fontWeight: 'bold',
- },
+   },
    text:{
-     fontSize: 14,
+     fontSize:14,
      fontWeight: '400',
      color:'#000000',
-     marginTop: 10
+     marginTop:8
+   },
+     text3:{
+       fontSize:16,
+       fontWeight: '400',
+       color:'#000000',
+       marginBottom:4,
    },
    textCapacity:{
      fontSize: 14,
@@ -484,11 +488,11 @@ var styles = StyleSheet.create({
      left: 5
    },
    textPrice:{
-     fontSize: 14,
+     fontSize:14,
      fontWeight: '400',
      color:'#000000',
      marginTop: 10,
-     right: 20
+     right:20
    },
    close:{
      backgroundColor:'#E6B000',
@@ -496,12 +500,12 @@ var styles = StyleSheet.create({
      fontSize:16,
      padding:5,
      width: 80,
-     height:35,
+     height:32,
      textAlign:'center',
-     borderRadius:30,
-     marginTop:3,
+     borderRadius:5,
+     marginTop:4,
      right:16
-     },
+   },
    imageGroup4:{
      flexDirection: 'row',
      justifyContent: 'space-between',

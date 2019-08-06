@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-//import {Container, Header, Title, Content, Footer, FooterTab,Left, Right, Body, Icon,} from 'native-base';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,8 +9,6 @@ import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
-//import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
 
 const options={
   title: 'my pic app',
@@ -35,7 +32,7 @@ export default class Create_Prospecting extends Component<{}>{
         index:0,
         image:'',
         caption:''
-      }],
+      }]
     }
     this.selectImage = this.selectImage.bind(this);
   };
@@ -132,7 +129,7 @@ export default class Create_Prospecting extends Component<{}>{
    };
    insertActivityToServer(newActivity).then((responseJson)=> {
      if(responseJson.err){
-        Alert.alert(responseJson.err);
+       Alert.alert(responseJson.err);
      }else{
        this.prospecting();
      }
@@ -149,7 +146,7 @@ export default class Create_Prospecting extends Component<{}>{
             <TouchableOpacity onPress={() => this.selectImage(r.index)}>
               <Image source={r.image !=='' ? r.image :
                 require('../images/add.png')}
-                style={{width:50, height:50,  marginRight:10,marginTop:10, paddingLeft:10}}/>
+                style={{width:48, height:48,marginRight:8,marginTop:10, paddingLeft:8}}/>
             </TouchableOpacity>
             <TextInput
               style={styles.inputBox2}
@@ -157,7 +154,7 @@ export default class Create_Prospecting extends Component<{}>{
               onChangeText={data => this.insertVal(data, r.index)}
             />
             <Icon name="trash"
-               size={30}
+               size={32}
                color="red"
                style={{ marginLeft: 'auto', marginTop: 20, marginRight:25}}
                onPress={() => this.trashVal(r.index)}
@@ -169,18 +166,18 @@ export default class Create_Prospecting extends Component<{}>{
 
     return (
       <View style={styles.container}>
-      <View style = {{backgroundColor:'#284586', height:50}}>
-   <View style={styles.imageGroup2}>
-   <Image style={{width:40, height:40,left:16}}
-     source={require('../images/logo1.png')}/>
-     <Text style={styles.text2}>FO Activity</Text>
-   <TouchableOpacity onPress={this.prospecting}>
-     <Text style={styles.close}>keluar</Text>
-   </TouchableOpacity>
-   </View>
+        <View style = {{backgroundColor:'#284586', height:50}}>
+          <View style={styles.imageGroup2}>
+            <Image style={{width:40, height:40,left:16}}
+              source={require('../images/logo1.png')}/>
+            <Text style={styles.text2}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
+        </View>
    </View>
         <View style={styles.imageGroup1}>
-          <Image style={{width:60, height:60, marginTop:15}}
+          <Image style={{width:64, height:64, marginTop:16}}
             source={require('../images/prospecting.png')}/>
           <Text style={styles.text1}>
             <Text> Prospecting</Text>
@@ -189,8 +186,8 @@ export default class Create_Prospecting extends Component<{}>{
         <KeyboardAwareScrollView style={{paddingLeft:20,}}>
           <DatePicker
               style={{width: 350}}
-              date={this.state.date} //initial date from state
-              mode="date" //The enum of date, datetime and time
+              date={this.state.date}
+              mode="date"
               placeholder="pilih tanggal"
               format="DD-MM-YYYY"
               minDate="01-01-2018"
@@ -202,11 +199,11 @@ export default class Create_Prospecting extends Component<{}>{
                   position: 'absolute',
                   left: 0,
                   marginLeft: 0,
-                  width:50,
-                  height:50
+                  width:48,
+                  height:48
                 },
                 dateInput: {
-                  marginLeft: 60,
+                  marginLeft:56,
                   fontSize: 16,
                   borderRadius:5,
                   borderWidth: 0.5,
@@ -242,16 +239,15 @@ export default class Create_Prospecting extends Component<{}>{
             <Text>Foto Kegiatan</Text>
           </Text>
             {arr}
-          <TouchableOpacity style={styles.save} onPress={() => { this.insertSomeThing('')}}>
-            <Icon name="plus" size={40} color="black"/>
-          </TouchableOpacity>
-        </KeyboardAwareScrollView>
-        <View style={styles.footer}>
-          <TouchableOpacity
-              onPress={()=> {this.insertToServer() }}>
-            <Text style={styles.next}>Selanjutnya</Text>
+        <View style={{paddingBottom:80 }}>
+          <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+            <Icon name="plus-square" size={48} color="#284586"/>
           </TouchableOpacity>
         </View>
+        </KeyboardAwareScrollView>
+          <TouchableOpacity onPress={()=>{this.insertToServer()}} style={styles.footer}>
+            <Text style={styles.next}>Selanjutnya</Text>
+          </TouchableOpacity>
       </View>
     )
   };
@@ -261,14 +257,12 @@ const styles = StyleSheet.create({
   container:{
     flex: 1,
     backgroundColor:'#FFFFFF',
-    //width: wp('100%'),
-    //height: hp('95%'),
   },
   text:{
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
-    marginTop: 10,
+    marginTop:8,
 
   },
  imageGroup2:{
@@ -280,9 +274,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:100,
-    marginBottom:30,
-    marginTop:30
+    paddingRight:96,
+    marginBottom:32,
+    marginTop:32
   },
   text2:{
    color:'#FFFFFF',
@@ -298,9 +292,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   dropdown:{
-    // paddingVertical: 13,
-    // width: 250,
-    // paddingHorizontal:10,
     fontSize: 16,
     color:'#000000',
   },
@@ -325,18 +316,8 @@ const styles = StyleSheet.create({
     textAlign:'center',
     marginRight:20
   },
-  save:{
-    backgroundColor:'#FFC400',
-    color:'#ffffff',
-    fontSize:16,
-    padding:5,
-    marginBottom:70,
-    width: 50,
-    height:50,
-    borderRadius:8,
-    alignItems:'center',
-  },
   next:{
+    flex:1,
     color:'#ffffff',
     fontSize:20,
     marginTop:8,
@@ -345,8 +326,7 @@ const styles = StyleSheet.create({
     borderRadius:30,
     height:35,
     textAlign:'center',
-    fontWeight: 'bold',
-
+    fontWeight: 'bold'
   },
   inputDropdown:{
     borderWidth: 1,
@@ -355,7 +335,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     backgroundColor: '#FFFFFF',
     marginVertical: 10,
-
   },
   itemDropdown: {
     padding: 15,
@@ -418,17 +397,16 @@ const styles = StyleSheet.create({
     fontSize:16,
     padding:5,
     width: 80,
-    height:35,
+    height:32,
     textAlign:'center',
-    borderRadius:30,
-    marginTop: 3,
+    borderRadius:5,
+    marginTop:4,
     right:16
-
-    },
-    imageGroup4:{
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingLeft:280,
-      borderRadius:5,
+  },
+  imageGroup4:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft:280,
+    borderRadius:5,
   },
 });

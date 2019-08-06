@@ -2,17 +2,13 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-//import {Container, Header, Title, Content, Footer, FooterTab,Left, Right, Body, Icon,} from 'native-base';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
-// import { create } from '../data/api';
-// import axios from 'axios';
 import { insertActivityToServer } from '../networking/server';
-//import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 var items = [
@@ -35,6 +31,9 @@ export default class Monitor_Lapangan extends Component<{}>{
 
   laporkan_aktivitas() {
     Actions.laporkan_aktivitas()
+  }
+  success_page(){
+    Actions.success_page()
   }
 
   constructor() {
@@ -123,9 +122,9 @@ export default class Monitor_Lapangan extends Component<{}>{
       if(responseJson.err){
         Alert.alert(responseJson.err);
       }else{
-        this.laporkan_aktivitas();
+        this.success_page();
       }
-    })    
+    })
     console.log(newActivity);
   }
 
@@ -160,7 +159,7 @@ export default class Monitor_Lapangan extends Component<{}>{
             <TouchableOpacity onPress={() => this.selectImage(r.index)}>
               <Image source={r.image !=='' ? r.image :
                 require('../images/add.png')}
-                style={{width:50, height:50,  marginRight:10,marginTop:10, paddingLeft:10}}/>
+                style={{width:48, height:48,  marginRight:8,marginTop:8, paddingLeft:8}}/>
             </TouchableOpacity>
             <TextInput
               style={styles.inputBox2}
@@ -168,9 +167,9 @@ export default class Monitor_Lapangan extends Component<{}>{
               onChangeText={data => this.insertVal(data, r.index)}
             />
             <Icon name="trash"
-               size={30}
+               size={32}
                color="red"
-               style={{ marginLeft: 'auto', marginTop: 20, marginRight:5}}
+               style={{ marginLeft: 'auto', marginTop:16, marginRight:4}}
                onPress={() => this.trashVal(r.index)}
             />
           </View>
@@ -180,18 +179,18 @@ export default class Monitor_Lapangan extends Component<{}>{
 
     return (
       <View style={styles.container}>
-      <View style = {{backgroundColor:'#284586', height:56}}>
-      <View style={styles.imageGroup5}>
-      <Image style={{width:40, height:40,left:16}}
-        source={require('../images/logo1.png')}/>
-        <Text style={styles.text2}>FO Activity</Text>
-      <TouchableOpacity onPress={this.prospecting}>
-        <Text style={styles.close}>keluar</Text>
-      </TouchableOpacity>
-      </View>
+        <View style = {{backgroundColor:'#284586', height:56}}>
+          <View style={styles.imageGroup5}>
+            <Image style={{width:40, height:40,left:16}}
+              source={require('../images/logo1.png')}/>
+            <Text style={styles.text2}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
+        </View>
       </View>
         <View style={styles.imageGroup1}>
-          <Image style={{width:60, height:60, marginTop:15}}
+          <Image style={{width:64, height:64, marginTop:16}}
             source={require('../images/monitoring.png')}/>
           <Text style={styles.text1}>
             <Text> Monitor Lapangan</Text>
@@ -200,8 +199,8 @@ export default class Monitor_Lapangan extends Component<{}>{
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
           <DatePicker
               style={{width: 350}}
-              date={this.state.date} //initial date from state
-              mode="date" //The enum of date, datetime and time
+              date={this.state.date}
+              mode="date"
               placeholder="pilih tanggal"
               format="DD-MM-YYYY"
               minDate="01-01-2018"
@@ -213,11 +212,11 @@ export default class Monitor_Lapangan extends Component<{}>{
                   position: 'absolute',
                   left: 0,
                   marginLeft: 0,
-                  width:50,
-                  height:50
+                  width:48,
+                  height:48
                 },
                 dateInput: {
-                  marginLeft: 60,
+                  marginLeft:56,
                   fontSize: 16,
                   borderRadius:5,
                   borderWidth: 0.5,
@@ -270,9 +269,11 @@ export default class Monitor_Lapangan extends Component<{}>{
             <Text>Foto Kegiatan</Text>
           </Text>
           {arr}
-          <TouchableOpacity style={styles.save} onPress={() => { this.insertSomeThing('')}}>
-            <Icon name="plus" size={40} color="black"/>
-          </TouchableOpacity>
+          <View style={{paddingBottom:32}}>
+            <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+              <Icon name="plus-square" size={48} color="#284586"/>
+            </TouchableOpacity>
+          </View>
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <View style={styles.imageGroup2}>
@@ -293,24 +294,21 @@ export default class Monitor_Lapangan extends Component<{}>{
 const styles = StyleSheet.create({
   container:{
     backgroundColor:'#FFFFFF',
-    //width: wp('100%'),
-    //height: hp('95%'),
     flex: 1,
   },
   text:{
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
-    // /paddingLeft:10,
     marginTop: 10,
   },
   text1:{
     fontSize: 24,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:85,
-    marginBottom:30,
-    marginTop:30
+    paddingRight:80,
+    marginBottom:32,
+    marginTop:32
   },
   text2:{
     color:'#FFFFFF',
@@ -329,9 +327,6 @@ const styles = StyleSheet.create({
    marginBottom: 30,
   },
   dropdown:{
-    // paddingVertical: 13,
-    // width: 250,
-    // paddingHorizontal:10,
     fontSize: 16,
     color:'#000000',
   },
@@ -358,11 +353,11 @@ const styles = StyleSheet.create({
     color:'#000000',
     fontSize:16,
     padding:8,
-    width: 150,
+    width: 144,
     height:40,
     textAlign:'center',
-    marginRight:50,
-    borderRadius:30
+    marginRight:48,
+    borderRadius:5
   },
   save:{
     backgroundColor:'#FFC400',
@@ -379,12 +374,12 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFC400',
     color:'#000000',
     fontSize:16,
-    marginBottom:10,
+    marginBottom:8,
     padding:8,
-    width: 150,
+    width: 144,
     height:40,
     textAlign:'center',
-    borderRadius:30
+    borderRadius:5
   },
   inputDropdown:{
     borderWidth: 0.5,
@@ -418,15 +413,15 @@ const styles = StyleSheet.create({
   },
   inputBox3:{
     width:350,
-    height:45,
+    height:48,
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
     backgroundColor: '#F5F5F5',
-    paddingVertical: 6,
+    paddingVertical:8,
     fontSize:16,
     color:'#000000',
-    marginVertical: 5,
+    marginVertical:4,
   },
   inputBox2:{
     width:260,
@@ -454,11 +449,11 @@ const styles = StyleSheet.create({
     backgroundColor:'#E6B000',
     color:'#000000',
     fontSize:16,
-    padding:5,
+    padding:4,
     width: 80,
-    height:35,
+    height:32,
     textAlign:'center',
-    borderRadius:30,
+    borderRadius:5,
     marginTop: 3,
     right:16
  },
