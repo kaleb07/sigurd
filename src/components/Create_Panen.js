@@ -26,9 +26,9 @@ value: 'kg',
 }];
 
 const options={
-  title: 'my pic app',
-  takePhotoButtonTitle:'Take photo your camera',
-  chooseFromLibraryButtonTitle:'Choose photo from library',
+  title: 'Choose photo',
+  takePhotoButtonTitle:'Take from my camera',
+  chooseFromLibraryButtonTitle:'Take from my library',
 }
 
 export default class Create_Panen extends Component<{}>{
@@ -161,7 +161,8 @@ export default class Create_Panen extends Component<{}>{
  }
 
   render(){
-    const  search  = this.state;
+    const now = new Date();
+    const prevMonths = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
     let arr = this.state.arr.map((r, index) => {
       return (
         <View key={ index }>
@@ -191,7 +192,7 @@ export default class Create_Panen extends Component<{}>{
       <View style={styles.container}>
         <View style = {{backgroundColor:'#284586', height:56}}>
           <View style={styles.imageGroup5}>
-            <Image style={{width:40, height:40,left:16}}
+            <Image style={{width:40, height:40,left:8}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
             <TouchableOpacity onPress={this.prospecting}>
@@ -213,8 +214,8 @@ export default class Create_Panen extends Component<{}>{
               mode="date"
               placeholder="pilih tanggal"
               format="DD-MM-YYYY"
-              minDate="01-01-2018"
-              maxDate="01-01-2050"
+              minDate={prevMonths}
+              maxDate={now}
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               customStyles={{
@@ -264,25 +265,25 @@ export default class Create_Panen extends Component<{}>{
               underlineColorAndroid="transparent"
             />
 
-            <Text style={styles.text}>
-              <Text>Jumlah Panen</Text>
-            </Text>
-            <View style={styles.textInputWrapper}>
-              <TextInput style={styles.inputHarvest}
-                        multiline={true}
-                        onChangeText={(harvestQuantity) => this.setState({harvestQuantity})}
-                        value={this.state.harvestQuantity}
-                        keyboardType="numeric"
-              />
-              <Dropdown label=' '
-                        containerStyle={{width:95, bottom: 16, left: 24}}
-                        fontSize={16}
-                        baseColor={"#000000"}
-                        data={unit}
-                        onChangeText={(unitHarvest) => this.setState({unitHarvest})}
-                        value={this.state.unitHarvest}>
-              </Dropdown>
-            </View>
+          <Text style={styles.text}>
+            <Text>Jumlah Panen</Text>
+          </Text>
+          <View style={styles.textInputWrapper}>
+            <TextInput style={styles.inputHarvest}
+                      multiline={true}
+                      onChangeText={(harvestQuantity) => this.setState({harvestQuantity})}
+                      value={this.state.harvestQuantity}
+                      keyboardType="numeric"
+            />
+            <Dropdown label=' '
+                      containerStyle={{width:95, bottom: 16, left: 24}}
+                      fontSize={16}
+                      baseColor={"#000000"}
+                      data={unit}
+                      onChangeText={(unitHarvest) => this.setState({unitHarvest})}
+                      value={this.state.unitHarvest}>
+            </Dropdown>
+          </View>
 
           <Text style={styles.text3}>
             <Text>Lokasi</Text>
@@ -311,13 +312,13 @@ export default class Create_Panen extends Component<{}>{
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <View style={styles.imageGroup2}>
-              <TouchableOpacity onPress={this.kegiatan} >
-                <Text style={styles.cancel}>Batal</Text>
-              </TouchableOpacity>
+            <TouchableOpacity onPress={this.kegiatan} >
+              <Text style={styles.cancel}>Batal</Text>
+            </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => { this.insertToServer() }}>
-                <Text style={styles.next}>Simpan</Text>
-              </TouchableOpacity>
+            <TouchableOpacity onPress={() => { this.insertToServer() }}>
+              <Text style={styles.next}>Simpan</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

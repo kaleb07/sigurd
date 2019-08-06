@@ -8,17 +8,18 @@ export default class Success_Page extends Component <{}>{
   laporkan_aktivitas() {
     Actions.laporkan_aktivitas()
   }
+
   render(){
-      return (
-        <View style={styles.container}>
-          <View style = {{backgroundColor:'#284586', height:56}}>
-            <View style={styles.imageGroup1}>
-              <Image style={{width:40, height:40,left:16}}
-                source={require('../images/logo1.png')}/>
-              <Text style={styles.text1}>FO Activity</Text>
-              <TouchableOpacity onPress={this.prospecting}>
-                <Text style={styles.close}>keluar</Text>
-              </TouchableOpacity>
+    return (
+      <View style={styles.container}>
+        <View style = {{backgroundColor:'#284586', height:56}}>
+          <View style={styles.imageGroup1}>
+            <Image style={{width:40, height:40,left:16}}
+              source={require('../images/logo1.png')}/>
+            <Text style={styles.text1}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.logo}>

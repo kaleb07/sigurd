@@ -232,14 +232,14 @@ export default class Prospecting_Result extends Component<{}> {
       <View style={styles.container}>
         <View style = {{backgroundColor:'#284586', height:50}}>
           <View style={styles.imageGroup}>
-            <Image style={{width:40, height:40,left:16}}
+            <Image style={{width:40, height:40,left:8}}
               source={require('../images/logo1.png')}/>
-          <Text style={styles.text2}>FO Activity</Text>
-          <TouchableOpacity onPress={this.prospecting}>
-            <Text style={styles.close}>keluar</Text>
-          </TouchableOpacity>
+            <Text style={styles.text2}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
+         </View>
         </View>
-      </View>
         <View style={styles.imageGroup1}>
           <Image style={{width:64, height:64, marginTop:16}}
             source={require('../images/prospecting.png')}/>
@@ -285,12 +285,12 @@ export default class Prospecting_Result extends Component<{}> {
             <Text>Luas Lahan</Text>
           </Text>
           <View style={styles.dropdownWrapper}>
-              <TextInputMask
-                style={styles.inputBox4}
-                type={'only-numbers'}
-                onChangeText={(landArea) => this.setState({landArea})}
-                value={this.state.landArea}
-              />
+            <TextInputMask
+              style={styles.inputBox4}
+              type={'only-numbers'}
+              onChangeText={(landArea) => this.setState({landArea})}
+              value={this.state.landArea}
+            />
             <Dropdown label=' '
                       containerStyle={{width:95, bottom: 16, left: 24}}
                       fontSize={16}
@@ -310,15 +310,15 @@ export default class Prospecting_Result extends Component<{}> {
               value={this.state.longTimeFarming}
           />
          <View>
-            { arr }
-              <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
-                <Icon name="plus-square" size={48} color="#284586"/>
-              </TouchableOpacity>
+          { arr }
+          <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+            <Icon name="plus-square" size={48} color="#284586"/>
+          </TouchableOpacity>
          </View>
         </KeyboardAwareScrollView>
-          <TouchableOpacity onPress={ () => { this.insertToServer(); }}  style={styles.footer}>
-            <Text style={styles.next}>Simpan</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={ () => { this.insertToServer(); }}  style={styles.footer}>
+          <Text style={styles.next}>Simpan</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -326,7 +326,6 @@ export default class Prospecting_Result extends Component<{}> {
 
 var styles = StyleSheet.create({
   container:{
-    //marginTop:35,
     backgroundColor:'#FFFFFF',
     flex: 1,
   },
@@ -474,11 +473,11 @@ var styles = StyleSheet.create({
      color:'#000000',
      marginTop:8
    },
-     text3:{
-       fontSize:16,
-       fontWeight: '400',
-       color:'#000000',
-       marginBottom:4,
+   text3:{
+     fontSize:16,
+     fontWeight: '400',
+     color:'#000000',
+     marginBottom:4,
    },
    textCapacity:{
      fontSize: 14,

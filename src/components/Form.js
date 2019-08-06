@@ -10,8 +10,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
 
-
-
 var items = [
   {id: 1, name: 'Cabe Merah'},
   {id: 2, name: 'Cabe Hijau'},
@@ -20,9 +18,9 @@ var items = [
 ];
 
 const options={
-  title: 'my pic app',
-  takePhotoButtonTitle:'Take photo your camera',
-  chooseFromLibraryButtonTitle:'Choose photo from library',
+  title: 'Choose photo',
+  takePhotoButtonTitle:'Take from my camera',
+  chooseFromLibraryButtonTitle:'Take from my library',
 }
 
 export default class Form extends Component<{}>{
@@ -52,24 +50,6 @@ export default class Form extends Component<{}>{
     }
     this.selectImage = this.selectImage.bind(this);
   };
-
-  CheckTextInputIsEmptyOrNot(){
-    const {date}  = this.state ;
-    const { activityDesc }  = this.state ;
-    const { location }  = this.state ;
-    const { activityResult }  = this.state ;
-    const { image }  = this.state.arr ;
-    const { caption }  = this.state.arr ;
-    const { arr }  = this.state ;
-
-
-    if(date == '' || activityDesc == '' || location == '' || activityResult == '' || image == '' || caption =='' || arr =='' ){
-      Alert.alert("Please Enter All the Values.");
-    }
-    else{
-    this.insertToServer();
-    }
-  }
 
   removeItem(index) {
     const list = this.state.arr;
@@ -144,7 +124,6 @@ export default class Form extends Component<{}>{
         this.success_page();
       }
     })
-    //
     console.log(newActivity);
   }
 
@@ -171,7 +150,8 @@ export default class Form extends Component<{}>{
  }
 
   render(){
-    const  search  = this.state;
+    const now = new Date();
+    const prevMonths = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
     let arr = this.state.arr.map((r, index) => {
       return (
         <View key={ index }>
@@ -201,7 +181,7 @@ export default class Form extends Component<{}>{
       <View style={styles.container}>
         <View style = {{backgroundColor:'#284586', height:56}}>
           <View style={styles.imageGroup5}>
-            <Image style={{width:40, height:40,left:16}}
+            <Image style={{width:40, height:40,left:8}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
             <TouchableOpacity onPress={this.prospecting}>
@@ -224,8 +204,8 @@ export default class Form extends Component<{}>{
               mode="date"
               placeholder="pilih tanggal"
               format="DD-MM-YYYY"
-              minDate="01-01-2018"
-              maxDate="01-01-2050"
+              minDate={prevMonths}
+              maxDate={now}
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               customStyles={{
@@ -246,55 +226,55 @@ export default class Form extends Component<{}>{
               }
             }}
             onDateChange={(date) => {this.setState({date: date})}}/>
-          <Text style={styles.text}>
-            <Text>Deskripsi Kegiatan</Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityDesc) => this.setState({activityDesc})}
-                    value={this.state.activityDesc}
-          />
-          <Text style={styles.text}>
-            <Text>Proyek</Text>
-          </Text>
-          <SearchableDropdown
-              onTextChange={text => console.log(text)}
-              onItemSelect={items => console.log(items)}
-              containerStyle={{ padding: 1 }}
-              textInputStyle={styles.inputDropdown}
-              itemStyle={styles.itemDropdown}
-              itemTextStyle={{ color: '#222' }}
-              itemsContainerStyle={{ maxHeight: 140 }}
-              items={items}
-              defaultIndex={2}
-              placeholder="Proyek"
-              resetValue={false}
-              underlineColorAndroid="transparent"
-          />
-          <Text style={styles.text}>
-            <Text>Lokasi</Text>
-          </Text>
-          <TextInput style={styles.inputBox3}
-                    onChangeText={(location) => this.setState({location})}
-                    value={this.state.location}
-          />
-          <Text style={styles.text}>
-            <Text>Hasil Kegiatan </Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityResult) => this.setState({activityResult})}
-                    value={this.state.activityResult}
-          />
-          <Text style={styles.text}>
-            <Text>Foto Kegiatan</Text>
-          </Text>
-          {arr}
-          <View style={{paddingBottom:80 }}>
-            <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
-              <Icon name="plus-square" size={48} color="#284586"/>
-            </TouchableOpacity>
-          </View>
+            <Text style={styles.text}>
+              <Text>Deskripsi Kegiatan</Text>
+            </Text>
+            <TextInput style={styles.inputBox}
+                      multiline={true}
+                      onChangeText={(activityDesc) => this.setState({activityDesc})}
+                      value={this.state.activityDesc}
+            />
+            <Text style={styles.text}>
+              <Text>Proyek</Text>
+            </Text>
+            <SearchableDropdown
+                onTextChange={text => console.log(text)}
+                onItemSelect={items => console.log(items)}
+                containerStyle={{ padding: 1 }}
+                textInputStyle={styles.inputDropdown}
+                itemStyle={styles.itemDropdown}
+                itemTextStyle={{ color: '#222' }}
+                itemsContainerStyle={{ maxHeight: 140 }}
+                items={items}
+                defaultIndex={2}
+                placeholder="Proyek"
+                resetValue={false}
+                underlineColorAndroid="transparent"
+            />
+            <Text style={styles.text}>
+              <Text>Lokasi</Text>
+            </Text>
+            <TextInput style={styles.inputBox3}
+                      onChangeText={(location) => this.setState({location})}
+                      value={this.state.location}
+            />
+            <Text style={styles.text}>
+              <Text>Hasil Kegiatan </Text>
+            </Text>
+            <TextInput style={styles.inputBox}
+                      multiline={true}
+                      onChangeText={(activityResult) => this.setState({activityResult})}
+                      value={this.state.activityResult}
+            />
+            <Text style={styles.text}>
+              <Text>Foto Kegiatan</Text>
+            </Text>
+            {arr}
+            <View style={{paddingBottom:80 }}>
+              <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+                <Icon name="plus-square" size={48} color="#284586"/>
+              </TouchableOpacity>
+            </View>
           </View>
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
