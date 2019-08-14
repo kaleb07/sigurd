@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 const apiActivity = 'http://localhost:3011/activity';
 const apiActivityOption = 'http://localhost:3011/activity_option';
 const apiProspecting = 'http://localhost:3011/prospecting';
+const apiSignedUrl = 'http://localhost:3011/signed-url';
+var RNFetchBlob = require('rn-fetch-blob').default
 var id = '';
 var id_farmer='';
 
@@ -44,8 +46,63 @@ async function sendIdFarmer(params){
   console.log('send id prospecting: ', id_farmer);
 }
 
-async function insertActivityToServer(params){
+
+async function insertActivityToServer(activity, params){
   try{
+    let urls = [];
+    let arr = [{
+      uri: '',
+      url: '',
+      caption: ''
+    }];
+    let imgs = await params.images.map(async (img, index) => {
+      let urlBody = activity + '/' + img.image.fileName;
+      const save = () => {
+            urls[index] = 'https://storage.cloud.google.com/s-tanifund-storage/' + urlBody;
+            arr[index] = {
+              uri: img.image.uri,
+              url : urls[index],
+              caption : img.caption
+            };
+
+            console.log('arr: ', arr);
+        }
+
+      let saveUrl = await save();
+
+      const signUrl = await fetch(apiSignedUrl, {
+            method: 'POST',
+            headers: {
+              'Accept' : 'application/json',
+              'Content-Type' : 'application/json',
+            },
+            body: JSON.stringify({
+                url: urlBody,
+                contentType: img.image.type
+              })
+        })
+
+        const response = await signUrl.json();
+        console.log('signed url = ', response);
+
+        const url = await RNFetchBlob.fetch( 'PUT', response[0], {
+                "Content-Type": img.image.type,
+                "Accept": "*/*",
+                "Cache-Control": "no-cache",
+                "Host": "storage.googleapis.com",
+                "Accept-Encoding": "gzip, deflate",
+                "Connection": "keep-alive",
+                "cache-control": "no-cache"
+              }, RNFetchBlob.wrap(img.image.uri)
+            )
+
+        // .catch(function(error){
+        //   console.log('error signedUrl: ', error)
+        // })
+      })
+
+      params.images = arr;
+
     let response = await fetch(apiActivity, {
         method: 'POST',
         headers: {
@@ -56,8 +113,9 @@ async function insertActivityToServer(params){
     });
     let responseJson = await response.json();
     id = responseJson.id;
-    console.log('from server ', id)
+    console.log('respn: ', responseJson);
     return responseJson;
+
   } catch(error){
     console.log('Error is: ', error);
   }

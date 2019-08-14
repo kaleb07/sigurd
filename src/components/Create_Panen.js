@@ -18,17 +18,18 @@ var items = [
 ];
 
 let unit = [{
-value: 'ton',
-}, {
-value: 'kw',
-}, {
-value: 'kg',
+  value: 'ton',
+  }, {
+  value: 'kw',
+  }, {
+  value: 'kg',
 }];
 
 const options={
   title: 'Choose photo',
   takePhotoButtonTitle:'Take from my camera',
   chooseFromLibraryButtonTitle:'Take from my library',
+  quality: 0.2,
 }
 
 export default class Create_Panen extends Component<{}>{
@@ -102,7 +103,11 @@ export default class Create_Panen extends Component<{}>{
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        const source = { uri: response.uri };
+        const source = {
+          uri: response.uri,
+          type: response.type,
+          fileName: response.fileName
+         };
         const newList = list.map(listData => {
           if(listData.index === index) {
             return {
@@ -117,7 +122,7 @@ export default class Create_Panen extends Component<{}>{
     }});
   };
 
-  insertToServer(){
+  insertToServer(activityName){
     const newActivity = {
       date: this.state.date,
       activityOption: 'Panen',
@@ -128,7 +133,7 @@ export default class Create_Panen extends Component<{}>{
       activityResult: this.state.activityResult,
       images:this.state.arr,
     };
-    insertActivityToServer(newActivity).then((responseJson)=> {
+    insertActivityToServer(activityName, newActivity).then((responseJson)=> {
       if(responseJson.err){
         Alert.alert(responseJson.err);
       }else{
@@ -316,7 +321,7 @@ export default class Create_Panen extends Component<{}>{
               <Text style={styles.cancel}>Batal</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { this.insertToServer() }}>
+            <TouchableOpacity onPress={() => { this.insertToServer('panen') }}>
               <Text style={styles.next}>Simpan</Text>
             </TouchableOpacity>
           </View>

@@ -10,28 +10,18 @@ import { TextInputMask } from 'react-native-masked-text';
 import { getProspecting, updateProspectingResult } from '../networking/server';
 
 let index = 0;
-let capacityUnit = [{
-value: 'ton',
-}, {
-value: 'kw',
-}, {
-value: 'kg',
-}];
-
-let priceUnit = [{
-value: 'ton',
-}, {
-value: 'kw',
-}, {
-value: 'kg',
+let weightUnit = [{
+  value: 'ton',
+  }, {
+  value: 'kw',
+  }, {
+  value: 'kg',
 }];
 
 let landAreaUnit = [{
-value: 'hektar',
-}, {
-value: 'm2',
-}, {
-value: 'rante',
+  value: 'hektar',
+  }, {
+  value: 'm2',
 }];
 
 export default class Prospecting_Result extends Component<{}> {
@@ -215,7 +205,7 @@ export default class Prospecting_Result extends Component<{}> {
                        containerStyle={{width:45, top: 10, left: 0}}
                        fontSize={14}
                        baseColor={"#000000"}
-                       data={capacityUnit}
+                       data={weightUnit}
                        onChangeText={unitCapacity => this.insertVal(unitCapacity, r.index, 'unitCapacity')}
                        value={r.unitCapacity}
                        >
@@ -245,7 +235,7 @@ export default class Prospecting_Result extends Component<{}> {
                     containerStyle={{width:46, top: 10, right:16}}
                     fontSize={16}
                     baseColor={"#000000"}
-                    data={priceUnit}
+                    data={weightUnit}
                     onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
                     value={r.unitPrice}
                     >

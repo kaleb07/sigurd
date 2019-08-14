@@ -141,10 +141,10 @@ export default class List_data extends Component <{}>{
                </View>
         })
 
-      let images = activityProspecting.images.map((val, key) => {
-        return <View key={key} style={{flexDirection: 'row', paddingTop:5}}>
-                 <Image source = {{uri: val.image.uri}}
-                  style={{height:60,width:55,}}/>
+      let images = activityProspecting.images.map((val, idx) => {
+        return <View key={idx} style={{flexDirection: 'row', paddingTop:5}}>
+                 <Image source = {{uri: val.uri}}
+                  style={{height:60, width:55}}/>
                  <Text numberOfLines={3} style={{left:10, color:'#000000',fontSize:16}}>{val.caption}</Text>
                </View>
       });
