@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 const apiActivity = 'http://localhost:3011/activity';
 const apiActivityOption = 'http://localhost:3011/activity_option';
 const apiProspecting = 'http://localhost:3011/prospecting';
+const apiSignedUrl = 'http://localhost:3011/signed-url';
+var RNFetchBlob = require('rn-fetch-blob').default
 const apiAccount = 'https://api.tanihub.net/v1/auth/signin';
 var id = '';
 var id_farmer='';

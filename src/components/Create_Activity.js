@@ -16,9 +16,7 @@ export default class Create_Activity extends Component <Props> {
 
    _configureGoogleSignIn() {
      GoogleSignin.configure({
-       webClientId: '352070757217-dmkn2fi5o0dpkq3fbooo8vvu6ct17rct.apps.googleusercontent.com',  //Replace with your own client id
-       // forceConsentPrompt: true,
-       // offlineAccess: false,
+       webClientId: '352070757217-dmkn2fi5o0dpkq3fbooo8vvu6ct17rct.apps.googleusercontent.com',
      });
    }
 
@@ -50,7 +48,7 @@ export default class Create_Activity extends Component <Props> {
            provider: 'google-app',
          }
        };
-       console.log('params:', params);
+
        const email = userInfo.user.email;
        const index = email.indexOf('@');
        const domain = email.substring(index + 1);
@@ -65,19 +63,14 @@ export default class Create_Activity extends Component <Props> {
          })
        } else {
          Alert.alert('Silahkan masuk dengan akun TaniHub');
-         console.log('domain salah:');
        }
 
-       //const get = await userInfo.json();
        await GoogleSignin.revokeAccess();
-       console.log('Success:', userInfo);
+
      } catch (error) {
        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-         // sign in was cancelled
          Alert.alert('cancelled');
        } else if (error.code === statusCodes.IN_PROGRESS) {
-         // operation in progress already
-         // console.log('errrrrrr',error)
          Alert.alert('in progress');
        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
          Alert.alert('play services not available or outdated');
@@ -90,6 +83,7 @@ export default class Create_Activity extends Component <Props> {
        }
      }
    };
+
   render(){
     return (
       <View style = {styles.container}>
@@ -117,7 +111,7 @@ export default class Create_Activity extends Component <Props> {
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Light}
                 onPress={this._signIn }
-                />
+              />
             </TouchableOpacity>
           </View>
         </View>
