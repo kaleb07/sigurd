@@ -11,8 +11,6 @@ export default class Kategori_kegiatan extends Component <{}>{
     super();
     this.state = ({
       isLoading:true,
-      activityOptionFromServer: [],
-      refreshing: false,
       dataSource:'',
       }
     );
@@ -21,12 +19,9 @@ export default class Kategori_kegiatan extends Component <{}>{
   componentDidMount(){
     return ( getActivityOptionFromServer().then((responseJson) => {
       this.setState({
-      dataSource: responseJson,
-      isLoading:false
-    }, function(){
-
-    });
-    console.log('ok', responseJson);
+        dataSource: responseJson,
+        isLoading:false
+      });
     }).catch((error)=> {
     console.log('Error : ', error);
   }))
@@ -160,9 +155,8 @@ text1:{
   marginTop:3,
   fontWeight: 'bold',
   paddingRight:100
-
-  },
- imageGroup:{
+},
+imageGroup:{
    flexDirection: 'row',
    justifyContent: 'space-between',
    marginTop:40,

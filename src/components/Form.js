@@ -21,6 +21,7 @@ const options={
   title: 'Choose photo',
   takePhotoButtonTitle:'Take from my camera',
   chooseFromLibraryButtonTitle:'Take from my library',
+  quality: 0.2,
 }
 
 export default class Form extends Component<{}>{
@@ -37,7 +38,6 @@ export default class Form extends Component<{}>{
   constructor() {
     super();
     this.state = {
-      isLoading:false,
       date:'',
       activityDesc:'',
       location:'',
@@ -92,7 +92,11 @@ export default class Form extends Component<{}>{
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        const source = { uri: response.uri };
+        const source = {
+          uri: response.uri,
+          type: response.type,
+          fileName: response.fileName
+         };
         const newList = list.map(listData => {
           if(listData.index === index) {
             return {
@@ -101,13 +105,12 @@ export default class Form extends Component<{}>{
             }
           }
           return listData
-          console.log('listdata = ', listData);
         })
         this.setState({ arr:newList });
     }});
   };
 
-  insertToServer(){
+  insertToServer(activityName){
     const newActivity = {
       date: this.state.date,
       activityOption: 'Konsultasi',
@@ -117,14 +120,13 @@ export default class Form extends Component<{}>{
       activityResult: this.state.activityResult,
       images:this.state.arr,
     };
-    insertActivityToServer(newActivity).then((responseJson)=> {
+    insertActivityToServer(activityName, newActivity).then((responseJson)=> {
       if(responseJson.err){
         Alert.alert(responseJson.err);
       }else{
         this.success_page();
       }
     })
-    console.log(newActivity);
   }
 
   clearVal() {
@@ -282,7 +284,7 @@ export default class Form extends Component<{}>{
             <TouchableOpacity onPress={this.kegiatan} >
               <Text style={styles.cancel}>Batal</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { this.insertToServer() }}>
+            <TouchableOpacity onPress={() => { this.insertToServer('konsultasi') }}>
               <Text style={styles.next}>Simpan</Text>
             </TouchableOpacity>
           </View>

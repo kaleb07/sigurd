@@ -14,6 +14,7 @@ const options={
   title: 'Choose photo',
   takePhotoButtonTitle:'Take from my camera',
   chooseFromLibraryButtonTitle:'Take from my library',
+  quality: 0.2,
 }
 
 export default class Create_Prospecting extends Component<{}>{
@@ -88,7 +89,11 @@ export default class Create_Prospecting extends Component<{}>{
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        const source = { uri: response.uri };
+        const source = {
+          uri: response.uri,
+          type: response.type,
+          fileName: response.fileName
+         };
         const newList = list.map(listData => {
           if(listData.index === index) {
             return {
@@ -97,7 +102,6 @@ export default class Create_Prospecting extends Component<{}>{
             }
           }
           return listData
-          console.log('listdata = ', listData);
         })
         this.setState({ arr:newList });
     }});
@@ -125,7 +129,7 @@ export default class Create_Prospecting extends Component<{}>{
    };
  }
 
- insertToServer(){
+ insertToServer(activityName){
    const newActivity = {
      date: this.state.date,
      activityOption: 'Lainnya',
@@ -134,14 +138,13 @@ export default class Create_Prospecting extends Component<{}>{
      activityResult: this.state.activityResult,
      images:this.state.arr,
    };
-   insertActivityToServer(newActivity).then((responseJson)=> {
+   insertActivityToServer(activityName, newActivity).then((responseJson)=> {
      if(responseJson.err){
        Alert.alert(responseJson.err);
      }else{
        this.success_page();
      }
    })
-   console.log(newActivity);
  }
 
  render(){
@@ -258,7 +261,7 @@ export default class Create_Prospecting extends Component<{}>{
               <Text style={styles.cancel}>Batal</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { this.insertToServer() }}>
+            <TouchableOpacity onPress={() => { this.insertToServer('lainnya') }}>
               <Text style={styles.next}>Simpan</Text>
             </TouchableOpacity>
           </View>
