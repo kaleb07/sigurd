@@ -68,10 +68,9 @@ export default class List_data extends Component <{}>{
     } else {
       let activityProspecting = this.state.dataSource;
       let farmers = activityProspecting.farmer.map((val, key) => {
-        return <View style = {{marginTop:10,backgroundColor:'#E0E0E0'}}>
-                <DropDownItem
+        return <DropDownItem
                   key={key}
-                  style={styles.dropDownItem}
+                  style={{marginBottom:10, backgroundColor:'#E0E0E0'}}
                   contentVisible={false}
                   invisibleImage={IC_ARR_DOWN}
                   visibleImage={IC_ARR_UP}
@@ -138,7 +137,6 @@ export default class List_data extends Component <{}>{
                       </TouchableOpacity>
                     </View>
                 </DropDownItem>
-               </View>
         })
 
       let images = activityProspecting.images.map((val, key) => {
@@ -200,7 +198,9 @@ export default class List_data extends Component <{}>{
             </TouchableOpacity>
           </View>
           <ScrollView style={{flex:1,alignSelf: 'stretch', paddingBottom:150,paddingLeft:16}}>
-            {farmers}
+            <View style = {{marginTop:10,backgroundColor:'#FFFFFF'}}>
+              {farmers}
+            </View>
           </ScrollView>
         </ScrollView>
         <TouchableOpacity onPress={this.success_page} style={styles.footer}>

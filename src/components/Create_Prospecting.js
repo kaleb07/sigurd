@@ -9,6 +9,7 @@ import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const options={
   title: 'Choose photo',
@@ -157,7 +158,7 @@ export default class Create_Prospecting extends Component<{}>{
           <Icon name="trash"
              size={32}
              color="red"
-             style={{ marginLeft: 'auto', marginTop: 20, marginRight:25}}
+             style={{ marginLeft: 'auto', marginTop:16, marginRight:24}}
              onPress={() => this.trashVal(r.index)}
           />
         </View>
@@ -167,6 +168,7 @@ export default class Create_Prospecting extends Component<{}>{
 
     return (
       <View style={styles.container}>
+      <View style={styles.textWrapper}>
         <View style = {{backgroundColor:'#284586', height:50}}>
           <View style={styles.imageGroup2}>
             <Image style={{width:40, height:40,left:8}}
@@ -220,6 +222,7 @@ export default class Create_Prospecting extends Component<{}>{
                     multiline={true}
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
+                    placeholder="Terjalin kerja sama, tidak terjalin kerjasama, on proses"
           />
           <Text style={styles.text}>
             <Text>Lokasi</Text>
@@ -227,6 +230,7 @@ export default class Create_Prospecting extends Component<{}>{
           <TextInput style={styles.inputBox3}
                     onChangeText={(location) => this.setState({location})}
                     value={this.state.location}
+                    placeholder="Daerah, provinsi, area (west/east)"
           />
           <Text style={styles.text}>
             <Text>Hasil Kegiatan </Text>
@@ -235,6 +239,7 @@ export default class Create_Prospecting extends Component<{}>{
                     multiline={true}
                     onChangeText={(activityResult) => this.setState({activityResult})}
                     value={this.state.activityResult}
+                    placeholder="Terjalin kerja sama, tidak terjalin kerjasama, on proses"
           />
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
@@ -246,10 +251,12 @@ export default class Create_Prospecting extends Component<{}>{
             </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>
+        </View>
         <TouchableOpacity onPress={()=>{this.insertToServer()}} style={styles.footer}>
           <Text style={styles.next}>Selanjutnya</Text>
         </TouchableOpacity>
       </View>
+
     )
   };
 };
@@ -258,6 +265,10 @@ const styles = StyleSheet.create({
   container:{
     flex: 1,
     backgroundColor:'#FFFFFF',
+  },
+  textWrapper: {
+   height: hp('100%'), // 70% of height device screen
+   width: wp('100%')   // 80% of width device screen
   },
   text:{
     fontSize: 16,

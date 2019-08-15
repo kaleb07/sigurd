@@ -3,6 +3,8 @@ import {View,StyleSheet,TouchableOpacity,Text,ScrollView,ImageBackground,Image} 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {Actions} from 'react-native-router-flux';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 
 export default class Laporkan_Aktivitas extends Component <{}>{
   kegiatan() {
@@ -11,6 +13,7 @@ export default class Laporkan_Aktivitas extends Component <{}>{
   render(){
     return (
       <View style={styles.container}>
+        <View style={styles.textWrapper}>
           <View style = {{backgroundColor:'#284586', height:56}}>
             <View style={styles.imageGroup}>
               <Image style={{width:40, height:40, left:8}}
@@ -40,6 +43,7 @@ export default class Laporkan_Aktivitas extends Component <{}>{
               <Text style = {styles.buttonText}> Laporkan Aktivitas </Text>
           </TouchableOpacity>
         </ImageBackground>
+        </View>
       </View>
     )
   }
@@ -49,6 +53,10 @@ const styles = StyleSheet.create({
   container:{
     backgroundColor:'#FFFFFF',
     flex: 1,
+  },
+  textWrapper: {
+   height: hp('100%'), // 70% of height device screen
+   width: wp('100%')   // 80% of width device screen
   },
   textGroup2:{
    marginVertical: 144,

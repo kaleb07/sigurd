@@ -169,7 +169,7 @@ export default class Form extends Component<{}>{
             <Icon name="trash"
                size={32}
                color="red"
-               style={{ marginLeft: 'auto', marginTop: 20, marginRight:5}}
+               style={{ marginLeft: 'auto', marginTop: 16, marginRight:5}}
                onPress={() => this.trashVal(r.index)}
             />
           </View>
@@ -202,7 +202,7 @@ export default class Form extends Component<{}>{
               style={{width: 350}}
               date={this.state.date}
               mode="date"
-              placeholder="pilih tanggal"
+              placeholder="Pilih tanggal"
               format="DD-MM-YYYY"
               minDate={prevMonths}
               maxDate={now}
@@ -233,6 +233,7 @@ export default class Form extends Component<{}>{
                       multiline={true}
                       onChangeText={(activityDesc) => this.setState({activityDesc})}
                       value={this.state.activityDesc}
+                       placeholder="Konsultasi dengan... Kelompok tani... Perihal..."
             />
             <Text style={styles.text}>
               <Text>Proyek</Text>
@@ -257,6 +258,7 @@ export default class Form extends Component<{}>{
             <TextInput style={styles.inputBox3}
                       onChangeText={(location) => this.setState({location})}
                       value={this.state.location}
+                      placeholder="Daerah, provinsi, area (west/east)"
             />
             <Text style={styles.text}>
               <Text>Hasil Kegiatan </Text>
@@ -265,6 +267,7 @@ export default class Form extends Component<{}>{
                       multiline={true}
                       onChangeText={(activityResult) => this.setState({activityResult})}
                       value={this.state.activityResult}
+                         placeholder="Konsultasi dengan... Kelompok tani... Perihal..."
             />
             <Text style={styles.text}>
               <Text>Foto Kegiatan</Text>

@@ -254,7 +254,7 @@ export default class Prospecting_Result extends Component<{}> {
              name="trash"
              size={32}
              color="red"
-             style={{ marginLeft: 'auto', marginTop: 40, right: 16}}
+             style={{ marginLeft: 'auto', marginTop:40, right: 16}}
              onPress={() => this.trashVal(r.index)}
            />
           </View>
@@ -288,17 +288,25 @@ export default class Prospecting_Result extends Component<{}> {
          <TextInput style={styles.inputBox}
                    onChangeText={(leaderName) => this.setState({leaderName})}
                    value={this.state.leaderName}
+                   placeholder="Nama lengkap sesuai KTP"
          />
 
          <Text style={styles.text}>
              <Text>Nomor Telepon</Text>
          </Text>
          <TextInputMask
-           style={styles.inputBox}
-           type={'only-numbers'}
-           onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-           value={this.state.phoneNumber}
-         />
+             	style={styles.inputBox}
+             	type={'custom'}
+             	options={{
+             		mask: '+62 999-9999-9999',
+             	}}
+             	selectionColor="#CF0821"
+             	underlineColorAndroid="transparent"
+             	keyboardType="numeric"
+             	value={this.state.phoneNumber}
+              onChangeText={(phoneNumber) => this.setState({phoneNumber})}
+              placeholder="+62 (8xx xxxx xxxx)"
+             />
          <Text style={styles.text}>
            <Text>Kelompok Tani</Text>
          </Text>
@@ -340,9 +348,9 @@ export default class Prospecting_Result extends Component<{}> {
            <Text>Lama Bertani</Text>
          </Text>
          <TextInput style={styles.inputBox}
-             placeholder= "*contoh '1 tahun 12 bulan 30 hari'"
              onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
              value={this.state.longTimeFarming}
+             placeholder="X tahun, X bulan"
          />
         <View>
          { arr }

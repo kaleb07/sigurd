@@ -3,8 +3,28 @@ import React, {Component} from 'react';
 const apiActivity = 'http://localhost:3011/activity';
 const apiActivityOption = 'http://localhost:3011/activity_option';
 const apiProspecting = 'http://localhost:3011/prospecting';
+const apiAccount = 'https://api.tanihub.net/v1/auth/signin';
 var id = '';
 var id_farmer='';
+
+async function getAccountInfo(params){
+  try{
+    let response = await fetch(apiAccount, {
+        method: 'POST',
+        headers: {
+          'Accept' : 'application/json',
+          'Content-Type' : 'application/json',
+          'serviceId' : 1655787172617,
+          'servicesecret' : '47f64d61139f70fcfe2626be8510971dd710c8aaba1a3374c8098a4a98165683e9370cf525dc0d0ab324baf3349b7d8b7be09e62a9bab0e2054878ff783f1ae1'
+        },
+        body: JSON.stringify(params),
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch(error){
+    console.log('Error is: ', error);
+  }
+}
 
 async function getActivityFromServer(){
   try{
@@ -137,3 +157,4 @@ export {insertActivityToServer};
 export {insertProspectingToServer};
 export {deleteProspectingResult};
 export {updateProspectingResult};
+export {getAccountInfo};
