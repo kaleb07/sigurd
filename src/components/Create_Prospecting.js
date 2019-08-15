@@ -95,7 +95,6 @@ export default class Create_Prospecting extends Component<{}>{
             }
           }
           return listData
-          console.log('listdata = ', listData);
         })
         this.setState({ arr:newList });
     }});
@@ -139,7 +138,6 @@ export default class Create_Prospecting extends Component<{}>{
        this.prospecting();
      }
    })
-   console.log(newActivity);
  }
 
  render(){

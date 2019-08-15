@@ -98,7 +98,6 @@ export default class Prospecting_Result extends Component<{}> {
          this.list_data();
        }
      })
-    console.log(newProspecting);
   }
 
   insertVal(data, index, key) {

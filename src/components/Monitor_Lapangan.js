@@ -39,7 +39,6 @@ export default class Monitor_Lapangan extends Component<{}>{
   constructor() {
     super();
     this.state = {
-      isLoading:false,
       date:'',
       activityDesc:'',
       location:'',
@@ -106,7 +105,6 @@ export default class Monitor_Lapangan extends Component<{}>{
             }
           }
           return listData
-          console.log('listdata = ', listData);
         })
         this.setState({ arr:newList });
     }});
@@ -129,7 +127,6 @@ export default class Monitor_Lapangan extends Component<{}>{
         this.success_page();
       }
     })
-    console.log(newActivity);
   }
 
   clearVal() {

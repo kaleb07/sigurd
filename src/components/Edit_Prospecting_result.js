@@ -68,14 +68,11 @@ export default class Prospecting_Result extends Component<{}> {
               unitPrice : r.unitPrice
           }
         }),
-    }, function(){
-
-    });
-    console.log('oks', this.state.arr);
+      });
     }).catch((error)=> {
-    console.log('Error : ', error);
-  }))
-  }
+      console.log('Error : ', error);
+    })
+  )}
 
   list_data() {
     Actions.list_data()
@@ -87,8 +84,6 @@ export default class Prospecting_Result extends Component<{}> {
       return data.index !== index;
     })
      this.setState({ arr:newList });
-     console.log('hapus :', newList);
-     console.log('arr :', list)
   };
 
   insertSomeThing(){
@@ -131,7 +126,6 @@ export default class Prospecting_Result extends Component<{}> {
          this.list_data();
        }
      })
-    console.log(newProspecting);
   }
 
   insertVal(data, index, key) {

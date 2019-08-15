@@ -22,10 +22,9 @@ async function getActivityOptionFromServer(){
   try{
     let response = await fetch(apiActivityOption);
     let responseJson = response.json();
-    console.log('Bisa nih');
     return responseJson;
   } catch(error){
-      console.log('Error is: ', error);
+    console.log('Error is: ', error);
   }
 }
 
@@ -34,7 +33,6 @@ async function getProspecting(){
     let getById = apiProspecting + '/' + id_farmer;
     let response = await fetch(getById);
     let responseJson = await response.json();
-    console.log('prosp : ', responseJson);
     return responseJson;
   } catch(error){
       console.log('Error is: ', error);
@@ -43,33 +41,25 @@ async function getProspecting(){
 
 async function sendIdFarmer(params){
   id_farmer = params;
-  console.log('send id prospecting: ', id_farmer);
 }
-
 
 async function insertActivityToServer(activity, params){
   try{
     let urls = [];
     let arr = [{
-      uri: '',
       url: '',
       caption: ''
     }];
     let imgs = await params.images.map(async (img, index) => {
       let urlBody = activity + '/' + img.image.fileName;
       const save = () => {
-            urls[index] = 'https://storage.cloud.google.com/s-tanifund-storage/' + urlBody;
-            arr[index] = {
-              uri: img.image.uri,
-              url : urls[index],
-              caption : img.caption
-            };
-
-            console.log('arr: ', arr);
-        }
-
+          urls[index] = 'https://storage.googleapis.com/s-tanifund-storage/' + urlBody;
+          arr[index] = {
+            url : urls[index],
+            caption : img.caption
+          };
+      }
       let saveUrl = await save();
-
       const signUrl = await fetch(apiSignedUrl, {
             method: 'POST',
             headers: {
@@ -81,28 +71,19 @@ async function insertActivityToServer(activity, params){
                 contentType: img.image.type
               })
         })
-
-        const response = await signUrl.json();
-        console.log('signed url = ', response);
-
-        const url = await RNFetchBlob.fetch( 'PUT', response[0], {
-                "Content-Type": img.image.type,
-                "Accept": "*/*",
-                "Cache-Control": "no-cache",
-                "Host": "storage.googleapis.com",
-                "Accept-Encoding": "gzip, deflate",
-                "Connection": "keep-alive",
-                "cache-control": "no-cache"
-              }, RNFetchBlob.wrap(img.image.uri)
-            )
-
-        // .catch(function(error){
-        //   console.log('error signedUrl: ', error)
-        // })
-      })
-
-      params.images = arr;
-
+      const response = await signUrl.json();
+      const url = await RNFetchBlob.fetch( 'PUT', response[0], {
+              "Content-Type": img.image.type,
+              "Accept": "*/*",
+              "Cache-Control": "no-cache",
+              "Host": "storage.googleapis.com",
+              "Accept-Encoding": "gzip, deflate",
+              "Connection": "keep-alive",
+              "cache-control": "no-cache"
+            }, RNFetchBlob.wrap(img.image.uri)
+          )
+    })
+    params.images = arr;
     let response = await fetch(apiActivity, {
         method: 'POST',
         headers: {
@@ -113,9 +94,7 @@ async function insertActivityToServer(activity, params){
     });
     let responseJson = await response.json();
     id = responseJson.id;
-    console.log('respn: ', responseJson);
     return responseJson;
-
   } catch(error){
     console.log('Error is: ', error);
   }
@@ -124,7 +103,6 @@ async function insertActivityToServer(activity, params){
 async function insertProspectingToServer(params){
   try{
     params.activityId = id
-    console.log('params', params);
     let response = await fetch(apiProspecting, {
         method: 'POST',
         headers: {
@@ -134,7 +112,6 @@ async function insertProspectingToServer(params){
         body: JSON.stringify(params)
     });
     let responseJson = await response.json();
-    console.log('respon: ', responseJson);
     return responseJson;
   } catch(error){
     console.log('Error is: ', error);
@@ -159,7 +136,6 @@ async function deleteProspectingResult(params){
         method: 'DELETE',
     });
     let responseJson = await response.json();
-    console.log('deleteById: ', deleteById);
     return responseJson;
   } catch(error){
     console.log('Error is: ', error);
@@ -178,8 +154,6 @@ async function updateProspectingResult(params){
         body: JSON.stringify(params)
     });
     let responseJson = await response.json();
-    console.log('update URL: ', updateById);
-    console.log('update By Id: ', responseJson);
     return responseJson;
   } catch(error){
     console.log('Error is: ', error);

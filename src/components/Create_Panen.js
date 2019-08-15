@@ -47,7 +47,6 @@ export default class Create_Panen extends Component<{}>{
   constructor() {
     super();
     this.state = {
-      isLoading:false,
       date:'',
       harvestQuantity: '',
       activityDesc:'',
@@ -116,7 +115,6 @@ export default class Create_Panen extends Component<{}>{
             }
           }
           return listData
-          console.log('listdata = ', listData);
         })
         this.setState({ arr:newList });
     }});
@@ -140,7 +138,6 @@ export default class Create_Panen extends Component<{}>{
         this.success_page();
       }
     })
-    console.log(newActivity);
   }
 
   clearVal() {
