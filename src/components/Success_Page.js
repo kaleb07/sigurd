@@ -5,40 +5,65 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {Actions} from 'react-native-router-flux';
 
 export default class Success_Page extends Component <{}>{
+  constructor() {
+    super();
+    this.state = ({
+      isLoading:true,
+    });
+  }
+
   laporkan_aktivitas() {
     Actions.laporkan_aktivitas()
   }
 
-  render(){
+  componentDidMount(){
     return (
-      <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height:56}}>
-          <View style={styles.imageGroup1}>
-            <Image style={{width:40, height:40,left:16}}
-              source={require('../images/logo1.png')}/>
-            <Text style={styles.text1}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting}>
-              <Text style={styles.close}>keluar</Text>
+      this.setState({
+        isLoading:false
+      })
+    )
+  }
+
+  render(){
+   if(this.state.isLoading){
+      return(
+        <View style={{flex:1, padding:100, marginTop:100,alignItems:'center'}}>
+          <Image style={{width:150, height:150}}
+            source={require('../images/logo.png')}/>
+          <Text style={{fontSize: 30, color: '#AAAAAA', paddingTop: 15, fontWeight: 'bold'}}>Loading...</Text>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          <View style = {{backgroundColor:'#284586', height:56}}>
+            <View style={styles.imageGroup1}>
+              <Image style={{width:40, height:40,left:16}}
+                source={require('../images/logo1.png')}/>
+              <Text style={styles.text1}>FO Activity</Text>
+              <TouchableOpacity onPress={this.prospecting}>
+                <Text style={styles.close}>keluar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.logo}>
+            <Icon name='check'
+              size={80}
+              color='#284586'
+              style={{paddingLeft:100}}
+            />
+            <Text style={styles.text}>
+                <Text>Sukses</Text>
+            </Text>
+            <TouchableOpacity style={{paddingTop: 50, paddingLeft:95}} onPress={this.laporkan_aktivitas} >
+              <Text style={styles.cancel}>Tutup</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.footer}>
+          </View>
         </View>
-        <View style={styles.logo}>
-          <Icon name='check'
-            size={80}
-            color='#284586'
-            style={{paddingLeft:100}}
-          />
-          <Text style={styles.text}>
-              <Text>Sukses</Text>
-          </Text>
-          <TouchableOpacity style={{paddingTop: 50, paddingLeft:95}} onPress={this.laporkan_aktivitas} >
-            <Text style={styles.cancel}>Tutup</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.footer}>
-        </View>
-      </View>
-    )
+      )
+    }
   }
 }
 

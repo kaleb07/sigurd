@@ -203,7 +203,7 @@ export default class Monitor_Lapangan extends Component<{}>{
               style={{width: 350}}
               date={this.state.date}
               mode="date"
-              placeholder="pilih tanggal"
+              placeholder="Pilih tanggal"
               format="DD-MM-YYYY"
               minDate={prevMonths}
               maxDate={now}

@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {Actions} from 'react-native-router-flux';
 import { getActivityOptionFromServer } from '../networking/server';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 
 
 export default class Kategori_kegiatan extends Component <{}>{
@@ -52,7 +54,7 @@ export default class Kategori_kegiatan extends Component <{}>{
         <View style={{flex:1, padding:100, marginTop:100,alignItems:'center'}}>
           <Image style={{width:150, height:150}}
             source={require('../images/logo.png')}/>
-          <Text style={{fontSize: 30, color: '#aaaaaa', paddingTop: 15, fontWeight: 'bold'}}>Loading...</Text>
+          <Text style={{fontSize: 30, color: '#AAAAAA', paddingTop: 15, fontWeight: 'bold'}}>Loading...</Text>
         </View>
       )
     } else {
@@ -63,6 +65,7 @@ export default class Kategori_kegiatan extends Component <{}>{
       });
       return (
       <View style={styles.container}>
+      <View style={styles.textWrapper}>
         <View style = {{backgroundColor:'#284586', height:56}}>
           <View style={styles.imageGroup1}>
             <Image style={{width:40, height:40,left:8}}
@@ -118,6 +121,7 @@ export default class Kategori_kegiatan extends Component <{}>{
           {activityOptions[4]}
           {activityOptions[3]}
         </View>
+          </View>
         <View style={styles.footer}>
         </View>
       </View>
@@ -129,6 +133,10 @@ const styles = StyleSheet.create({
   container:{
     backgroundColor:'#FFFFFF',
     flex: 1,
+  },
+  textWrapper: {
+   height: hp('100%'), // 70% of height device screen
+   width: wp('100%')   // 80% of width device screen
   },
   footer: {
     position: 'absolute',
