@@ -4,7 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {Actions} from 'react-native-router-flux';
 import { getActivityOptionFromServer } from '../networking/server';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
+
 
 
 
@@ -65,27 +66,24 @@ export default class Kategori_kegiatan extends Component <{}>{
       });
       return (
       <View style={styles.container}>
-      <View style={styles.textWrapper}>
-        <View style = {{backgroundColor:'#284586', height:56}}>
+        <View style = {{backgroundColor:'#284586', height: hp(8)}}>
           <View style={styles.imageGroup1}>
-            <Image style={{width:40, height:40,left:8}}
+            <Image style={{width: wp(10), height: hp(5),left:8,marginTop:3}}
             source={require('../images/logo1.png')}/>
             <Text style={styles.text1}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting}>
+            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
               <Text style={styles.close}>keluar</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <Text style={styles.text}>
-            <Text>Kategori Kegiatan</Text>
-        </Text>
+        <Text style={styles.text}>Kategori Kegiatan</Text>
         <View style={styles.imageGroup}>
           <TouchableOpacity  onPress={this.create_prospecting}>
-            <Image style={{width:72, height:72}}
+            <Image style={{width: wp(20), height: hp(11)}}
             source={require('../images/prospecting.png')}/>
           </TouchableOpacity>
           <TouchableOpacity  onPress={this.register}>
-            <Image style={{width:72, height:72}}
+            <Image style={{width: wp(20), height: hp(11)}}
               source={require('../images/konsultasi.png')}/>
           </TouchableOpacity>
         </View>
@@ -95,11 +93,11 @@ export default class Kategori_kegiatan extends Component <{}>{
         </View>
         <View style={styles.imageGroup}>
           <TouchableOpacity  onPress={this.monitor_lapangan}>
-            <Image style={{width:72, height:72}}
+            <Image style={{width: wp(20), height: hp(11)}}
               source={require('../images/monitoring.png')}/>
           </TouchableOpacity>
           <TouchableOpacity  onPress={this.tanam_perdana}>
-            <Image style={{width:72, height:72}}
+            <Image style={{width: wp(20), height: hp(11)}}
               source={require('../images/tanam.png')}/>
           </TouchableOpacity>
         </View>
@@ -109,19 +107,18 @@ export default class Kategori_kegiatan extends Component <{}>{
         </View>
         <View style={styles.imageGroup}>
           <TouchableOpacity  onPress={this.create_panen}>
-            <Image style={{width:72, height:72}}
+            <Image style={{width: wp(20), height: hp(11)}}
               source={require('../images/panen.png')}/>
           </TouchableOpacity>
           <TouchableOpacity  onPress={this.create_lainnya}>
-            <Image style={{width:72, height:72}}
+            <Image style={{width: wp(20), height: hp(11)}}
               source={require('../images/lainnya.png')}/>
           </TouchableOpacity>
         </View>
         <View style={styles.textGroup3}>
           {activityOptions[4]}
           {activityOptions[3]}
-        </View>
-          </View>
+      </View>
         <View style={styles.footer}>
         </View>
       </View>
@@ -134,13 +131,9 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
     flex: 1,
   },
-  textWrapper: {
-   height: hp('100%'), // 70% of height device screen
-   width: wp('100%')   // 80% of width device screen
-  },
   footer: {
     position: 'absolute',
-    flex:0.1,
+    flex: 0.1,
     left: 0,
     right: 0,
     bottom: 0,
@@ -149,7 +142,7 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
 text:{
-  fontSize: 24,
+  fontSize: hp(4),
   fontWeight: '400',
   color:'#000000',
   marginTop:30,
@@ -157,7 +150,7 @@ text:{
 },
 text1:{
   color:'#FFFFFF',
-  fontSize:20,
+  fontSize: hp(3),
   padding:5,
   borderRadius:30,
   marginTop:3,
@@ -199,17 +192,19 @@ imageGroup:{
    paddingLeft:65,
    paddingRight:60,
  },
- close:{
-   backgroundColor:'#E6B000',
-   color:'#000000',
-   fontSize:16,
-   padding:4,
-   width: 80,
-   height:32,
-   textAlign:'center',
+ button1: {
+   width: wp(20),
+   height: hp(4),
+   backgroundColor: '#FFC400',
    borderRadius:5,
-   marginTop: 3,
+   marginTop:6,
    right:16
+ },
+ close:{
+   color:'#000000',
+   fontSize: hp(2),
+   textAlign:'center',
+   marginTop:4
 },
  imageGroup4:{
    flexDirection: 'row',

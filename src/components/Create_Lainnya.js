@@ -199,7 +199,7 @@ export default class Create_Prospecting extends Component<{}>{
               style={{width: 350}}
               date={this.state.date}
               mode="date"
-              placeholder="pilih tanggal"
+              placeholder="Pilih tanggal"
               format="DD-MM-YYYY"
               minDate={prevMonths}
               maxDate={now}
@@ -230,6 +230,7 @@ export default class Create_Prospecting extends Component<{}>{
                     multiline={true}
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
+                      placeholder="Strategic meeting, kolaborasi, marketing, dll."
           />
           <Text style={styles.text}>
             <Text>Lokasi</Text>
@@ -237,6 +238,7 @@ export default class Create_Prospecting extends Component<{}>{
           <TextInput style={styles.inputBox3}
                     onChangeText={(location) => this.setState({location})}
                     value={this.state.location}
+                    placeholder="Daerah, provinsi, area (west/east)"
           />
           <Text style={styles.text}>
             <Text>Hasil Kegiatan </Text>
@@ -244,7 +246,8 @@ export default class Create_Prospecting extends Component<{}>{
           <TextInput style={styles.inputBox}
                     multiline={true}
                     onChangeText={(activityResult) => this.setState({activityResult})}
-                    value={this.state.activityResult}/>
+                    value={this.state.activityResult}
+                    placeholder="Berhasil, tidak berhasil, on progress..."/>
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
           </Text>

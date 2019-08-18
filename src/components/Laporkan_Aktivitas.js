@@ -3,7 +3,7 @@ import {View,StyleSheet,TouchableOpacity,Text,ScrollView,ImageBackground,Image} 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {Actions} from 'react-native-router-flux';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
 
 export default class Laporkan_Aktivitas extends Component <{}>{
@@ -13,13 +13,12 @@ export default class Laporkan_Aktivitas extends Component <{}>{
   render(){
     return (
       <View style={styles.container}>
-        <View style={styles.textWrapper}>
-          <View style = {{backgroundColor:'#284586', height:56}}>
+          <View style = {{backgroundColor:'#284586', height: hp(8)}}>
             <View style={styles.imageGroup}>
-              <Image style={{width:40, height:40, left:8}}
+              <Image style={{ width: wp(10), height: hp(5), left:8, marginTop:3}}
                 source={require('../images/logo1.png')}/>
               <Text style={styles.text1}>FO Activity</Text>
-              <TouchableOpacity onPress={this.prospecting}>
+              <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
                 <Text style={styles.close}>keluar</Text>
               </TouchableOpacity>
             </View>
@@ -43,7 +42,6 @@ export default class Laporkan_Aktivitas extends Component <{}>{
               <Text style = {styles.buttonText}> Laporkan Aktivitas </Text>
           </TouchableOpacity>
         </ImageBackground>
-        </View>
       </View>
     )
   }
@@ -54,21 +52,25 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
     flex: 1,
   },
-  textWrapper: {
-   height: hp('100%'), // 70% of height device screen
-   width: wp('100%')   // 80% of width device screen
-  },
   textGroup2:{
    marginVertical: 144,
   },
   button: {
-    width: 248,
+    width: wp(70),
     backgroundColor: '#FFC400',
     borderRadius:5,
     paddingVertical: 16,
   },
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
+    borderRadius:5,
+    marginTop:8,
+    right:16
+  },
   text:{
-    fontSize: 20,
+    fontSize: hp(3),
     color:'black',
     textAlign:'center',
     fontWeight: 'bold',
@@ -81,20 +83,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   close:{
-    backgroundColor:'#E6B000',
     color:'#000000',
-    fontSize:16,
-    padding:5,
-    width: 80,
-    height:35,
+    fontSize: hp(2),
     textAlign:'center',
-    borderRadius:5,
-    marginTop: 3,
-    right:16
+    marginTop:4
   },
   text1:{
     color:'#FFFFFF',
-    fontSize:20,
+    fontSize: hp(3),
     padding:5,
     borderRadius:30,
     marginTop:3,

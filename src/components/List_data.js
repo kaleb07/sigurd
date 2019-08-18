@@ -6,6 +6,8 @@ import {Actions} from 'react-native-router-flux';
 import { getActivityProspecting, deleteProspectingResult, sendIdFarmer } from '../networking/server';
 import DropDownItem from 'react-native-drop-down-item';
 import { Table} from 'react-native-table-component';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
+
 
 const IC_ARR_DOWN = require('../images/ic_arr_down.png');
 const IC_ARR_UP = require('../images/ic_arr_up.png');
@@ -148,22 +150,20 @@ export default class List_data extends Component <{}>{
 
     return (
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height:50}}>
+        <View style = {{backgroundColor:'#284586', height: hp(8)}}>
           <View style={styles.imageGroup2}>
-            <Image style={{width:40, height:40,left:8}}
+            <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
             source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting}>
+            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
               <Text style={styles.close}>keluar</Text>
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.imageGroup1}>
-          <Image style={{width:64, height:64, marginTop:16}}
+          <Image style={{width: wp(18), height: hp(9), marginTop:16}}
             source={require('../images/prospecting.png')}/>
-          <Text style={styles.text1}>
-            <Text> Prospecting</Text>
-          </Text>
+          <Text style={styles.text1}>Prospecting</Text>
         </View>
         <ScrollView style={{paddingRight:16}}>
           <View style={{flex:1,paddingBottom:20 ,flexDirection: 'row'}}>
@@ -189,7 +189,7 @@ export default class List_data extends Component <{}>{
             </View>
           </View>
           <View style={styles.imageGroup3}>
-            <Image style={{width:48, height:48,left:10}}
+            <Image style={{width: wp(10), height: hp(7),left:16}}
             source={require('../images/data.jpg')}/>
             <Text style={{right:24,marginTop:12,fontSize:20,color:'#000000' }}> Detail Data Petani </Text>
             <TouchableOpacity onPress={this.prospecting}>
@@ -238,13 +238,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:96,
+    right:95,
     marginBottom:32,
     marginTop:32
   },
   text2:{
-   color:'#FFFFFF',
-    fontSize:20,
+    color:'#FFFFFF',
+    fontSize: hp(3),
     padding:5,
     borderRadius:30,
     marginTop:3,
@@ -280,25 +280,27 @@ const styles = StyleSheet.create({
     paddingLeft:4,
     color:'red'
   },
-  close:{
-    backgroundColor:'#E6B000',
-    color:'#000000',
-    fontSize:16,
-    padding:4,
-    width: 80,
-    height:32,
-    textAlign:'center',
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
     borderRadius:5,
-    marginTop:4,
+    marginTop:8,
     right:16
+  },
+  close:{
+    color:'#000000',
+    fontSize: hp(2),
+    textAlign:'center',
+    marginTop:4
   },
   tambah:{
     backgroundColor:'#FFC400',
     color:'#000000',
     fontSize:16,
     padding:5,
-    width:80,
-    height:32,
+    width: wp(20),
+    height: hp(4.5),
     textAlign:'center',
     borderRadius:5,
     marginTop:10,

@@ -3,6 +3,8 @@ import {Actions} from 'react-native-router-flux';
 import {GoogleSignin,GoogleSigninButton,statusCodes,} from 'react-native-google-signin';
 import {StyleSheet,Text,View,TouchableOpacity,Image,Header,Alert} from 'react-native';
 import {getAccountInfo}  from '../networking/server.js';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
+
 
 type Props = {};
 export default class Create_Activity extends Component <Props> {
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
  },
   text:{
-    fontSize: 20,
+    fontSize: hp(3),
     color:'black',
     textAlign:'center',
     fontWeight: 'bold',
@@ -134,7 +136,8 @@ const styles = StyleSheet.create({
      marginTop:-80,
   },
   text1:{
-    fontSize: 24,
+    fontSize:hp(4
+    ),
     color:'#284586',
     textAlign:'center',
     fontWeight: 'bold',

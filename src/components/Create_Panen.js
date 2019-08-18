@@ -9,6 +9,7 @@ import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
 var items = [
   {id: 1, name: 'Cabe Merah'},
@@ -192,18 +193,18 @@ export default class Create_Panen extends Component<{}>{
 
     return (
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height:56}}>
-          <View style={styles.imageGroup5}>
-            <Image style={{width:40, height:40,left:8}}
-              source={require('../images/logo1.png')}/>
-            <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting}>
-              <Text style={styles.close}>keluar</Text>
-            </TouchableOpacity>
+      <View style = {{backgroundColor:'#284586',height: hp(8)}}>
+        <View style={styles.imageGroup5}>
+          <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
+            source={require('../images/logo1.png')}/>
+          <Text style={styles.text2}>FO Activity</Text>
+          <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+            <Text style={styles.close}>keluar</Text>
+          </TouchableOpacity>
         </View>
       </View>
         <View style={styles.imageGroup1}>
-          <Image style={{width:64, height:64, marginTop:16}}
+          <Image style={{width: wp(18), height: hp(9.5), marginTop:16}}
             source={require('../images/panen.png')}/>
           <Text style={styles.text1}>
             <Text> Panen</Text>
@@ -211,10 +212,10 @@ export default class Create_Panen extends Component<{}>{
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
           <DatePicker
-              style={{width: 350}}
+              style={{width: wp(90)}}
               date={this.state.date}
               mode="date"
-              placeholder="pilih tanggal"
+              placeholder="Pilih tanggal"
               format="DD-MM-YYYY"
               minDate={prevMonths}
               maxDate={now}
@@ -246,6 +247,7 @@ export default class Create_Panen extends Component<{}>{
                     multiline={true}
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
+                    placeholder="Monitor kegiatan: persiapan lahan, perawatan, penyemprotan."
           />
 
 
@@ -281,9 +283,11 @@ export default class Create_Panen extends Component<{}>{
                       containerStyle={{width:95, bottom: 16, left: 24}}
                       fontSize={16}
                       baseColor={"#000000"}
+                      placeholder="kg,kw,ton"
                       data={unit}
                       onChangeText={(unitHarvest) => this.setState({unitHarvest})}
                       value={this.state.unitHarvest}>
+
             </Dropdown>
           </View>
 
@@ -293,6 +297,7 @@ export default class Create_Panen extends Component<{}>{
           <TextInput style={styles.inputBox3}
                     onChangeText={(location) => this.setState({location})}
                     value={this.state.location}
+                    placeholder="Daerah, provinsi, area (west/east)"
           />
           <Text style={styles.text}>
             <Text>Hasil Kegiatan </Text>
@@ -301,6 +306,7 @@ export default class Create_Panen extends Component<{}>{
                     multiline={true}
                     onChangeText={(activityResult) => this.setState({activityResult})}
                     value={this.state.activityResult}
+                    placeholder="Panen melon, panen semangka"
           />
           <Text style={styles.text}>
             <Text>Foto Kegiatan</Text>
@@ -342,11 +348,19 @@ const styles = StyleSheet.create({
     color:'#000000',
     marginTop:8,
   },
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
+    borderRadius:5,
+    marginTop:8,
+    right:16
+  },
   text1:{
     fontSize: 24,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:210,
+    paddingRight:205,
     marginBottom:30,
     marginTop:30
   },
@@ -501,22 +515,15 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   close:{
-    backgroundColor:'#E6B000',
     color:'#000000',
-    fontSize:16,
-    padding:5,
-    width: 80,
-    height:32,
+    fontSize: hp(2),
     textAlign:'center',
-    borderRadius:5,
-    right:16,
     marginTop:4
   },
   imageGroup5:{
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding:5,
-    marginTop:3
  },
   imageGroup4:{
     flexDirection: 'row',

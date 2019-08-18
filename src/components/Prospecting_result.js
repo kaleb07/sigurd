@@ -8,6 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import { Dropdown } from 'react-native-material-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
 import { insertProspectingToServer } from '../networking/server';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
 let index = 0;
 let weightUnit = [{
@@ -168,7 +169,7 @@ export default class Prospecting_Result extends Component<{}> {
             </View>
             <View style={styles.textInputWrapper}>
               <Dropdown label=' '
-                        containerStyle={{width:45, top: 10, left:4}}
+                        containerStyle={{width: wp(12), top: 10, left:4}}
                         fontSize={14}
                         baseColor={"#000000"}
                         data={weightUnit}
@@ -197,7 +198,7 @@ export default class Prospecting_Result extends Component<{}> {
            </View>
            <Text style={{paddingTop:46,right:24}}>/</Text>
            <Dropdown label=' '
-                     containerStyle={{width:46,top:10, right:20}}
+                     containerStyle={{width: wp(12),top:10, right:20}}
                      fontSize={16}
                      baseColor={"#000000"}
                      data={weightUnit}
@@ -219,36 +220,29 @@ export default class Prospecting_Result extends Component<{}> {
 
     return(
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height:50}}>
+        <View style = {{backgroundColor:'#284586',height: hp(8)}}>
           <View style={styles.imageGroup}>
-            <Image style={{width:40, height:40,left:8}}
+            <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting}>
+            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
               <Text style={styles.close}>keluar</Text>
             </TouchableOpacity>
          </View>
         </View>
         <View style={styles.imageGroup1}>
-          <Image style={{width:64, height:64, marginTop:16}}
+          <Image style={{width: wp(18), height: hp(9), marginTop:16}}
             source={require('../images/prospecting.png')}/>
-          <Text style={styles.text1}>
-            <Text>Prospecting</Text>
-          </Text>
+          <Text style={styles.text1}>Prospecting</Text>
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
-          <Text style={styles.text}>
-              <Text>Nama Lengkap Ketua</Text>
-          </Text>
+          <Text style={styles.text}>Nama Lengkap Ketua</Text>
           <TextInput style={styles.inputBox}
                     onChangeText={(leaderName) => this.setState({leaderName})}
                     value={this.state.leaderName}
                      placeholder="Nama lengkap sesuai KTP"
           />
-
-          <Text style={styles.text}>
-              <Text>Nomor Telepon</Text>
-          </Text>
+          <Text style={styles.text}>Nomor Telepon</Text>
           <TextInputMask
             	style={styles.inputBox}
             	type={'custom'}
@@ -262,25 +256,19 @@ export default class Prospecting_Result extends Component<{}> {
             onChangeText={(phoneNumber) => this.setState({phoneNumber})}
             placeholder="+62 (8xx xxxx xxxx)"
             />
-          <Text style={styles.text}>
-            <Text>Kelompok Tani</Text>
-          </Text>
+          <Text style={styles.text}>Kelompok Tani</Text>
           <TextInput style={styles.inputBox}
                     onChangeText={(groupFarmer) => this.setState({groupFarmer})}
                     value={this.state.groupFarmer}
           />
-          <Text style={styles.text}>
-            <Text>Jumlah Anggota</Text>
-          </Text>
+          <Text style={styles.text}>Jumlah Anggota</Text>
           <TextInputMask
             style={styles.inputBox}
             type={'only-numbers'}
             onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
             value={this.state.numberOfMembers}
           />
-          <Text style={styles.text}>
-            <Text>Luas Lahan</Text>
-          </Text>
+          <Text style={styles.text}>Luas Lahan</Text>
           <View style={styles.dropdownWrapper}>
             <TextInputMask
               style={styles.inputBox4}
@@ -298,9 +286,7 @@ export default class Prospecting_Result extends Component<{}> {
             </Dropdown>
           </View>
 
-          <Text style={styles.text3}>
-            <Text>Lama Bertani</Text>
-          </Text>
+          <Text style={styles.text3}>Lama Bertani</Text>
           <TextInput style={styles.inputBox}
               placeholder= "X tahun, X bulan"
               onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
@@ -332,6 +318,14 @@ var styles = StyleSheet.create({
     color:'#000000',
     marginRight: 15
   },
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
+    borderRadius:5,
+    marginTop:8,
+    right:16
+  },
   small:{
     flex: 1,
     flexDirection: 'row',
@@ -346,7 +340,7 @@ var styles = StyleSheet.create({
   },
   text2:{
     color:'#FFFFFF',
-    fontSize:20,
+    fontSize: hp(3),
     padding:5,
     borderRadius:30,
     marginTop:3,
@@ -376,8 +370,8 @@ var styles = StyleSheet.create({
     borderRadius:30,
   },
   inputBox:{
-    width:350,
-    height:48,
+    width: wp(90),
+    height: hp(6),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -389,7 +383,8 @@ var styles = StyleSheet.create({
   },
   smallCapacity:{
     flex: 1,
-    width:65,
+    width: wp(17),
+    height: hp(5),
     left:5,
     borderRadius:5,
     borderWidth: 0.5,
@@ -402,7 +397,8 @@ var styles = StyleSheet.create({
   },
   smallPrice:{
     flex: 1,
-    width:65,
+    width: wp(16),
+    height: hp(5),
     right:18,
     borderRadius:5,
     borderWidth: 0.5,
@@ -415,7 +411,8 @@ var styles = StyleSheet.create({
   },
   smallCommodity:{
     flex: 1,
-    width:70,
+    width: wp(17),
+    height: hp(5),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -432,8 +429,8 @@ var styles = StyleSheet.create({
       flexDirection:'row',
     },
    inputBox4:{
-     width:200,
-     height:45,
+     width: wp(50),
+     height: hp(6),
      borderRadius:5,
      borderWidth: 0.5,
      borderColor: '#000000',
@@ -490,17 +487,11 @@ var styles = StyleSheet.create({
      marginTop: 10,
      right:20
    },
-   close:{
-     backgroundColor:'#E6B000',
-     color:'#000000',
-     fontSize:16,
-     padding:5,
-     width: 80,
-     height:32,
-     textAlign:'center',
-     borderRadius:5,
-     marginTop:4,
-     right:16
+    close:{
+      color:'#000000',
+      fontSize: hp(2),
+      textAlign:'center',
+      marginTop:4
    },
    imageGroup4:{
      flexDirection: 'row',
