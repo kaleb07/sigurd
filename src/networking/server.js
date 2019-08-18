@@ -4,6 +4,7 @@ const apiActivity = 'http://localhost:3011/activity';
 const apiActivityOption = 'http://localhost:3011/activity_option';
 const apiProspecting = 'http://localhost:3011/prospecting';
 const apiSignedUrl = 'http://localhost:3011/signed-url';
+const apiProject = 'http://localhost:3011/project/all';
 var RNFetchBlob = require('rn-fetch-blob').default
 const apiAccount = 'https://api.tanihub.net/v1/auth/signin';
 var id = '';
@@ -25,6 +26,16 @@ async function getAccountInfo(params){
     return responseJson;
   } catch(error){
     console.log('Error is: ', error);
+  }
+}
+
+async function getProjectFromServer(){
+  try{
+    let response = await fetch(apiProject);
+    let responseJson = response.json();
+    return responseJson;
+  } catch(error){
+      console.log('Error is: ', error);
   }
 }
 
@@ -182,6 +193,7 @@ async function updateProspectingResult(params){
 
 export {getActivityOptionFromServer};
 export {getActivityFromServer};
+export {getProjectFromServer};
 export {getActivityProspecting};
 export {getProspecting};
 export {sendIdFarmer};

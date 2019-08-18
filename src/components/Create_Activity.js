@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
-import {GoogleSignin,GoogleSigninButton,statusCodes,} from 'react-native-google-signin';
+import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
 import {StyleSheet,Text,View,TouchableOpacity,Image,Header,Alert} from 'react-native';
 import {getAccountInfo}  from '../networking/server.js';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
-
-type Props = {};
-export default class Create_Activity extends Component <Props> {
+export default class Create_Activity extends Component <{}> {
   laporkan_aktivitas() {
-  Actions.laporkan_aktivitas()
-}
+    Actions.laporkan_aktivitas()
+  }
 
   async componentDidMount() {
      this._configureGoogleSignIn();
@@ -90,30 +88,22 @@ export default class Create_Activity extends Component <Props> {
     return (
       <View style = {styles.container}>
         <View style={styles.logo}>
-          <Image style={{width:100, height:100}}
-            source={require('../images/logo.png')}/>
-              <Text style={styles.text1}>
-                  <Text>FO Activity</Text>
-              </Text>
+           <Image style={{width:100, height:100}}
+              source={require('../images/logo.png')}/>
+            <Text style={styles.text1}>FO Activity</Text>
           </View>
           <View style={styles.textGroup2}>
-            <Text style={styles.text}>
-              <Text>Selamat datang!! </Text>
-            </Text>
-            <Text style={styles.text}>
-              <Text>Silahkan masuk melalui akun</Text>
-            </Text>
-            <Text style={styles.text}>
-              <Text>anda</Text>
-            </Text>
+            <Text style={styles.text}>Selamat datang!!</Text>
+            <Text style={styles.text}>Silahkan masuk melalui akun</Text>
+            <Text style={styles.text}>anda</Text>
             <View style = {styles.button}>
-            <TouchableOpacity>
-              <GoogleSigninButton
-                style={{ width: 312, height: 48 }}
-                size={GoogleSigninButton.Size.Wide}
-                color={GoogleSigninButton.Color.Light}
-                onPress={this._signIn }
-              />
+              <TouchableOpacity>
+                <GoogleSigninButton
+                  style={{ width: 312, height: 48 }}
+                  size={GoogleSigninButton.Size.Wide}
+                  color={GoogleSigninButton.Color.Light}
+                  onPress={this._signIn }
+                />
             </TouchableOpacity>
           </View>
         </View>
@@ -121,23 +111,23 @@ export default class Create_Activity extends Component <Props> {
     )
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
- },
+  },
   text:{
     fontSize: hp(3),
     color:'black',
     textAlign:'center',
     fontWeight: 'bold',
   },
-   textGroup2:{
-     marginTop:-80,
+  textGroup2:{
+    marginTop:-80,
   },
   text1:{
-    fontSize:hp(4
-    ),
+    fontSize:hp(4),
     color:'#284586',
     textAlign:'center',
     fontWeight: 'bold',

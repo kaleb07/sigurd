@@ -52,9 +52,7 @@ export default class Success_Page extends Component <{}>{
               color='#284586'
               style={{paddingLeft:100}}
             />
-            <Text style={styles.text}>
-                <Text>Sukses</Text>
-            </Text>
+            <Text style={styles.text}>Sukses</Text>
             <TouchableOpacity style={{paddingTop: 50, paddingLeft:95}} onPress={this.laporkan_aktivitas} >
               <Text style={styles.cancel}>Tutup</Text>
             </TouchableOpacity>

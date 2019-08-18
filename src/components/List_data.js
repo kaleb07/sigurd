@@ -5,9 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {Actions} from 'react-native-router-flux';
 import { getActivityProspecting, deleteProspectingResult, sendIdFarmer } from '../networking/server';
 import DropDownItem from 'react-native-drop-down-item';
-import { Table} from 'react-native-table-component';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
-
 
 const IC_ARR_DOWN = require('../images/ic_arr_down.png');
 const IC_ARR_UP = require('../images/ic_arr_up.png');
@@ -124,89 +122,89 @@ export default class List_data extends Component <{}>{
                           size={24}
                           color='#284586'
                        />
-                      <TouchableOpacity style = {styles.button} onPress={() => {sendIdFarmer(val.id); this.edit_prospecting()}}>
-                                <Text style = {styles.buttonText}>Edit</Text>
-                      </TouchableOpacity>
-                      <Icon name='trash'
+                       <TouchableOpacity style = {styles.button} onPress={() => {sendIdFarmer(val.id); this.edit_prospecting()}}>
+                          <Text style = {styles.buttonText}>Edit</Text>
+                       </TouchableOpacity>
+                       <Icon name='trash'
                          size={24}
                          color='red'
                          style={{paddingLeft:20}}
-                      />
-                      <TouchableOpacity style = {styles.button}
+                       />
+                       <TouchableOpacity style = {styles.button}
                         onPress={() => {this.deleteFarmer(val.id); this.componentDidMount()}}>
                           <Text style = {styles.buttonText1}>Delete</Text>
-                      </TouchableOpacity>
+                       </TouchableOpacity>
                     </View>
                 </DropDownItem>
         })
 
       let images = activityProspecting.images.map((val, key) => {
         return <View key={key} style={{flexDirection: 'row', paddingTop:5}}>
-                 <Image source = {{uri: val.url}}
-                  style={{height:60, width:55}}/>
+                 <Image source = {{uri: val.url}} style={{height:60, width:55}}/>
                  <Text numberOfLines={3} style={{left:10, color:'#000000',fontSize:16}}>{val.caption}</Text>
                </View>
       });
 
-    return (
-      <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height: hp(8)}}>
-          <View style={styles.imageGroup2}>
-            <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
-            source={require('../images/logo1.png')}/>
-            <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
-              <Text style={styles.close}>keluar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.imageGroup1}>
-          <Image style={{width: wp(18), height: hp(9), marginTop:16}}
-            source={require('../images/prospecting.png')}/>
-          <Text style={styles.text1}>Prospecting</Text>
-        </View>
-        <ScrollView style={{paddingRight:16}}>
-          <View style={{flex:1,paddingBottom:20 ,flexDirection: 'row'}}>
-            <View style={styles.textInputWrapper}>
-              <Text style={{color:'#000000',fontSize:16}}>Tanggal</Text>
-              <Text style={styles.text3}>Deskripsi Kegiatan</Text>
-              <Text style={styles.text3}>Lokasi</Text>
-              <Text style={styles.text3}>Hasil Kegiatan</Text>
-              <Text style={{color:'#000000', paddingTop:15,fontSize:16}}>Foto kegiatan</Text>
-              <View>{images}</View>
+      return (
+        <View style={styles.container}>
+          <View style = {{backgroundColor:'#284586', height: hp(8)}}>
+            <View style={styles.imageGroup2}>
+              <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
+                source={require('../images/logo1.png')}/>
+              <Text style={styles.text2}>FO Activity</Text>
+              <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+                <Text style={styles.close}>keluar</Text>
+              </TouchableOpacity>
             </View>
-              <View style={styles.textInputWrapper3}>
-                <Text style={styles.text3}>:</Text>
-                <Text style={styles.text3}>:</Text>
-                <Text style={styles.text3}>:</Text>
-                <Text style={styles.text3}>:</Text>
+          </View>
+          <View style={styles.imageGroup1}>
+            <Image style={{width: wp(18), height: hp(9), marginTop:16}}
+              source={require('../images/prospecting.png')}/>
+            <Text style={styles.text1}>Prospecting</Text>
+          </View>
+          <ScrollView style={{paddingRight:16}}>
+            <View style={{flex:1,paddingBottom:20 ,flexDirection: 'row'}}>
+              <View style={styles.textInputWrapper}>
+                <Text style={{color:'#000000',fontSize:16}}>Tanggal</Text>
+                <Text style={styles.text3}>Deskripsi Kegiatan</Text>
+                <Text style={styles.text3}>Lokasi</Text>
+                <Text style={styles.text3}>Hasil Kegiatan</Text>
+                <Text style={{color:'#000000', paddingTop:15,fontSize:16}}>Foto kegiatan</Text>
+                <View>{images}</View>
               </View>
-            <View style={styles.textInputWrapper2}>
-              <Text style={styles.text4}>{activityProspecting.date}</Text>
-              <Text style={styles.text4} numberOfLines={3}>{activityProspecting.activityDesc}</Text>
-              <Text style={styles.text4} numberOfLines={1}>{activityProspecting.location} </Text>
-              <Text style={styles.text4} numberOfLines={1}>{activityProspecting.activityResult} </Text>
+                <View style={styles.textInputWrapper3}>
+                  <Text style={styles.text3}>:</Text>
+                  <Text style={styles.text3}>:</Text>
+                  <Text style={styles.text3}>:</Text>
+                  <Text style={styles.text3}>:</Text>
+                </View>
+              <View style={styles.textInputWrapper2}>
+                <Text style={styles.text4}>{activityProspecting.date}</Text>
+                <Text style={styles.text4} numberOfLines={3}>{activityProspecting.activityDesc}</Text>
+                <Text style={styles.text4} numberOfLines={1}>{activityProspecting.location} </Text>
+                <Text style={styles.text4} numberOfLines={1}>{activityProspecting.activityResult} </Text>
+              </View>
             </View>
-          </View>
-          <View style={styles.imageGroup3}>
-            <Image style={{width: wp(10), height: hp(7),left:16}}
-            source={require('../images/data.jpg')}/>
-            <Text style={{right:24,marginTop:12,fontSize:20,color:'#000000' }}> Detail Data Petani </Text>
-            <TouchableOpacity onPress={this.prospecting}>
-              <Text style={styles.tambah}>Tambah</Text>
-            </TouchableOpacity>
-          </View>
-          <ScrollView style={{flex:1,alignSelf: 'stretch', paddingBottom:150,paddingLeft:16}}>
-            <View style = {{marginTop:10,backgroundColor:'#FFFFFF'}}>
-              {farmers}
+            <View style={styles.imageGroup3}>
+              <Image style={{width: wp(10), height: hp(7),left:16}}
+                source={require('../images/data.jpg')}/>
+              <Text style={{right:24,marginTop:12,fontSize:20,color:'#000000' }}> Detail Data Petani </Text>
+              <TouchableOpacity onPress={this.prospecting}>
+                <Text style={styles.tambah}>Tambah</Text>
+              </TouchableOpacity>
             </View>
+            <ScrollView style={{flex:1,alignSelf: 'stretch', paddingBottom:150,paddingLeft:16}}>
+              <View style = {{marginTop:10,backgroundColor:'#FFFFFF'}}>
+                {farmers}
+              </View>
+            </ScrollView>
           </ScrollView>
-        </ScrollView>
-        <TouchableOpacity onPress={this.success_page} style={styles.footer}>
-          <Text style={styles.next}>Selesai</Text>
-        </TouchableOpacity>
-      </View>
-    )}
+          <TouchableOpacity onPress={this.success_page} style={styles.footer}>
+            <Text style={styles.next}>Selesai</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    }
   }
 }
 
@@ -351,15 +349,15 @@ const styles = StyleSheet.create({
   },
   textInputWrapper5: {
     left:10
- },
- footer: {
-   position: 'absolute',
-   flex:0.1,
-   left: 0,
-   right: 0,
-   bottom: 0,
-   backgroundColor:'#284586',
-   height:56,
-   alignItems:'center'
+  },
+  footer: {
+    position: 'absolute',
+    flex:0.1,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor:'#284586',
+    height:56,
+    alignItems:'center'
   }
 });

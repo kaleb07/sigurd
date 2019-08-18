@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity,Image} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 import { Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { Dropdown } from 'react-native-material-dropdown';
@@ -59,13 +58,13 @@ export default class Prospecting_Result extends Component<{}> {
         longTimeFarming: responseJson.longTimeFarming,
         unitLandArea: responseJson.unitLandArea,
         arr: responseJson.product.map((r, index) => {
-            return {
-              index : r.id,
-              commodity : r.commodity,
-              capacity : r.capacity,
-              unitCapacity : r.unitCapacity,
-              price : r.price,
-              unitPrice : r.unitPrice
+          return {
+            index : r.id,
+            commodity : r.commodity,
+            capacity : r.capacity,
+            unitCapacity : r.unitCapacity,
+            price : r.price,
+            unitPrice : r.unitPrice
           }
         }),
       });
@@ -109,14 +108,14 @@ export default class Prospecting_Result extends Component<{}> {
       unitLandArea: this.state.unitLandArea,
       longTimeFarming: this.state.longTimeFarming,
       product: this.state.arr.map((val, index) => {
-          return {
-            id : val.index,
-            commodity : val.commodity,
-            capacity : val.capacity,
-            unitCapacity : val.unitCapacity,
-            price : val.price,
-            unitPrice : val.unitPrice
-         }
+        return {
+          id : val.index,
+          commodity : val.commodity,
+          capacity : val.capacity,
+          unitCapacity : val.unitCapacity,
+          price : val.price,
+          unitPrice : val.unitPrice
+        }
       })
     };
     updateProspectingResult(newProspecting).then((responseJson)=> {
@@ -173,9 +172,7 @@ export default class Prospecting_Result extends Component<{}> {
        <View key={ index }>
          <View style={styles.small}>
           <View style={styles.textInputWrapper}>
-             <Text style={styles.text}>
-               <Text>Komoditas</Text>
-             </Text>
+             <Text style={styles.text}>Komoditas</Text>
              <TextInput
                style={styles.smallCommodity}
                value={r.commodity}
@@ -184,9 +181,7 @@ export default class Prospecting_Result extends Component<{}> {
           </View>
 
           <View style={styles.textInputWrapper}>
-             <Text style={styles.textCapacity}>
-               <Text>Kapasitas</Text>
-             </Text>
+             <Text style={styles.textCapacity}>Kapasitas</Text>
              <TextInputMask
                style={styles.smallCapacity}
                type={'only-numbers'}
@@ -196,43 +191,40 @@ export default class Prospecting_Result extends Component<{}> {
            </View>
            <View style={styles.textInputWrapper}>
              <Dropdown label=' '
-                       containerStyle={{width:45, top: 10, left: 0}}
-                       fontSize={14}
-                       baseColor={"#000000"}
-                       data={weightUnit}
-                       onChangeText={unitCapacity => this.insertVal(unitCapacity, r.index, 'unitCapacity')}
-                       value={r.unitCapacity}
-                       >
+               containerStyle={{width:45, top: 10, left: 0}}
+               fontSize={14}
+               baseColor={"#000000"}
+               data={weightUnit}
+               onChangeText={unitCapacity => this.insertVal(unitCapacity, r.index, 'unitCapacity')}
+               value={r.unitCapacity}>
              </Dropdown>
            </View>
 
            <View style={styles.textInputWrapper}>
-             <Text style={styles.textPrice}>
-               <Text>Harga</Text>
-             </Text>
+             <Text style={styles.textPrice}>Harga</Text>
              <TextInputMask
-                   style={styles.smallPrice}
-                   type={'money'}
-                   options={{
-                     precision: 0,
-                     separator: '',
-                     delimiter: ',',
-                     unit: 'Rp',
-                     suffixUnit:''
-                   }}
-                   value={r.price}
-                   onChangeText={price => this.insertVal(price, r.index, 'price')}
-                   keyboardType="numeric"/>
+               style={styles.smallPrice}
+               type={'money'}
+               options={{
+                 precision: 0,
+                 separator: '',
+                 delimiter: ',',
+                 unit: 'Rp',
+                 suffixUnit:''
+               }}
+               value={r.price}
+               onChangeText={price => this.insertVal(price, r.index, 'price')}
+               keyboardType="numeric"/>
           </View>
+
           <Text style={{paddingTop:46,right:24}}>/</Text>
           <Dropdown label=' '
-                    containerStyle={{width:46, top: 10, right:16}}
-                    fontSize={16}
-                    baseColor={"#000000"}
-                    data={weightUnit}
-                    onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
-                    value={r.unitPrice}
-                    >
+            containerStyle={{width:46, top: 10, right:16}}
+            fontSize={16}
+            baseColor={"#000000"}
+            data={weightUnit}
+            onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
+            value={r.unitPrice}>
           </Dropdown>
           <Icon
              name="trash"
@@ -266,76 +258,68 @@ export default class Prospecting_Result extends Component<{}> {
          </Text>
        </View>
        <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
-         <Text style={styles.text}>
-             <Text>Nama Lengkap Ketua</Text>
-         </Text>
+         <Text style={styles.text}>Nama Lengkap Ketua</Text>
          <TextInput style={styles.inputBox}
-                   onChangeText={(leaderName) => this.setState({leaderName})}
-                   value={this.state.leaderName}
-                   placeholder="Nama lengkap sesuai KTP"
+           onChangeText={(leaderName) => this.setState({leaderName})}
+           value={this.state.leaderName}
+           placeholder="Nama lengkap sesuai KTP"
          />
 
-         <Text style={styles.text}>
-             <Text>Nomor Telepon</Text>
-         </Text>
+         <Text style={styles.text}>Nomor Telepon</Text>
          <TextInputMask
-             	style={styles.inputBox}
-             	type={'custom'}
-             	options={{
-             		mask: '+62 999-9999-9999',
-             	}}
-             	selectionColor="#CF0821"
-             	underlineColorAndroid="transparent"
-             	keyboardType="numeric"
-             	value={this.state.phoneNumber}
-              onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-              placeholder="+62 (8xx xxxx xxxx)"
-             />
-         <Text style={styles.text}>
-           <Text>Kelompok Tani</Text>
-         </Text>
+           	style={styles.inputBox}
+           	type={'custom'}
+           	options={{
+           		mask: '+62 999-9999-9999',
+           	}}
+           	selectionColor="#CF0821"
+           	underlineColorAndroid="transparent"
+           	keyboardType="numeric"
+           	value={this.state.phoneNumber}
+            onChangeText={(phoneNumber) => this.setState({phoneNumber})}
+            placeholder="+62 (8xx xxxx xxxx)"
+          />
+
+         <Text style={styles.text}>Kelompok Tani</Text>
          <TextInput style={styles.inputBox}
-                   onChangeText={(groupFarmer) => this.setState({groupFarmer})}
-                   value={this.state.groupFarmer}
+            onChangeText={(groupFarmer) => this.setState({groupFarmer})}
+            value={this.state.groupFarmer}
          />
-         <Text style={styles.text}>
-           <Text>Jumlah Anggota</Text>
-         </Text>
+
+         <Text style={styles.text}>Jumlah Anggota</Text>
          <TextInputMask
            style={styles.inputBox}
            type={'only-numbers'}
            onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
            value={this.state.numberOfMembers}
          />
-         <Text style={styles.text}>
-           <Text>Luas Lahan</Text>
-         </Text>
+
+         <Text style={styles.text}>Luas Lahan</Text>
          <View style={styles.dropdownWrapper}>
-             <TextInputMask
-               style={styles.inputBox4}
-               type={'only-numbers'}
-               onChangeText={(landArea) => this.setState({landArea})}
-               value={this.state.landArea}
-             />
+           <TextInputMask
+             style={styles.inputBox4}
+             type={'only-numbers'}
+             onChangeText={(landArea) => this.setState({landArea})}
+             value={this.state.landArea}
+           />
 
            <Dropdown label=' '
-                     containerStyle={{width:95, bottom: 16, left: 24}}
-                     fontSize={16}
-                     baseColor={"#000000"}
-                     data={landAreaUnit}
-                     onChangeText={(unitLandArea) => this.setState({unitLandArea})}
-                     value={this.state.unitLandArea}>
+             containerStyle={{width:95, bottom: 16, left: 24}}
+             fontSize={16}
+             baseColor={"#000000"}
+             data={landAreaUnit}
+             onChangeText={(unitLandArea) => this.setState({unitLandArea})}
+             value={this.state.unitLandArea}>
            </Dropdown>
          </View>
 
-         <Text style={styles.text3}>
-           <Text>Lama Bertani</Text>
-         </Text>
+         <Text style={styles.text3}>Lama Bertani</Text>
          <TextInput style={styles.inputBox}
-             onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
-             value={this.state.longTimeFarming}
-             placeholder="X tahun, X bulan"
+           onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
+           value={this.state.longTimeFarming}
+           placeholder="X tahun, X bulan"
          />
+
         <View>
          { arr }
            <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>

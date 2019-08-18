@@ -6,9 +6,6 @@ import {Actions} from 'react-native-router-flux';
 import { getActivityOptionFromServer } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
-
-
-
 export default class Kategori_kegiatan extends Component <{}>{
   constructor() {
     super();
@@ -26,8 +23,8 @@ export default class Kategori_kegiatan extends Component <{}>{
         isLoading:false
       });
     }).catch((error)=> {
-    console.log('Error : ', error);
-  }))
+      console.log('Error : ', error);
+    }))
   }
 
   register() {
@@ -64,65 +61,67 @@ export default class Kategori_kegiatan extends Component <{}>{
                   <Text>{val.name}</Text>
                </View>
       });
+
       return (
-      <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height: hp(8)}}>
-          <View style={styles.imageGroup1}>
-            <Image style={{width: wp(10), height: hp(5),left:8,marginTop:3}}
-            source={require('../images/logo1.png')}/>
-            <Text style={styles.text1}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
-              <Text style={styles.close}>keluar</Text>
+        <View style={styles.container}>
+          <View style = {{backgroundColor:'#284586', height: hp(8)}}>
+            <View style={styles.imageGroup1}>
+              <Image style={{width: wp(10), height: hp(5),left:8,marginTop:3}}
+              source={require('../images/logo1.png')}/>
+              <Text style={styles.text1}>FO Activity</Text>
+              <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+                <Text style={styles.close}>keluar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Text style={styles.text}>Kategori Kegiatan</Text>
+          <View style={styles.imageGroup}>
+            <TouchableOpacity  onPress={this.create_prospecting}>
+              <Image style={{width: wp(20), height: hp(11)}}
+                source={require('../images/prospecting.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity  onPress={this.register}>
+              <Image style={{width: wp(20), height: hp(11)}}
+                source={require('../images/konsultasi.png')}/>
             </TouchableOpacity>
           </View>
+          <View style={styles.textGroup}>
+            {activityOptions[0]}
+            {activityOptions[1]}
+          </View>
+          <View style={styles.imageGroup}>
+            <TouchableOpacity  onPress={this.monitor_lapangan}>
+              <Image style={{width: wp(20), height: hp(11)}}
+                source={require('../images/monitoring.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity  onPress={this.tanam_perdana}>
+              <Image style={{width: wp(20), height: hp(11)}}
+                source={require('../images/tanam.png')}/>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.textGroup2}>
+            {activityOptions[5]}
+            {activityOptions[2]}
+          </View>
+          <View style={styles.imageGroup}>
+            <TouchableOpacity  onPress={this.create_panen}>
+              <Image style={{width: wp(20), height: hp(11)}}
+                source={require('../images/panen.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity  onPress={this.create_lainnya}>
+              <Image style={{width: wp(20), height: hp(11)}}
+                source={require('../images/lainnya.png')}/>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.textGroup3}>
+            {activityOptions[4]}
+            {activityOptions[3]}
         </View>
-        <Text style={styles.text}>Kategori Kegiatan</Text>
-        <View style={styles.imageGroup}>
-          <TouchableOpacity  onPress={this.create_prospecting}>
-            <Image style={{width: wp(20), height: hp(11)}}
-            source={require('../images/prospecting.png')}/>
-          </TouchableOpacity>
-          <TouchableOpacity  onPress={this.register}>
-            <Image style={{width: wp(20), height: hp(11)}}
-              source={require('../images/konsultasi.png')}/>
-          </TouchableOpacity>
+          <View style={styles.footer}>
+          </View>
         </View>
-        <View style={styles.textGroup}>
-          {activityOptions[0]}
-          {activityOptions[1]}
-        </View>
-        <View style={styles.imageGroup}>
-          <TouchableOpacity  onPress={this.monitor_lapangan}>
-            <Image style={{width: wp(20), height: hp(11)}}
-              source={require('../images/monitoring.png')}/>
-          </TouchableOpacity>
-          <TouchableOpacity  onPress={this.tanam_perdana}>
-            <Image style={{width: wp(20), height: hp(11)}}
-              source={require('../images/tanam.png')}/>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.textGroup2}>
-          {activityOptions[5]}
-          {activityOptions[2]}
-        </View>
-        <View style={styles.imageGroup}>
-          <TouchableOpacity  onPress={this.create_panen}>
-            <Image style={{width: wp(20), height: hp(11)}}
-              source={require('../images/panen.png')}/>
-          </TouchableOpacity>
-          <TouchableOpacity  onPress={this.create_lainnya}>
-            <Image style={{width: wp(20), height: hp(11)}}
-              source={require('../images/lainnya.png')}/>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.textGroup3}>
-          {activityOptions[4]}
-          {activityOptions[3]}
-      </View>
-        <View style={styles.footer}>
-        </View>
-      </View>
-    )}
+      )
+    }
   }
 }
 

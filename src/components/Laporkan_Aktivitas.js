@@ -5,7 +5,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {Actions} from 'react-native-router-flux';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
-
 export default class Laporkan_Aktivitas extends Component <{}>{
   kegiatan() {
     Actions.kegiatan()
@@ -13,34 +12,26 @@ export default class Laporkan_Aktivitas extends Component <{}>{
   render(){
     return (
       <View style={styles.container}>
-          <View style = {{backgroundColor:'#284586', height: hp(8)}}>
-            <View style={styles.imageGroup}>
-              <Image style={{ width: wp(10), height: hp(5), left:8, marginTop:3}}
-                source={require('../images/logo1.png')}/>
-              <Text style={styles.text1}>FO Activity</Text>
-              <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
-                <Text style={styles.close}>keluar</Text>
-              </TouchableOpacity>
-            </View>
+        <View style = {{backgroundColor:'#284586', height: hp(8)}}>
+          <View style={styles.imageGroup}>
+            <Image style={{ width: wp(10), height: hp(5), left:8, marginTop:3}}
+              source={require('../images/logo1.png')}/>
+            <Text style={styles.text1}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+              <Text style={styles.close}>keluar</Text>
+            </TouchableOpacity>
           </View>
-          <ImageBackground source={require('../images/background.jpg')} style={{width: '100%', alignItems: 'center',height: '100%'}}>
-            <View style={styles.textGroup2}>
-              <Text style={styles.text}>
-                <Text>Selamat Bergabung</Text>
-              </Text>
-            <Text style={styles.text}>
-                <Text>Kami Akan Membantu Anda Dalam</Text>
-            </Text>
-            <Text style={styles.text}>
-                <Text>Melaporkan Aktivitas Yang Anda</Text>
-            </Text>
-            <Text style={styles.text}>
-                <Text>Lakukan</Text>
-            </Text>
+        </View>
+        <ImageBackground source={require('../images/background.jpg')} style={{width: '100%', alignItems: 'center',height: '100%'}}>
+          <View style={styles.textGroup2}>
+            <Text style={styles.text}>Selamat Bergabung</Text>
+            <Text style={styles.text}>Kami Akan Membantu Anda Dalam</Text>
+            <Text style={styles.text}>Melaporkan Aktivitas Yang Anda</Text>
+            <Text style={styles.text}>Lakukan</Text>
           </View>
           <TouchableOpacity onPress={this.kegiatan} style = {styles.button}>
               <Text style = {styles.buttonText}> Laporkan Aktivitas </Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
         </ImageBackground>
       </View>
     )

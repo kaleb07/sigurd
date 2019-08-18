@@ -1,22 +1,14 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
-import { SearchBar } from 'react-native-elements';
-import SearchableDropdown from 'react-native-searchable-dropdown';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
-import { insertActivityToServer } from '../networking/server';
+import { insertActivityToServer, getProjectFromServer } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
-
-var items = [
-  {id: 1, name: 'Cabe Merah'},
-  {id: 2, name: 'Cabe Hijau'},
-  {id: 3, name: 'Cabe Rawit'},
-  {id: 4, name: 'Durian'},
-];
+import {Autocomplete} from "react-native-dropdown-autocomplete";
 
 let unit = [{
   value: 'ton',
@@ -48,6 +40,7 @@ export default class Create_Panen extends Component<{}>{
   constructor() {
     super();
     this.state = {
+      isLoading: true,
       date:'',
       harvestQuantity: '',
       activityDesc:'',
@@ -58,10 +51,32 @@ export default class Create_Panen extends Component<{}>{
         index:0,
         image:'',
         caption:''
-      }]
+      }],
+      project: [],
     }
     this.selectImage = this.selectImage.bind(this);
   };
+
+  componentDidMount(){
+    return ( getProjectFromServer().then((responseJson) => {
+      this.setState({
+        projects: responseJson.data.items,
+        isLoading:false
+      });
+      console.log('project: ', this.state.projects);
+    }).catch((error)=> {
+      console.log('Error : ', error);
+    })
+  )}
+
+  handleSelectItem(item, index) {
+   this.setState({
+     project: [{
+       id: item.projectNo,
+       name: item.title
+     }]
+   })
+  }
 
   removeItem(index) {
     const list = this.state.arr;
@@ -126,7 +141,7 @@ export default class Create_Panen extends Component<{}>{
       date: this.state.date,
       activityOption: 'Panen',
       activityDesc: this.state.activityDesc,
-      project: 'abc',
+      project: this.state.project,
       harvestQuantity: this.state.harvestQuantity + ' ' + this.state.unitHarvest,
       location: this.state.location,
       activityResult: this.state.activityResult,
@@ -164,54 +179,64 @@ export default class Create_Panen extends Component<{}>{
  }
 
   render(){
-    const now = new Date();
-    const prevMonths = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
-    let arr = this.state.arr.map((r, index) => {
+    if(this.state.isLoading){
+      return(
+        <View style={{flex:1, padding:100, marginTop:100,alignItems:'center'}}>
+          <Image style={{width:150, height:150}}
+            source={require('../images/logo.png')}/>
+          <Text style={{fontSize: 30, color: '#AAAAAA', paddingTop: 15, fontWeight: 'bold'}}>Loading...</Text>
+        </View>
+      )
+    } else {
+      const projects = this.state.projects;
+      const now = new Date();
+      const prevMonths = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
+      let arr = this.state.arr.map((r, index) => {
+        return (
+          <View key={ index }>
+            <View style={styles.imageGroup}>
+              <TouchableOpacity onPress={() => this.selectImage(r.index)}>
+                <Image source={r.image !=='' ? r.image :
+                  require('../images/add.png')}
+                  style={{width:48, height:48,marginRight:8,marginTop:10, paddingLeft:8}}/>
+              </TouchableOpacity>
+              <TextInput
+                style={styles.inputBox2}
+                value={r.caption}
+                onChangeText={data => this.insertVal(data, r.index)}
+              />
+              <Icon name="trash"
+                 size={32}
+                 color="red"
+                 style={{ marginLeft: 'auto', marginTop: 16, marginRight:5}}
+                 onPress={() => this.trashVal(r.index)}
+              />
+            </View>
+          </View>
+        );
+      })
+
       return (
-        <View key={ index }>
-          <View style={styles.imageGroup}>
-            <TouchableOpacity onPress={() => this.selectImage(r.index)}>
-              <Image source={r.image !=='' ? r.image :
-                require('../images/add.png')}
-                style={{width:48, height:48,  marginRight:8,marginTop:8, paddingLeft:8}}/>
+        <View style={styles.container}>
+        <View style = {{backgroundColor:'#284586',height: hp(8)}}>
+          <View style={styles.imageGroup5}>
+            <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
+              source={require('../images/logo1.png')}/>
+            <Text style={styles.text2}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+              <Text style={styles.close}>keluar</Text>
             </TouchableOpacity>
-            <TextInput
-              style={styles.inputBox2}
-              value={r.caption}
-              onChangeText={data => this.insertVal(data, r.index)}
-            />
-            <Icon name="trash"
-               size={32}
-               color="red"
-               style={{ marginLeft: 'auto', marginTop:16, marginRight:8}}
-               onPress={() => this.trashVal(r.index)}
-            />
           </View>
         </View>
-      );
-    });
-
-    return (
-      <View style={styles.container}>
-      <View style = {{backgroundColor:'#284586',height: hp(8)}}>
-        <View style={styles.imageGroup5}>
-          <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
-            source={require('../images/logo1.png')}/>
-          <Text style={styles.text2}>FO Activity</Text>
-          <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
-            <Text style={styles.close}>keluar</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-        <View style={styles.imageGroup1}>
-          <Image style={{width: wp(18), height: hp(9.5), marginTop:16}}
-            source={require('../images/panen.png')}/>
-          <Text style={styles.text1}>
-            <Text> Panen</Text>
-          </Text>
-        </View>
-        <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
-          <DatePicker
+          <View style={styles.imageGroup1}>
+            <Image style={{width: wp(18), height: hp(9.5), marginTop:16}}
+              source={require('../images/panen.png')}/>
+            <Text style={styles.text1}>
+              <Text> Panen</Text>
+            </Text>
+          </View>
+          <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+            <DatePicker
               style={{width: wp(90)}}
               date={this.state.date}
               mode="date"
@@ -238,99 +263,86 @@ export default class Create_Panen extends Component<{}>{
                   backgroundColor: '#F5F5F5',
                 }
               }}
-              onDateChange={(date) => {this.setState({date: date})}}/>
-
-          <Text style={styles.text}>
-            <Text>Deskripsi Kegiatan</Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityDesc) => this.setState({activityDesc})}
-                    value={this.state.activityDesc}
-                    placeholder="Monitor kegiatan: persiapan lahan, perawatan, penyemprotan."
-          />
-
-
-          <Text style={styles.text}>
-            <Text>Proyek</Text>
-          </Text>
-          <SearchableDropdown
-              onTextChange={text => console.log(text)}
-              onItemSelect={items => console.log(items)}
-              containerStyle={{ padding: 1 }}
-              textInputStyle={styles.inputDropdown}
-              itemStyle={styles.itemDropdown}
-              itemTextStyle={{ color: '#222' }}
-              itemsContainerStyle={{ maxHeight: 140 }}
-              items={items}
-              defaultIndex={2}
-              placeholder="Proyek"
-              resetValue={false}
-              underlineColorAndroid="transparent"
+              onDateChange={(date) => {this.setState({date: date})}}
             />
 
-          <Text style={styles.text}>
-            <Text>Jumlah Panen</Text>
-          </Text>
-          <View style={styles.textInputWrapper}>
-            <TextInput style={styles.inputHarvest}
-                      multiline={true}
-                      onChangeText={(harvestQuantity) => this.setState({harvestQuantity})}
-                      value={this.state.harvestQuantity}
-                      keyboardType="numeric"
+            <Text style={styles.text}>Deskripsi Kegiatan</Text>
+            <TextInput style={styles.inputBox}
+              multiline={true}
+              onChangeText={(activityDesc) => this.setState({activityDesc})}
+              value={this.state.activityDesc}
+              placeholder="Monitor kegiatan: persiapan lahan, perawatan, penyemprotan."
             />
-            <Dropdown label=' '
-                      containerStyle={{width:95, bottom: 16, left: 24}}
-                      fontSize={16}
-                      baseColor={"#000000"}
-                      placeholder="kg,kw,ton"
-                      data={unit}
-                      onChangeText={(unitHarvest) => this.setState({unitHarvest})}
-                      value={this.state.unitHarvest}>
+            <Text style={styles.text}>Proyek</Text>
+            <Autocomplete
+              style={styles.input}
+              scrollToInput={ev => {}}
+              handleSelectItem={(item, id) => this.handleSelectItem(item, id)}
+              onDropdownClose={() => {}}
+              onDropdownShow={() => {}}
+              data={projects}
+              minimumCharactersCount={1}
+              highlightText
+              valueExtractor={item => item.title }
+              rightContent
+              rightTextExtractor={item => item.projectNo}
+            />
 
-            </Dropdown>
-          </View>
+            <Text style={styles.text}>Jumlah Panen</Text>
+            <View style={styles.textInputWrapper}>
+              <TextInput style={styles.inputHarvest}
+                multiline={true}
+                onChangeText={(harvestQuantity) => this.setState({harvestQuantity})}
+                value={this.state.harvestQuantity}
+                keyboardType="numeric"
+              />
+              <Dropdown label=' '
+                containerStyle={{width:95, bottom: 16, left: 24}}
+                fontSize={16}
+                baseColor={"#000000"}
+                placeholder="kg,kw,ton"
+                data={unit}
+                onChangeText={(unitHarvest) => this.setState({unitHarvest})}
+                value={this.state.unitHarvest}>
+              </Dropdown>
+            </View>
 
-          <Text style={styles.text3}>
-            <Text>Lokasi</Text>
-          </Text>
-          <TextInput style={styles.inputBox3}
-                    onChangeText={(location) => this.setState({location})}
-                    value={this.state.location}
-                    placeholder="Daerah, provinsi, area (west/east)"
-          />
-          <Text style={styles.text}>
-            <Text>Hasil Kegiatan </Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityResult) => this.setState({activityResult})}
-                    value={this.state.activityResult}
-                    placeholder="Panen melon, panen semangka"
-          />
-          <Text style={styles.text}>
-            <Text>Foto Kegiatan</Text>
-          </Text>
-          {arr}
-          <View style={{paddingBottom:32}}>
-            <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
-              <Icon name="plus-square" size={48} color="#284586"/>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAwareScrollView>
-        <View style={styles.footer}>
-          <View style={styles.imageGroup2}>
-            <TouchableOpacity onPress={this.kegiatan} >
-              <Text style={styles.cancel}>Batal</Text>
-            </TouchableOpacity>
+            <Text style={styles.text3}>Lokasi</Text>
+            <TextInput style={styles.inputBox3}
+              onChangeText={(location) => this.setState({location})}
+              value={this.state.location}
+              placeholder="Daerah, provinsi, area (west/east)"
+            />
 
-            <TouchableOpacity onPress={() => { this.insertToServer('panen') }}>
-              <Text style={styles.next}>Simpan</Text>
-            </TouchableOpacity>
+            <Text style={styles.text}>Hasil Kegiatan </Text>
+            <TextInput style={styles.inputBox}
+              multiline={true}
+              onChangeText={(activityResult) => this.setState({activityResult})}
+              value={this.state.activityResult}
+              placeholder="Panen melon, panen semangka"
+            />
+
+            <Text style={styles.text}>Foto Kegiatan</Text>
+            {arr}
+            <View style={{paddingBottom:32}}>
+              <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+                <Icon name="plus-square" size={48} color="#284586"/>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAwareScrollView>
+          <View style={styles.footer}>
+            <View style={styles.imageGroup2}>
+              <TouchableOpacity onPress={this.kegiatan} >
+                <Text style={styles.cancel}>Batal</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { this.insertToServer('panen') }}>
+                <Text style={styles.next}>Simpan</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-    )
+      )
+    }
   };
 };
 

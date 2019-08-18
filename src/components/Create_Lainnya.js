@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
-import { SearchBar } from 'react-native-elements';
-import SearchableDropdown from 'react-native-searchable-dropdown';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -155,8 +153,7 @@ export default class Create_Prospecting extends Component<{}>{
         <View key={ index }>
           <View style={styles.imageGroup}>
             <TouchableOpacity onPress={() => this.selectImage(r.index)}>
-              <Image source={r.image !=='' ? r.image :
-                require('../images/add.png')}
+              <Image source={r.image !=='' ? r.image : require('../images/add.png')}
                 style={{width:48, height:48,  marginRight:8,marginTop:8, paddingLeft:8}}/>
             </TouchableOpacity>
             <TextInput
@@ -196,61 +193,58 @@ export default class Create_Prospecting extends Component<{}>{
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
           <DatePicker
-              style={{width: 350}}
-              date={this.state.date}
-              mode="date"
-              placeholder="Pilih tanggal"
-              format="DD-MM-YYYY"
-              minDate={prevMonths}
-              maxDate={now}
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  marginLeft: 0,
-                  width:48,
-                  height:48
-                },
-                dateInput: {
-                  marginLeft: 64,
-                  fontSize: 16,
-                  borderRadius:5,
-                  borderWidth: 0.5,
-                  borderColor: '#000000',
-                  backgroundColor: '#F5F5F5',
-                }
-              }}
-              onDateChange={(date) => {this.setState({date: date})}}/>
-          <Text style={styles.text}>
-            <Text>Deskripsi Kegiatan</Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityDesc) => this.setState({activityDesc})}
-                    value={this.state.activityDesc}
-                      placeholder="Strategic meeting, kolaborasi, marketing, dll."
+            style={{width: 350}}
+            date={this.state.date}
+            mode="date"
+            placeholder="Pilih tanggal"
+            format="DD-MM-YYYY"
+            minDate={prevMonths}
+            maxDate={now}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                marginLeft: 0,
+                width:48,
+                height:48
+              },
+              dateInput: {
+                marginLeft: 64,
+                fontSize: 16,
+                borderRadius:5,
+                borderWidth: 0.5,
+                borderColor: '#000000',
+                backgroundColor: '#F5F5F5',
+              }
+            }}
+            onDateChange={(date) => {this.setState({date: date})}}
           />
-          <Text style={styles.text}>
-            <Text>Lokasi</Text>
-          </Text>
+
+          <Text style={styles.text}>Deskripsi Kegiatan</Text>
+          <TextInput style={styles.inputBox}
+            multiline={true}
+            onChangeText={(activityDesc) => this.setState({activityDesc})}
+            value={this.state.activityDesc}
+            placeholder="Strategic meeting, kolaborasi, marketing, dll."
+          />
+
+          <Text style={styles.text}>Lokasi</Text>
           <TextInput style={styles.inputBox3}
-                    onChangeText={(location) => this.setState({location})}
-                    value={this.state.location}
-                    placeholder="Daerah, provinsi, area (west/east)"
+            onChangeText={(location) => this.setState({location})}
+            value={this.state.location}
+            placeholder="Daerah, provinsi, area (west/east)"
           />
-          <Text style={styles.text}>
-            <Text>Hasil Kegiatan </Text>
-          </Text>
+
+          <Text style={styles.text}>Hasil Kegiatan </Text>
           <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityResult) => this.setState({activityResult})}
-                    value={this.state.activityResult}
-                    placeholder="Berhasil, tidak berhasil, on progress..."/>
-          <Text style={styles.text}>
-            <Text>Foto Kegiatan</Text>
-          </Text>
+            multiline={true}
+            onChangeText={(activityResult) => this.setState({activityResult})}
+            value={this.state.activityResult}
+            placeholder="Berhasil, tidak berhasil, on progress..."/>
+
+          <Text style={styles.text}>Foto Kegiatan</Text>
           {arr}
           <View style={{paddingBottom:32}}>
             <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
@@ -263,7 +257,6 @@ export default class Create_Prospecting extends Component<{}>{
             <TouchableOpacity onPress={this.kegiatan} >
               <Text style={styles.cancel}>Batal</Text>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => { this.insertToServer('lainnya') }}>
               <Text style={styles.next}>Simpan</Text>
             </TouchableOpacity>

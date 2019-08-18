@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
-import { SearchBar } from 'react-native-elements';
-import SearchableDropdown from 'react-native-searchable-dropdown';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -149,8 +147,7 @@ export default class Create_Prospecting extends Component<{}>{
       <View key={ index }>
         <View style={styles.imageGroup}>
           <TouchableOpacity onPress={() => this.selectImage(r.index)}>
-            <Image source={r.image !=='' ? r.image :
-              require('../images/add.png')}
+            <Image source={r.image !=='' ? r.image : require('../images/add.png')}
               style={{width: wp(11),height: hp(7),marginRight:8,marginTop:10, paddingLeft:8}}/>
           </TouchableOpacity>
           <TextInput
@@ -171,16 +168,16 @@ export default class Create_Prospecting extends Component<{}>{
 
     return (
       <View style={styles.container}>
-          <View style = {{backgroundColor:'#284586', height: hp(8)}}>
-            <View style={styles.imageGroup2}>
-              <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
+        <View style = {{backgroundColor:'#284586', height: hp(8)}}>
+          <View style={styles.imageGroup2}>
+            <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
               source={require('../images/logo1.png')}/>
-              <Text style={styles.text2}>FO Activity</Text>
-              <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+            <Text style={styles.text2}>FO Activity</Text>
+            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
               <Text style={styles.close}>keluar</Text>
-         </TouchableOpacity>
-         </View>
-     </View>
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={styles.imageGroup1}>
           <Image style={{width: wp(18), height: hp(9), marginTop:16}}
             source={require('../images/prospecting.png')}/>
@@ -188,68 +185,68 @@ export default class Create_Prospecting extends Component<{}>{
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20,}}>
           <DatePicker
-              style={{width: wp(90)}}
-              date={this.state.date}
-              mode="date"
-              placeholder="Pilih tanggal"
-              format="DD-MM-YYYY"
-              minDate={prevMonths}
-              maxDate={now}
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  marginLeft: 0,
-                  width: wp(10),
-                  height: hp(7)
-                },
-                dateInput: {
-                  marginLeft:56,
-                  fontSize: 16,
-                  borderRadius:5,
-                  borderWidth: 0.5,
-                  backgroundColor:'#F5F5F5',
-                  borderColor: '#000000',
-                }
-              }}
-              onDateChange={(date) => {this.setState({date: date})}}/>
-          <Text style={styles.text}>
-            <Text>Deskripsi Kegiatan </Text>
-          </Text>
+            style={{width: wp(90)}}
+            date={this.state.date}
+            mode="date"
+            placeholder="Pilih tanggal"
+            format="DD-MM-YYYY"
+            minDate={prevMonths}
+            maxDate={now}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                marginLeft: 0,
+                width: wp(10),
+                height: hp(7)
+              },
+              dateInput: {
+                marginLeft:56,
+                fontSize: 16,
+                borderRadius:5,
+                borderWidth: 0.5,
+                backgroundColor:'#F5F5F5',
+                borderColor: '#000000',
+              }
+            }}
+            onDateChange={(date) => {this.setState({date: date})}}
+          />
+
+          <Text style={styles.text}>Deskripsi Kegiatan</Text>
           <TextInput style={styles.inputBox}
                     multiline={true}
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
                     placeholder="Terjalin kerja sama, tidak terjalin kerjasama, on proses"
           />
-          <Text style={styles.text}>
-            <Text>Lokasi</Text>
-          </Text>
+
+          <Text style={styles.text}>Lokasi</Text>
           <TextInput style={styles.inputBox3}
-                    onChangeText={(location) => this.setState({location})}
-                    value={this.state.location}
-                    placeholder="Daerah, provinsi, area (west/east)"
+            onChangeText={(location) => this.setState({location})}
+            value={this.state.location}
+            placeholder="Daerah, provinsi, area (west/east)"
           />
+
           <Text style={styles.text}>Hasil Kegiatan</Text>
           <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityResult) => this.setState({activityResult})}
-                    value={this.state.activityResult}
-                    placeholder="Terjalin kerja sama, tidak terjalin kerjasama, on proses"
+            multiline={true}
+            onChangeText={(activityResult) => this.setState({activityResult})}
+            value={this.state.activityResult}
+            placeholder="Terjalin kerja sama, tidak terjalin kerjasama, on proses"
           />
+
           <Text style={styles.text}>Foto Kegiatan</Text>
           {arr}
-            <TouchableOpacity style={{paddingBottom:80}} onPress={() => { this.insertSomeThing('')}}>
-              <Icon name="plus-square" size={48} color="#284586"/>
-            </TouchableOpacity>
+          <TouchableOpacity style={{paddingBottom:80}} onPress={() => { this.insertSomeThing('')}}>
+            <Icon name="plus-square" size={48} color="#284586"/>
+          </TouchableOpacity>
         </KeyboardAwareScrollView>
         <TouchableOpacity onPress={()=>{this.insertToServer('prospecting')}} style={styles.footer}>
           <Text style={styles.next}>Selanjutnya</Text>
         </TouchableOpacity>
-    </View>
-
+      </View>
     )
   };
 };
