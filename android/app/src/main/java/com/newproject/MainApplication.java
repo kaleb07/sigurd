@@ -3,7 +3,9 @@ package com.newproject;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -27,7 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSensitiveInfoPackage(),
             new RNFetchBlobPackage(),
+            new RNGoogleSigninPackage(), // <-- this needs to be in the list
             new RNTextInputMaskPackage(),
             new VectorIconsPackage(),
             new ImagePickerPackage()

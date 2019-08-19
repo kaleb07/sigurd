@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity,Image} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { KeyboardAccessoryNavigation } from 'react-native-keyboard-accessory';
 import { Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { Dropdown } from 'react-native-material-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
 import { insertProspectingToServer } from '../networking/server';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
 let index = 0;
 let weightUnit = [{
@@ -143,11 +143,9 @@ export default class Prospecting_Result extends Component<{}> {
     let arr = this.state.arr.map((r, index) => {
       return (
         <View key={ index }>
-          <View style={styles.small}>
+         <View style={styles.small}>
            <View style={styles.textInputWrapper}>
-              <Text style={styles.text}>
-                <Text>Komoditas</Text>
-              </Text>
+              <Text style={styles.text}>Komoditas</Text>
               <TextInput
                 style={styles.smallCommodity}
                 value={r.commodity}
@@ -156,54 +154,50 @@ export default class Prospecting_Result extends Component<{}> {
            </View>
 
            <View style={styles.textInputWrapper}>
-              <Text style={styles.textCapacity}>
-                <Text>Kapasitas</Text>
-              </Text>
+              <Text style={styles.textCapacity}>Kapasitas</Text>
               <TextInputMask
                 style={styles.smallCapacity}
                 type={'only-numbers'}
                 value={r.capacity}
                 onChangeText={capacity => this.insertVal(capacity, r.index, 'capacity')}
               />
-            </View>
-            <View style={styles.textInputWrapper}>
-              <Dropdown label=' '
-                        containerStyle={{width:45, top: 10, left:4}}
-                        fontSize={14}
-                        baseColor={"#000000"}
-                        data={weightUnit}
-                        onChangeText={unitCapacity => this.insertVal(unitCapacity, r.index, 'unitCapacity')}
-                        value={r.unitCapacity}
-                        >
-              </Dropdown>
-            </View>
+           </View>
            <View style={styles.textInputWrapper}>
-              <Text style={styles.textPrice}>
-                <Text>Harga</Text>
-              </Text>
+              <Dropdown label=' '
+                containerStyle={{width: wp(12), top: 10, left:4}}
+                fontSize={14}
+                baseColor={"#000000"}
+                data={weightUnit}
+                onChangeText={unitCapacity => this.insertVal(unitCapacity, r.index, 'unitCapacity')}
+                value={r.unitCapacity}
+              >
+              </Dropdown>
+           </View>
+           <View style={styles.textInputWrapper}>
+              <Text style={styles.textPrice}>Harga</Text>
               <TextInputMask
-                    style={styles.smallPrice}
-                    type={'money'}
-                    options={{
-                      precision: 0,
-                      separator: '',
-                      delimiter: ',',
-                      unit: 'Rp',
-                      suffixUnit:''
-                    }}
-                    value={r.price}
-                    onChangeText={price => this.insertVal(price, r.index, 'price')}
-                    keyboardType="numeric"/>
+                style={styles.smallPrice}
+                type={'money'}
+                options={{
+                  precision: 0,
+                  separator: '',
+                  delimiter: ',',
+                  unit: 'Rp',
+                  suffixUnit:''
+                }}
+                value={r.price}
+                onChangeText={price => this.insertVal(price, r.index, 'price')}
+                keyboardType="numeric"
+              />
            </View>
            <Text style={{paddingTop:46,right:24}}>/</Text>
            <Dropdown label=' '
-                     containerStyle={{width:46,top:10, right:20}}
-                     fontSize={16}
-                     baseColor={"#000000"}
-                     data={weightUnit}
-                     onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
-                     value={r.unitPrice}
-                     >
+             containerStyle={{width: wp(12),top:10, right:20}}
+             fontSize={16}
+             baseColor={"#000000"}
+             data={weightUnit}
+             onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
+             value={r.unitPrice}>
            </Dropdown>
            <Icon
       				name="trash"
@@ -212,67 +206,66 @@ export default class Prospecting_Result extends Component<{}> {
       				style={{ marginLeft: 'auto', marginTop: 40, right: 16}}
       				onPress={() => this.trashVal(r.index)}
       			/>
-           </View>
+         </View>
         </View>
       );
     });
 
     return(
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height:50}}>
+        <View style = {{backgroundColor:'#284586',height: hp(8)}}>
           <View style={styles.imageGroup}>
-            <Image style={{width:40, height:40,left:8}}
+            <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting}>
+            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
               <Text style={styles.close}>keluar</Text>
             </TouchableOpacity>
          </View>
         </View>
         <View style={styles.imageGroup1}>
-          <Image style={{width:64, height:64, marginTop:16}}
+          <Image style={{width: wp(18), height: hp(9), marginTop:16}}
             source={require('../images/prospecting.png')}/>
-          <Text style={styles.text1}>
-            <Text>Prospecting</Text>
-          </Text>
+          <Text style={styles.text1}>Prospecting</Text>
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
-          <Text style={styles.text}>
-              <Text>Nama Lengkap Ketua</Text>
-          </Text>
+          <Text style={styles.text}>Nama Lengkap Ketua</Text>
           <TextInput style={styles.inputBox}
-                    onChangeText={(leaderName) => this.setState({leaderName})}
-                    value={this.state.leaderName}
+            onChangeText={(leaderName) => this.setState({leaderName})}
+            value={this.state.leaderName}
+            placeholder="Nama lengkap sesuai KTP"
           />
 
-          <Text style={styles.text}>
-              <Text>Nomor Telepon</Text>
-          </Text>
+          <Text style={styles.text}>Nomor Telepon</Text>
           <TextInputMask
-            style={styles.inputBox}
-            type={'only-numbers'}
+          	style={styles.inputBox}
+          	type={'custom'}
+          	options={{
+          		mask: '+62 999-9999-9999',
+          	}}
+          	selectionColor="#CF0821"
+          	underlineColorAndroid="transparent"
+          	keyboardType="numeric"
+          	value={this.state.phoneNumber}
             onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-            value={this.state.phoneNumber}
+            placeholder="+62 (8xx xxxx xxxx)"
           />
-          <Text style={styles.text}>
-            <Text>Kelompok Tani</Text>
-          </Text>
+
+          <Text style={styles.text}>Kelompok Tani</Text>
           <TextInput style={styles.inputBox}
-                    onChangeText={(groupFarmer) => this.setState({groupFarmer})}
-                    value={this.state.groupFarmer}
+            onChangeText={(groupFarmer) => this.setState({groupFarmer})}
+            value={this.state.groupFarmer}
           />
-          <Text style={styles.text}>
-            <Text>Jumlah Anggota</Text>
-          </Text>
+
+          <Text style={styles.text}>Jumlah Anggota</Text>
           <TextInputMask
             style={styles.inputBox}
             type={'only-numbers'}
             onChangeText={(numberOfMembers) => this.setState({numberOfMembers})}
             value={this.state.numberOfMembers}
           />
-          <Text style={styles.text}>
-            <Text>Luas Lahan</Text>
-          </Text>
+
+          <Text style={styles.text}>Luas Lahan</Text>
           <View style={styles.dropdownWrapper}>
             <TextInputMask
               style={styles.inputBox4}
@@ -281,22 +274,20 @@ export default class Prospecting_Result extends Component<{}> {
               value={this.state.landArea}
             />
             <Dropdown label=' '
-                      containerStyle={{width:95, bottom: 16, left: 24}}
-                      fontSize={16}
-                      baseColor={"#000000"}
-                      data={landAreaUnit}
-                      onChangeText={(unitLandArea) => this.setState({unitLandArea})}
-                      value={this.state.unitLandArea}>
+              containerStyle={{width:95, bottom: 16, left: 24}}
+              fontSize={16}
+              baseColor={"#000000"}
+              data={landAreaUnit}
+              onChangeText={(unitLandArea) => this.setState({unitLandArea})}
+              value={this.state.unitLandArea}>
             </Dropdown>
           </View>
 
-          <Text style={styles.text3}>
-            <Text>Lama Bertani</Text>
-          </Text>
+          <Text style={styles.text3}>Lama Bertani</Text>
           <TextInput style={styles.inputBox}
-              placeholder= "*contoh '1 tahun 12 bulan 30 hari'"
-              onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
-              value={this.state.longTimeFarming}
+            placeholder= "X tahun, X bulan"
+            onChangeText={(longTimeFarming) => this.setState({longTimeFarming})}
+            value={this.state.longTimeFarming}
           />
          <View>
           { arr }
@@ -324,6 +315,14 @@ var styles = StyleSheet.create({
     color:'#000000',
     marginRight: 15
   },
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
+    borderRadius:5,
+    marginTop:8,
+    right:16
+  },
   small:{
     flex: 1,
     flexDirection: 'row',
@@ -338,7 +337,7 @@ var styles = StyleSheet.create({
   },
   text2:{
     color:'#FFFFFF',
-    fontSize:20,
+    fontSize: hp(3),
     padding:5,
     borderRadius:30,
     marginTop:3,
@@ -368,8 +367,8 @@ var styles = StyleSheet.create({
     borderRadius:30,
   },
   inputBox:{
-    width:350,
-    height:48,
+    width: wp(90),
+    height: hp(6),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -381,7 +380,8 @@ var styles = StyleSheet.create({
   },
   smallCapacity:{
     flex: 1,
-    width:65,
+    width: wp(17),
+    height: hp(5),
     left:5,
     borderRadius:5,
     borderWidth: 0.5,
@@ -394,7 +394,8 @@ var styles = StyleSheet.create({
   },
   smallPrice:{
     flex: 1,
-    width:65,
+    width: wp(16),
+    height: hp(5),
     right:18,
     borderRadius:5,
     borderWidth: 0.5,
@@ -407,7 +408,8 @@ var styles = StyleSheet.create({
   },
   smallCommodity:{
     flex: 1,
-    width:70,
+    width: wp(17),
+    height: hp(5),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -424,8 +426,8 @@ var styles = StyleSheet.create({
       flexDirection:'row',
     },
    inputBox4:{
-     width:200,
-     height:45,
+     width: wp(50),
+     height: hp(6),
      borderRadius:5,
      borderWidth: 0.5,
      borderColor: '#000000',
@@ -457,7 +459,7 @@ var styles = StyleSheet.create({
      fontWeight: 'bold',
    },
    text:{
-     fontSize:14,
+     fontSize: hp(2),
      fontWeight: '400',
      color:'#000000',
      marginTop:8
@@ -469,30 +471,24 @@ var styles = StyleSheet.create({
      marginBottom:4,
    },
    textCapacity:{
-     fontSize: 14,
+    fontSize: hp(2),
      fontWeight: '400',
      color:'#000000',
      marginTop: 10,
      left: 5
    },
    textPrice:{
-     fontSize:14,
+     fontSize: hp(2),
      fontWeight: '400',
      color:'#000000',
      marginTop: 10,
      right:20
    },
-   close:{
-     backgroundColor:'#E6B000',
-     color:'#000000',
-     fontSize:16,
-     padding:5,
-     width: 80,
-     height:32,
-     textAlign:'center',
-     borderRadius:5,
-     marginTop:4,
-     right:16
+    close:{
+      color:'#000000',
+      fontSize: hp(2),
+      textAlign:'center',
+      marginTop:4
    },
    imageGroup4:{
      flexDirection: 'row',

@@ -1,21 +1,14 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
-import { SearchBar } from 'react-native-elements';
-import SearchableDropdown from 'react-native-searchable-dropdown';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
-import { insertActivityToServer } from '../networking/server';
-
-var items = [
-  {id: 1, name: 'Cabe Merah'},
-  {id: 2, name: 'Cabe Hijau'},
-  {id: 3, name: 'Cabe Rawit'},
-  {id: 4, name: 'Durian'},
-];
+import { insertActivityToServer, getProjectFromServer } from '../networking/server';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
+import {Autocomplete} from "react-native-dropdown-autocomplete";
 
 const options={
   title: 'Choose photo',
@@ -39,6 +32,7 @@ export default class Monitor_Lapangan extends Component<{}>{
   constructor() {
     super();
     this.state = {
+      isLoading: true,
       date:'',
       activityDesc:'',
       location:'',
@@ -47,10 +41,32 @@ export default class Monitor_Lapangan extends Component<{}>{
         index:0,
         image:'',
         caption:''
-      }]
+      }],
+      project: [],
     }
     this.selectImage = this.selectImage.bind(this);
   };
+
+  componentDidMount(){
+    return ( getProjectFromServer().then((responseJson) => {
+      this.setState({
+        projects: responseJson.data.items,
+        isLoading:false
+      });
+      console.log('project: ', this.state.projects);
+    }).catch((error)=> {
+      console.log('Error : ', error);
+    })
+  )}
+
+  handleSelectItem(item, index) {
+   this.setState({
+     project: [{
+       id: item.projectNo,
+       name: item.title
+     }]
+   })
+  }
 
   removeItem(index) {
     const list = this.state.arr;
@@ -115,7 +131,7 @@ export default class Monitor_Lapangan extends Component<{}>{
       date: this.state.date,
       activityOption: 'Monitor Lapangan',
       activityDesc: this.state.activityDesc,
-      project: 'abc',
+      project: this.state.project,
       location: this.state.location,
       activityResult: this.state.activityResult,
       images:this.state.arr,
@@ -152,58 +168,66 @@ export default class Monitor_Lapangan extends Component<{}>{
  }
 
   render(){
-    const now = new Date();
-    const prevMonths = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
-    let arr = this.state.arr.map((r, index) => {
-      return (
-        <View key={ index }>
-          <View style={styles.imageGroup}>
-            <TouchableOpacity onPress={() => this.selectImage(r.index)}>
-              <Image source={r.image !=='' ? r.image :
-                require('../images/add.png')}
-                style={{width:48, height:48,  marginRight:8,marginTop:8, paddingLeft:8}}/>
-            </TouchableOpacity>
-            <TextInput
-              style={styles.inputBox2}
-              value={r.caption}
-              onChangeText={data => this.insertVal(data, r.index)}
-            />
-            <Icon name="trash"
-               size={32}
-               color="red"
-               style={{ marginLeft: 'auto', marginTop:16, marginRight:4}}
-               onPress={() => this.trashVal(r.index)}
-            />
-          </View>
+    if(this.state.isLoading){
+      return(
+        <View style={{flex:1, padding:100, marginTop:100,alignItems:'center'}}>
+          <Image style={{width:150, height:150}}
+            source={require('../images/logo.png')}/>
+          <Text style={{fontSize: 30, color: '#AAAAAA', paddingTop: 15, fontWeight: 'bold'}}>Loading...</Text>
         </View>
-      );
-    });
+      )
+    } else {
+      const projects = this.state.projects;
+      const now = new Date();
+      const prevMonths = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
+      let arr = this.state.arr.map((r, index) => {
+        return (
+          <View key={ index }>
+            <View style={styles.imageGroup}>
+              <TouchableOpacity onPress={() => this.selectImage(r.index)}>
+                <Image source={r.image !=='' ? r.image :
+                  require('../images/add.png')}
+                  style={{width: wp(11),height: hp(6),marginRight:8,marginTop:12, paddingLeft:8}}/>
+              </TouchableOpacity>
+              <TextInput
+                style={styles.inputBox2}
+                value={r.caption}
+                onChangeText={data => this.insertVal(data, r.index)}
+              />
+              <Icon name="trash"
+                 size={32}
+                 color="red"
+                 style={{ marginLeft: 'auto', marginTop: 16, marginRight:5}}
+                 onPress={() => this.trashVal(r.index)}
+              />
+            </View>
+          </View>
+        );
+      })
 
-    return (
-      <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height:56}}>
-          <View style={styles.imageGroup5}>
-            <Image style={{width:40, height:40,left:8}}
-              source={require('../images/logo1.png')}/>
-            <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting}>
-              <Text style={styles.close}>keluar</Text>
-            </TouchableOpacity>
+      return (
+        <View style={styles.container}>
+          <View style = {{backgroundColor:'#284586',height: hp(8)}}>
+            <View style={styles.imageGroup5}>
+              <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
+                source={require('../images/logo1.png')}/>
+              <Text style={styles.text2}>FO Activity</Text>
+              <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+                <Text style={styles.close}>keluar</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        <View style={styles.imageGroup1}>
-          <Image style={{width:64, height:64, marginTop:16}}
-            source={require('../images/monitoring.png')}/>
-          <Text style={styles.text1}>
-            <Text> Monitor Lapangan</Text>
-          </Text>
-        </View>
-        <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
-          <DatePicker
-              style={{width: 350}}
+          <View style={styles.imageGroup1}>
+            <Image style={{width: wp(18), height: hp(9.5), marginTop:16}}
+              source={require('../images/monitoring.png')}/>
+            <Text style={styles.text1}>Monitor Lapangan</Text>
+          </View>
+          <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+            <DatePicker
+              style={{width: wp(90)}}
               date={this.state.date}
               mode="date"
-              placeholder="pilih tanggal"
+              placeholder="Pilih tanggal"
               format="DD-MM-YYYY"
               minDate={prevMonths}
               maxDate={now}
@@ -214,8 +238,8 @@ export default class Monitor_Lapangan extends Component<{}>{
                   position: 'absolute',
                   left: 0,
                   marginLeft: 0,
-                  width:48,
-                  height:48
+                  width: wp(10),
+                  height: hp(7)
                 },
                 dateInput: {
                   marginLeft:56,
@@ -226,70 +250,68 @@ export default class Monitor_Lapangan extends Component<{}>{
                   backgroundColor: '#F5F5F5',
                 }
               }}
-              onDateChange={(date) => {this.setState({date: date})}}/>
-          <Text style={styles.text}>
-            <Text>Deskripsi Kegiatan</Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityDesc) => this.setState({activityDesc})}
-                    value={this.state.activityDesc}
-          />
-          <Text style={styles.text}>
-            <Text>Proyek</Text>
-          </Text>
-          <SearchableDropdown
-              onTextChange={text => console.log(text)}
-              onItemSelect={items => console.log(items)}
-              containerStyle={{ padding: 1 }}
-              textInputStyle={styles.inputDropdown}
-              itemStyle={styles.itemDropdown}
-              itemTextStyle={{ color: '#222' }}
-              itemsContainerStyle={{ maxHeight: 140 }}
-              items={items}
-              defaultIndex={2}
-              placeholder="Proyek"
-              resetValue={false}
-              underlineColorAndroid="transparent"
+              onDateChange={(date) => {this.setState({date: date})}}
             />
-          <Text style={styles.text}>
-            <Text>Lokasi</Text>
-          </Text>
-          <TextInput style={styles.inputBox3}
-                    onChangeText={(location) => this.setState({location})}
-                    value={this.state.location}
-          />
-          <Text style={styles.text}>
-            <Text>Hasil Kegiatan </Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityResult) => this.setState({activityResult})}
-                    value={this.state.activityResult}
-          />
-          <Text style={styles.text}>
-            <Text>Foto Kegiatan</Text>
-          </Text>
-          {arr}
-          <View style={{paddingBottom:32}}>
-            <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
-              <Icon name="plus-square" size={48} color="#284586"/>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAwareScrollView>
-        <View style={styles.footer}>
-          <View style={styles.imageGroup2}>
-            <TouchableOpacity onPress={this.kegiatan} >
-              <Text style={styles.cancel}>Batal</Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { this.insertToServer('monitor_lapangan') }}>
-              <Text style={styles.next}>Simpan</Text>
-            </TouchableOpacity>
+            <Text style={styles.text}>Deskripsi Kegiatan</Text>
+            <TextInput style={styles.inputBox}
+              multiline={true}
+              onChangeText={(activityDesc) => this.setState({activityDesc})}
+              value={this.state.activityDesc}
+              placeholder="Monitor kegiatan: persiapan lahan, perawatan, penyemprotan."
+            />
+
+            <Text style={styles.text}>Proyek</Text>
+            <Autocomplete
+              style={styles.input}
+              scrollToInput={ev => {}}
+              handleSelectItem={(item, id) => this.handleSelectItem(item, id)}
+              onDropdownClose={() => {}}
+              onDropdownShow={() => {}}
+              data={projects}
+              minimumCharactersCount={1}
+              highlightText
+              valueExtractor={item => item.title }
+              rightContent
+              rightTextExtractor={item => item.projectNo}
+            />
+
+            <Text style={styles.text}>Lokasi</Text>
+            <TextInput style={styles.inputBox3}
+                      onChangeText={(location) => this.setState({location})}
+                      value={this.state.location}
+                      placeholder="Daerah, provinsi, area (west/east)"
+            />
+
+            <Text style={styles.text}>Hasil Kegiatan </Text>
+            <TextInput style={styles.inputBox}
+                      multiline={true}
+                      onChangeText={(activityResult) => this.setState({activityResult})}
+                      value={this.state.activityResult}
+                      placeholder="Kegiatan berjalan lancar.../ ada hambatan.../ dll."
+            />
+
+            <Text style={styles.text}>Foto Kegiatan</Text>
+              {arr}
+            <View style={{paddingBottom:32}}>
+              <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+                <Icon name="plus-square" size={48} color="#284586"/>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAwareScrollView>
+          <View style={styles.footer}>
+            <View style={styles.imageGroup2}>
+              <TouchableOpacity onPress={this.kegiatan} >
+                <Text style={styles.cancel}>Batal</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { this.insertToServer('monitor_lapangan') }}>
+                <Text style={styles.next}>Simpan</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-    )
+      )
+    }
   };
 };
 
@@ -298,6 +320,14 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
     flex: 1,
   },
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
+    borderRadius:5,
+    marginTop:8,
+    right:16
+},
   text:{
     fontSize: 16,
     fontWeight: '400',
@@ -314,7 +344,7 @@ const styles = StyleSheet.create({
   },
   text2:{
     color:'#FFFFFF',
-    fontSize:20,
+    fontSize: hp(3),
     padding:5,
     borderRadius:30,
     marginTop:3,
@@ -353,10 +383,10 @@ const styles = StyleSheet.create({
   cancel:{
     backgroundColor:'#FFC400',
     color:'#000000',
-    fontSize:16,
+    fontSize: hp(2),
     padding:8,
-    width: 144,
-    height:40,
+    width: wp(32),
+    height: hp(5),
     textAlign:'center',
     marginRight:48,
     borderRadius:5
@@ -375,11 +405,11 @@ const styles = StyleSheet.create({
   next:{
     backgroundColor:'#FFC400',
     color:'#000000',
-    fontSize:16,
+    fontSize: hp(2),
     marginBottom:8,
     padding:8,
-    width: 144,
-    height:40,
+    width: wp(32),
+    height: hp(5),
     textAlign:'center',
     borderRadius:5
   },
@@ -400,8 +430,8 @@ const styles = StyleSheet.create({
     borderRadius:5,
   },
   inputBox:{
-    width:350,
-    height:100,
+    width: wp(90),
+    height: hp(14),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -413,8 +443,8 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   inputBox3:{
-    width:350,
-    height:48,
+    width: wp(90),
+    height: hp(6),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -425,8 +455,8 @@ const styles = StyleSheet.create({
     marginVertical:4,
   },
   inputBox2:{
-    width:260,
-    height:45,
+    width: wp(64),
+    height: hp(6),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -447,16 +477,10 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   close:{
-    backgroundColor:'#E6B000',
     color:'#000000',
-    fontSize:16,
-    padding:4,
-    width: 80,
-    height:32,
+    fontSize: hp(2),
     textAlign:'center',
-    borderRadius:5,
-    marginTop: 3,
-    right:16
+    marginTop:4
  },
   imageGroup4:{
     flexDirection: 'row',
@@ -468,6 +492,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding:5,
-    marginTop:3
   },
 });

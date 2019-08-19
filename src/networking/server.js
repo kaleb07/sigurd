@@ -4,9 +4,42 @@ const apiActivity = 'http://localhost:3011/activity';
 const apiActivityOption = 'http://localhost:3011/activity_option';
 const apiProspecting = 'http://localhost:3011/prospecting';
 const apiSignedUrl = 'http://localhost:3011/signed-url';
+const apiProject = 'http://localhost:3011/project/all';
 var RNFetchBlob = require('rn-fetch-blob').default
-var id = '';
+const apiAccount = 'https://api.tanihub.net/v1/auth/signin';
+var id_activity = '';
 var id_farmer='';
+var id_user='';
+
+async function getAccountInfo(params){
+  try{
+    let response = await fetch(apiAccount, {
+        method: 'POST',
+        headers: {
+          'Accept' : 'application/json',
+          'Content-Type' : 'application/json',
+          'serviceId' : 1655787172617,
+          'servicesecret' : '47f64d61139f70fcfe2626be8510971dd710c8aaba1a3374c8098a4a98165683e9370cf525dc0d0ab324baf3349b7d8b7be09e62a9bab0e2054878ff783f1ae1'
+        },
+        body: JSON.stringify(params),
+    });
+    let responseJson = await response.json();
+    id_user = responseJson.data.user.id;
+    return responseJson;
+  } catch(error){
+    console.log('Error is: ', error);
+  }
+}
+
+async function getProjectFromServer(){
+  try{
+    let response = await fetch(apiProject);
+    let responseJson = response.json();
+    return responseJson;
+  } catch(error){
+      console.log('Error is: ', error);
+  }
+}
 
 async function getActivityFromServer(){
   try{
@@ -84,6 +117,7 @@ async function insertActivityToServer(activity, params){
           )
     })
     params.images = arr;
+    params.userId = id_user;
     let response = await fetch(apiActivity, {
         method: 'POST',
         headers: {
@@ -93,7 +127,7 @@ async function insertActivityToServer(activity, params){
         body: JSON.stringify(params),
     });
     let responseJson = await response.json();
-    id = responseJson.id;
+    id_activity = responseJson.id;
     return responseJson;
   } catch(error){
     console.log('Error is: ', error);
@@ -102,7 +136,7 @@ async function insertActivityToServer(activity, params){
 
 async function insertProspectingToServer(params){
   try{
-    params.activityId = id
+    params.activityId = id_activity
     let response = await fetch(apiProspecting, {
         method: 'POST',
         headers: {
@@ -120,7 +154,7 @@ async function insertProspectingToServer(params){
 
 async function getActivityProspecting(){
   try{
-    let getById = apiActivity + '/' + id;
+    let getById = apiActivity + '/' + id_activity;
     let response = await fetch(getById);
     let responseJson = await response.json();
     return responseJson;
@@ -162,6 +196,7 @@ async function updateProspectingResult(params){
 
 export {getActivityOptionFromServer};
 export {getActivityFromServer};
+export {getProjectFromServer};
 export {getActivityProspecting};
 export {getProspecting};
 export {sendIdFarmer};
@@ -169,3 +204,4 @@ export {insertActivityToServer};
 export {insertProspectingToServer};
 export {deleteProspectingResult};
 export {updateProspectingResult};
+export {getAccountInfo};

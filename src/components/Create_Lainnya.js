@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
-import { SearchBar } from 'react-native-elements';
-import SearchableDropdown from 'react-native-searchable-dropdown';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,6 +7,7 @@ import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
 const options={
   title: 'Choose photo',
@@ -155,9 +154,8 @@ export default class Create_Prospecting extends Component<{}>{
         <View key={ index }>
           <View style={styles.imageGroup}>
             <TouchableOpacity onPress={() => this.selectImage(r.index)}>
-              <Image source={r.image !=='' ? r.image :
-                require('../images/add.png')}
-                style={{width:48, height:48,  marginRight:8,marginTop:8, paddingLeft:8}}/>
+              <Image source={r.image !=='' ? r.image : require('../images/add.png')}
+                style={{width: wp(11),height: hp(6),  marginRight:8,marginTop:8, paddingLeft:8}}/>
             </TouchableOpacity>
             <TextInput
               style={styles.inputBox2}
@@ -167,7 +165,7 @@ export default class Create_Prospecting extends Component<{}>{
             <Icon name="trash"
                size={32}
                color="red"
-               style={{ marginLeft: 'auto', marginTop:16, marginRight:8}}
+               style={{ marginLeft: 'auto', marginTop:16, marginRight:16}}
                onPress={() => this.trashVal(r.index)}
             />
           </View>
@@ -177,18 +175,18 @@ export default class Create_Prospecting extends Component<{}>{
 
     return (
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height:56}}>
-         <View style={styles.imageGroup5}>
-           <Image style={{width:40, height:40,left:8}}
-             source={require('../images/logo1.png')}/>
-             <Text style={styles.text2}>FO Activity</Text>
-           <TouchableOpacity onPress={this.prospecting}>
-             <Text style={styles.close}>keluar</Text>
-           </TouchableOpacity>
-         </View>
+      <View style = {{backgroundColor:'#284586',height: hp(8)}}>
+        <View style={styles.imageGroup5}>
+          <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
+            source={require('../images/logo1.png')}/>
+          <Text style={styles.text2}>FO Activity</Text>
+          <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+            <Text style={styles.close}>keluar</Text>
+          </TouchableOpacity>
         </View>
+      </View>
         <View style={styles.imageGroup1}>
-          <Image style={{width:64, height:64, marginTop:14}}
+          <Image style={{width: wp(18), height: hp(9.5),marginTop:14}}
             source={require('../images/lainnya.png')}/>
           <Text style={styles.text1}>
             <Text> Lainnya</Text>
@@ -196,58 +194,58 @@ export default class Create_Prospecting extends Component<{}>{
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
           <DatePicker
-              style={{width: 350}}
-              date={this.state.date}
-              mode="date"
-              placeholder="pilih tanggal"
-              format="DD-MM-YYYY"
-              minDate={prevMonths}
-              maxDate={now}
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  marginLeft: 0,
-                  width:48,
-                  height:48
-                },
-                dateInput: {
-                  marginLeft: 64,
-                  fontSize: 16,
-                  borderRadius:5,
-                  borderWidth: 0.5,
-                  borderColor: '#000000',
-                  backgroundColor: '#F5F5F5',
-                }
-              }}
-              onDateChange={(date) => {this.setState({date: date})}}/>
-          <Text style={styles.text}>
-            <Text>Deskripsi Kegiatan</Text>
-          </Text>
-          <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityDesc) => this.setState({activityDesc})}
-                    value={this.state.activityDesc}
+            style={{width: wp(90)}}
+            date={this.state.date}
+            mode="date"
+            placeholder="Pilih tanggal"
+            format="DD-MM-YYYY"
+            minDate={prevMonths}
+            maxDate={now}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                marginLeft: 0,
+                width: wp(10),
+                height: hp(7)
+              },
+              dateInput: {
+                marginLeft: 64,
+                fontSize: 16,
+                borderRadius:5,
+                borderWidth: 0.5,
+                borderColor: '#000000',
+                backgroundColor: '#F5F5F5',
+              }
+            }}
+            onDateChange={(date) => {this.setState({date: date})}}
           />
-          <Text style={styles.text}>
-            <Text>Lokasi</Text>
-          </Text>
+
+          <Text style={styles.text}>Deskripsi Kegiatan</Text>
+          <TextInput style={styles.inputBox}
+            multiline={true}
+            onChangeText={(activityDesc) => this.setState({activityDesc})}
+            value={this.state.activityDesc}
+            placeholder="Strategic meeting, kolaborasi, marketing, dll."
+          />
+
+          <Text style={styles.text}>Lokasi</Text>
           <TextInput style={styles.inputBox3}
-                    onChangeText={(location) => this.setState({location})}
-                    value={this.state.location}
+            onChangeText={(location) => this.setState({location})}
+            value={this.state.location}
+            placeholder="Daerah, provinsi, area (west/east)"
           />
-          <Text style={styles.text}>
-            <Text>Hasil Kegiatan </Text>
-          </Text>
+
+          <Text style={styles.text}>Hasil Kegiatan </Text>
           <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityResult) => this.setState({activityResult})}
-                    value={this.state.activityResult}/>
-          <Text style={styles.text}>
-            <Text>Foto Kegiatan</Text>
-          </Text>
+            multiline={true}
+            onChangeText={(activityResult) => this.setState({activityResult})}
+            value={this.state.activityResult}
+            placeholder="Berhasil, tidak berhasil, on progress..."/>
+
+          <Text style={styles.text}>Foto Kegiatan</Text>
           {arr}
           <View style={{paddingBottom:32}}>
             <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
@@ -260,7 +258,6 @@ export default class Create_Prospecting extends Component<{}>{
             <TouchableOpacity onPress={this.kegiatan} >
               <Text style={styles.cancel}>Batal</Text>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => { this.insertToServer('lainnya') }}>
               <Text style={styles.next}>Simpan</Text>
             </TouchableOpacity>
@@ -282,6 +279,14 @@ const styles = StyleSheet.create({
     color:'#000000',
     marginTop:8,
   },
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
+    borderRadius:5,
+    marginTop:8,
+    right:16
+  },
   text1:{
     fontSize: 24,
     fontWeight: '400',
@@ -291,13 +296,13 @@ const styles = StyleSheet.create({
     marginTop:32
   },
   text2:{
-    color:'#FFFFFF',
-    fontSize:20,
-    padding:5,
-    borderRadius:30,
-    marginTop:3,
-    fontWeight: 'bold',
-    paddingRight:100
+   color:'#FFFFFF',
+   fontSize: hp(3),
+   padding:5,
+   borderRadius:30,
+   marginTop:3,
+   fontWeight: 'bold',
+   paddingRight:100
   },
   textgroup:{
     fontSize: 30,
@@ -335,10 +340,10 @@ const styles = StyleSheet.create({
   cancel:{
     backgroundColor:'#FFC400',
     color:'#000000',
-    fontSize:16,
+    fontSize: hp(2),
     padding:8,
-    width: 144,
-    height:40,
+    width: wp(32),
+    height: hp(5),
     textAlign:'center',
     marginRight:48,
     borderRadius:5
@@ -357,11 +362,11 @@ const styles = StyleSheet.create({
   next:{
     backgroundColor:'#FFC400',
     color:'#000000',
-    fontSize:16,
+    fontSize: hp(2),
     marginBottom:8,
     padding:8,
-    width: 144,
-    height:40,
+    width: wp(32),
+    height: hp(5),
     textAlign:'center',
     borderRadius:5
   },
@@ -382,8 +387,8 @@ const styles = StyleSheet.create({
     borderRadius:5,
   },
   inputBox:{
-    width:350,
-    height:104,
+    width: wp(90),
+    height: hp(14),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -394,8 +399,8 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   inputBox3:{
-    width:350,
-    height:48,
+    width: wp(90),
+    height: hp(6),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -406,8 +411,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   inputBox2:{
-    width:256,
-    height:48,
+    width: wp(64),
+    height: hp(6),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -427,16 +432,10 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   close:{
-    backgroundColor:'#E6B000',
     color:'#000000',
-    fontSize:16,
-    padding:4,
-    width: 80,
-    height:32,
+    fontSize: hp(2),
     textAlign:'center',
-    borderRadius:5,
-    right:16,
-    marginTop: 3
+    marginTop:4
  },
   imageGroup4:{
     flexDirection: 'row',

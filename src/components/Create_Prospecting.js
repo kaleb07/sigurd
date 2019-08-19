@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
-import { SearchBar } from 'react-native-elements';
-import SearchableDropdown from 'react-native-searchable-dropdown';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,6 +7,7 @@ import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
 const options={
   title: 'Choose photo',
@@ -148,9 +147,8 @@ export default class Create_Prospecting extends Component<{}>{
       <View key={ index }>
         <View style={styles.imageGroup}>
           <TouchableOpacity onPress={() => this.selectImage(r.index)}>
-            <Image source={r.image !=='' ? r.image :
-              require('../images/add.png')}
-              style={{width:48, height:48,marginRight:8,marginTop:10, paddingLeft:8}}/>
+            <Image source={r.image !=='' ? r.image : require('../images/add.png')}
+              style={{width: wp(11),height: hp(6),marginRight:8,marginTop:12, paddingLeft:8}}/>
           </TouchableOpacity>
           <TextInput
             style={styles.inputBox2}
@@ -160,7 +158,7 @@ export default class Create_Prospecting extends Component<{}>{
           <Icon name="trash"
              size={32}
              color="red"
-             style={{ marginLeft: 'auto', marginTop: 20, marginRight:25}}
+             style={{ marginLeft: 'auto', marginTop:16, marginRight:32}}
              onPress={() => this.trashVal(r.index)}
           />
         </View>
@@ -170,84 +168,80 @@ export default class Create_Prospecting extends Component<{}>{
 
     return (
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height:50}}>
+        <View style = {{backgroundColor:'#284586', height: hp(8)}}>
           <View style={styles.imageGroup2}>
-            <Image style={{width:40, height:40,left:8}}
+            <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting}>
+            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
               <Text style={styles.close}>keluar</Text>
             </TouchableOpacity>
+          </View>
         </View>
-   </View>
         <View style={styles.imageGroup1}>
-          <Image style={{width:64, height:64, marginTop:16}}
+          <Image style={{width: wp(18), height: hp(9), marginTop:16}}
             source={require('../images/prospecting.png')}/>
-          <Text style={styles.text1}>
-            <Text> Prospecting</Text>
-          </Text>
+          <Text style={styles.text1}> Prospecting</Text>
         </View>
         <KeyboardAwareScrollView style={{paddingLeft:20,}}>
           <DatePicker
-              style={{width: 350}}
-              date={this.state.date}
-              mode="date"
-              placeholder="pilih tanggal"
-              format="DD-MM-YYYY"
-              minDate={prevMonths}
-              maxDate={now}
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateIcon: {
-                  position: 'absolute',
-                  left: 0,
-                  marginLeft: 0,
-                  width:48,
-                  height:48
-                },
-                dateInput: {
-                  marginLeft:56,
-                  fontSize: 16,
-                  borderRadius:5,
-                  borderWidth: 0.5,
-                  backgroundColor:'#F5F5F5',
-                  borderColor: '#000000',
-                }
-              }}
-              onDateChange={(date) => {this.setState({date: date})}}/>
-          <Text style={styles.text}>
-            <Text>Deskripsi Kegiatan </Text>
-          </Text>
+            style={{width: wp(90)}}
+            date={this.state.date}
+            mode="date"
+            placeholder="Pilih tanggal"
+            format="DD-MM-YYYY"
+            minDate={prevMonths}
+            maxDate={now}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                marginLeft: 0,
+                width: wp(10),
+                height: hp(7)
+              },
+              dateInput: {
+                marginLeft:56,
+                fontSize: 16,
+                borderRadius:5,
+                borderWidth: 0.5,
+                backgroundColor:'#F5F5F5',
+                borderColor: '#000000',
+              }
+            }}
+            onDateChange={(date) => {this.setState({date: date})}}
+          />
+
+          <Text style={styles.text}>Deskripsi Kegiatan</Text>
           <TextInput style={styles.inputBox}
                     multiline={true}
                     onChangeText={(activityDesc) => this.setState({activityDesc})}
                     value={this.state.activityDesc}
+                    placeholder="Terjalin kerja sama, tidak terjalin kerjasama, on proses"
           />
-          <Text style={styles.text}>
-            <Text>Lokasi</Text>
-          </Text>
+
+          <Text style={styles.text}>Lokasi</Text>
           <TextInput style={styles.inputBox3}
-                    onChangeText={(location) => this.setState({location})}
-                    value={this.state.location}
+            onChangeText={(location) => this.setState({location})}
+            value={this.state.location}
+            placeholder="Daerah, provinsi, area (west/east)"
           />
-          <Text style={styles.text}>
-            <Text>Hasil Kegiatan </Text>
-          </Text>
+
+          <Text style={styles.text}>Hasil Kegiatan</Text>
           <TextInput style={styles.inputBox}
-                    multiline={true}
-                    onChangeText={(activityResult) => this.setState({activityResult})}
-                    value={this.state.activityResult}
+            multiline={true}
+            onChangeText={(activityResult) => this.setState({activityResult})}
+            value={this.state.activityResult}
+            placeholder="Terjalin kerja sama, tidak terjalin kerjasama, on proses"
           />
-          <Text style={styles.text}>
-            <Text>Foto Kegiatan</Text>
-          </Text>
+
+          <Text style={styles.text}>Foto Kegiatan</Text>
           {arr}
-          <View style={{paddingBottom:80 }}>
-            <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
-              <Icon name="plus-square" size={48} color="#284586"/>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity style={{paddingBottom:80}} onPress={() => { this.insertSomeThing('')}}>
+            <Icon name="plus-square" size={48} color="#284586"/>
+          </TouchableOpacity>
         </KeyboardAwareScrollView>
         <TouchableOpacity onPress={()=>{this.insertToServer('prospecting')}} style={styles.footer}>
           <Text style={styles.next}>Selanjutnya</Text>
@@ -261,6 +255,7 @@ const styles = StyleSheet.create({
   container:{
     flex: 1,
     backgroundColor:'#FFFFFF',
+
   },
   text:{
     fontSize: 16,
@@ -282,9 +277,17 @@ const styles = StyleSheet.create({
     marginBottom:32,
     marginTop:32
   },
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
+    borderRadius:5,
+    marginTop:8,
+    right:16
+  },
   text2:{
    color:'#FFFFFF',
-   fontSize:20,
+   fontSize: hp(3),
    padding:5,
    borderRadius:30,
    marginTop:3,
@@ -349,8 +352,8 @@ const styles = StyleSheet.create({
     borderRadius:5,
   },
   inputBox:{
-    width:350,
-    height:100,
+    width: wp(90),
+    height: hp(14),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -362,8 +365,8 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   inputBox3:{
-    width:350,
-    height:45,
+    width: wp(90),
+    height: hp(6),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -374,8 +377,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   inputBox2:{
-    width:260,
-    height:45,
+    width: wp(64),
+    height: hp(6),
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
@@ -395,17 +398,11 @@ const styles = StyleSheet.create({
     height:56,
     alignItems:'center'
   },
-  close:{
-    backgroundColor:'#E6B000',
-    color:'#000000',
-    fontSize:16,
-    padding:5,
-    width: 80,
-    height:32,
-    textAlign:'center',
-    borderRadius:5,
-    marginTop:4,
-    right:16
+close:{
+  color:'#000000',
+  fontSize: hp(2),
+  textAlign:'center',
+  marginTop:4
   },
   imageGroup4:{
     flexDirection: 'row',

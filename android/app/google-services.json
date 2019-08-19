@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "352070757217",
+    "firebase_url": "https://sigurd-2e88b.firebaseio.com",
+    "project_id": "sigurd-2e88b",
+    "storage_bucket": "sigurd-2e88b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352070757217:android:6feb9a0c8821561d",
+        "android_client_info": {
+          "package_name": "com.newproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352070757217-vof76ruq7fdc5fdm3es79onnubmq08s7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.newproject",
+            "certificate_hash": "435de5bb4e9318086deb7de4eda55af9402c8d58"
+          }
+        },
+        {
+          "client_id": "352070757217-dh95igc5ahm74t7ro452hdusqth1stig.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.newproject",
+            "certificate_hash": "d864e15c2f67cf6dc85e4369e43155eea25d3d98"
+          }
+        },
+        {
+          "client_id": "352070757217-6jtls0ntmj97tf01qprbcemf9aj83rls.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.newproject",
+            "certificate_hash": "b3b72018f932448a29e75752ae489a5d585605d6"
+          }
+        },
+        {
+          "client_id": "352070757217-dmkn2fi5o0dpkq3fbooo8vvu6ct17rct.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc1lnu1vWj7nuIL_DwNctK-rXD0wC9Kdc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352070757217-dmkn2fi5o0dpkq3fbooo8vvu6ct17rct.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
