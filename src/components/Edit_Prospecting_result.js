@@ -7,6 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import { Dropdown } from 'react-native-material-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
 import { getProspecting, updateProspectingResult } from '../networking/server';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
 let index = 0;
 let weightUnit = [{
@@ -240,18 +241,18 @@ export default class Prospecting_Result extends Component<{}> {
 
    return(
      <View style={styles.container}>
-      <View style = {{backgroundColor:'#284586', height:50}}>
-        <View style={styles.imageGroup}>
-          <Image style={{width:40, height:40,left:8}}
-            source={require('../images/logo1.png')}/>
-          <Text style={styles.text2}>FO Activity</Text>
-          <TouchableOpacity onPress={this.prospecting}>
-            <Text style={styles.close}>keluar</Text>
-          </TouchableOpacity>
-        </View>
+     <View style = {{backgroundColor:'#284586',height: hp(8)}}>
+       <View style={styles.imageGroup}>
+         <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
+           source={require('../images/logo1.png')}/>
+         <Text style={styles.text2}>FO Activity</Text>
+         <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+           <Text style={styles.close}>keluar</Text>
+         </TouchableOpacity>
       </View>
+     </View>
       <View style={styles.imageGroup1}>
-         <Image style={{width:64, height:64, marginTop:16}}
+         <Image style={{width: wp(18), height: hp(9), marginTop:16}}
            source={require('../images/prospecting.png')}/>
          <Text style={styles.text1}>
            <Text>Prospecting</Text>
@@ -340,6 +341,14 @@ var styles = StyleSheet.create({
    backgroundColor:'#FFFFFF',
    flex: 1,
  },
+ button1: {
+   width: wp(20),
+   height: hp(4),
+   backgroundColor: '#FFC400',
+   borderRadius:5,
+   marginTop:8,
+   right:16
+ },
  dropdown:{
    width:15,
    fontSize: 12,
@@ -360,7 +369,7 @@ var styles = StyleSheet.create({
  },
  text2:{
    color:'#FFFFFF',
-   fontSize:20,
+   fontSize: hp(3),
    padding:5,
    borderRadius:30,
    marginTop:3,
@@ -390,8 +399,8 @@ var styles = StyleSheet.create({
    borderRadius:30,
  },
  inputBox:{
-   width:350,
-   height:48,
+   width: wp(90),
+   height: hp(6),
    borderRadius:5,
    borderWidth: 0.5,
    borderColor: '#000000',
@@ -403,7 +412,8 @@ var styles = StyleSheet.create({
  },
  smallCapacity:{
    flex: 1,
-   width:65,
+   width: wp(17),
+   height: hp(5),
    left:5,
    borderRadius:5,
    borderWidth: 0.5,
@@ -416,8 +426,9 @@ var styles = StyleSheet.create({
  },
  smallPrice:{
    flex: 1,
-   width:65,
-   right:20,
+   width: wp(16),
+   height: hp(5),
+   right:18,
    borderRadius:5,
    borderWidth: 0.5,
    borderColor: '#000000',
@@ -429,7 +440,8 @@ var styles = StyleSheet.create({
  },
  smallCommodity:{
    flex: 1,
-   width:70,
+   width: wp(17),
+   height: hp(5),
    borderRadius:5,
    borderWidth: 0.5,
    borderColor: '#000000',
@@ -445,17 +457,17 @@ var styles = StyleSheet.create({
   dropdownWrapper: {
      flexDirection:'row',
    },
-  inputBox4:{
-    width:200,
-    height:45,
-    borderRadius:5,
-    borderWidth: 0.5,
-    borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
-    fontSize:16,
-    color:'#000000',
-    marginVertical: 5,
+   inputBox4:{
+     width: wp(50),
+     height: hp(6),
+     borderRadius:5,
+     borderWidth: 0.5,
+     borderColor: '#000000',
+     backgroundColor:'#F5F5F5',
+     paddingVertical: 6,
+     fontSize:16,
+     color:'#000000',
+     marginVertical: 5,
   },
   footer: {
     position: 'absolute',
@@ -479,7 +491,7 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   text:{
-    fontSize:14,
+    fontSize: hp(2),
     fontWeight: '400',
     color:'#000000',
     marginTop:8
@@ -491,30 +503,24 @@ var styles = StyleSheet.create({
     marginBottom:4,
   },
   textCapacity:{
-    fontSize: 14,
+   fontSize: hp(2),
     fontWeight: '400',
     color:'#000000',
     marginTop: 10,
     left: 5
   },
   textPrice:{
-    fontSize: 14,
+    fontSize: hp(2),
     fontWeight: '400',
     color:'#000000',
     marginTop: 10,
-    right: 20
+    right:20
   },
   close:{
-    backgroundColor:'#E6B000',
     color:'#000000',
-    fontSize:16,
-    padding:5,
-    width: 80,
-    height:32,
+    fontSize: hp(2),
     textAlign:'center',
-    borderRadius:5,
-    marginTop:4,
-    right:16
+    marginTop:4
     },
   imageGroup4:{
     flexDirection: 'row',

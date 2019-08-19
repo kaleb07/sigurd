@@ -148,7 +148,7 @@ export default class Create_Prospecting extends Component<{}>{
         <View style={styles.imageGroup}>
           <TouchableOpacity onPress={() => this.selectImage(r.index)}>
             <Image source={r.image !=='' ? r.image : require('../images/add.png')}
-              style={{width: wp(11),height: hp(7),marginRight:8,marginTop:10, paddingLeft:8}}/>
+              style={{width: wp(11),height: hp(6),marginRight:8,marginTop:12, paddingLeft:8}}/>
           </TouchableOpacity>
           <TextInput
             style={styles.inputBox2}

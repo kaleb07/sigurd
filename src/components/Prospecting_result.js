@@ -459,7 +459,7 @@ var styles = StyleSheet.create({
      fontWeight: 'bold',
    },
    text:{
-     fontSize:14,
+     fontSize: hp(2),
      fontWeight: '400',
      color:'#000000',
      marginTop:8
@@ -471,14 +471,14 @@ var styles = StyleSheet.create({
      marginBottom:4,
    },
    textCapacity:{
-     fontSize: 14,
+    fontSize: hp(2),
      fontWeight: '400',
      color:'#000000',
      marginTop: 10,
      left: 5
    },
    textPrice:{
-     fontSize:14,
+     fontSize: hp(2),
      fontWeight: '400',
      color:'#000000',
      marginTop: 10,

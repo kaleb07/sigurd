@@ -79,6 +79,7 @@
 		647C3E0A338648CC91F80326 /* libRNTextInputMask.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D481B2244A14B558A7578D0 /* libRNTextInputMask.a */; };
 		9DE836FE8B90456A9A08DF53 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3363456EDF4DCEAC679505 /* libRNGoogleSignin.a */; };
 		C242DDC43437424F9E6D4559 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B10D41AEF7104B20ADC60641 /* libRNFetchBlob.a */; };
+		54A41ED865A64955BFC27EE1 /* libRNSensitiveInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA188F7E9E742AC93304D11 /* libRNSensitiveInfo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -431,6 +432,8 @@
 		5F3363456EDF4DCEAC679505 /* libRNGoogleSignin.a */ = {isa = PBXFileReference; name = "libRNGoogleSignin.a"; path = "libRNGoogleSignin.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		676260E0E64946298F23C919 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; name = "RNFetchBlob.xcodeproj"; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		B10D41AEF7104B20ADC60641 /* libRNFetchBlob.a */ = {isa = PBXFileReference; name = "libRNFetchBlob.a"; path = "libRNFetchBlob.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		9269CF8F07ED4AD6BD508714 /* RNSensitiveInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNSensitiveInfo.xcodeproj"; path = "../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		8CA188F7E9E742AC93304D11 /* libRNSensitiveInfo.a */ = {isa = PBXFileReference; name = "libRNSensitiveInfo.a"; path = "libRNSensitiveInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -464,6 +467,7 @@
 				647C3E0A338648CC91F80326 /* libRNTextInputMask.a in Frameworks */,
 				9DE836FE8B90456A9A08DF53 /* libRNGoogleSignin.a in Frameworks */,
 				C242DDC43437424F9E6D4559 /* libRNFetchBlob.a in Frameworks */,
+				54A41ED865A64955BFC27EE1 /* libRNSensitiveInfo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +663,7 @@
 				C3401987DCD9483DACFCF13D /* RNTextInputMask.xcodeproj */,
 				565DC91A50374E02A4D7D570 /* RNGoogleSignin.xcodeproj */,
 				676260E0E64946298F23C919 /* RNFetchBlob.xcodeproj */,
+				9269CF8F07ED4AD6BD508714 /* RNSensitiveInfo.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1369,6 +1374,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1377,6 +1383,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-text-input-mask\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
 				);
 			};
 			name = Debug;
@@ -1404,6 +1411,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1412,6 +1420,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-text-input-mask\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
 				);
 			};
 			name = Release;
@@ -1439,6 +1448,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-text-input-mask\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
 				);
 			};
 			name = Debug;
@@ -1465,6 +1475,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-text-input-mask\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
 				);
 			};
 			name = Release;
@@ -1500,6 +1511,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1508,6 +1520,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-text-input-mask\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
 				);
 			};
 			name = Debug;
@@ -1543,6 +1556,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1551,6 +1565,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-text-input-mask\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
 				);
 			};
 			name = Release;
@@ -1585,6 +1600,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1593,6 +1609,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-text-input-mask\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
 				);
 			};
 			name = Debug;
@@ -1627,6 +1644,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1635,6 +1653,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-text-input-mask\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
 				);
 			};
 			name = Release;

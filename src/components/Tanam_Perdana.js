@@ -187,7 +187,7 @@ export default class Tanam_Perdana extends Component<{}>{
               <TouchableOpacity onPress={() => this.selectImage(r.index)}>
                 <Image source={r.image !=='' ? r.image :
                   require('../images/add.png')}
-                  style={{width:48, height:48,marginRight:8,marginTop:10, paddingLeft:8}}/>
+                  style={{width: wp(11),height: hp(6),marginRight:8,marginTop:10, paddingLeft:8}}/>
               </TouchableOpacity>
               <TextInput
                 style={styles.inputBox2}
@@ -343,13 +343,13 @@ const styles = StyleSheet.create({
     marginTop:32
   },
   text2:{
-    color:'#FFFFFF',
-    fontSize:20,
-    padding:5,
-    borderRadius:30,
-    marginTop:3,
-    fontWeight: 'bold',
-    paddingRight:100
+   color:'#FFFFFF',
+   fontSize: hp(3),
+   padding:5,
+   borderRadius:30,
+   marginTop:3,
+   fontWeight: 'bold',
+   paddingRight:100
   },
   textgroup:{
     fontSize: 30,
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
   cancel:{
     backgroundColor:'#FFC400',
     color:'#000000',
-    fontSize:16,
+    fontSize: hp(2),
     padding:8,
     width: wp(32),
     height: hp(5),
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
   next:{
     backgroundColor:'#FFC400',
     color:'#000000',
-    fontSize:16,
+    fontSize: hp(2),
     marginBottom:8,
     padding:8,
     width: wp(32),

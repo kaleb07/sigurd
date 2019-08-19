@@ -45,7 +45,6 @@ export default class Form extends Component<{}>{
     }
     this.selectImage = this.selectImage.bind(this);
   };
-
   componentDidMount(){
     return ( getProjectFromServer().then((responseJson) => {
       this.setState({
@@ -186,7 +185,7 @@ export default class Form extends Component<{}>{
               <TouchableOpacity onPress={() => this.selectImage(r.index)}>
                 <Image source={r.image !=='' ? r.image :
                   require('../images/add.png')}
-                  style={{width:48, height:48,marginRight:8,marginTop:10, paddingLeft:8}}/>
+                  style={{width: wp(11),height: hp(6),marginRight:8,marginTop:12, paddingLeft:8}}/>
               </TouchableOpacity>
               <TextInput
                 style={styles.inputBox2}
@@ -274,6 +273,7 @@ export default class Form extends Component<{}>{
                 valueExtractor={item => item.title }
                 rightContent
                 rightTextExtractor={item => item.projectNo}
+                placeholder="Pilih proyek"
               />
 
               <Text style={styles.text}>Lokasi</Text>
@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
   cancel:{
     backgroundColor:'#FFC400',
     color:'#000000',
-    fontSize:16,
+    fontSize: hp(2),
     padding:8,
     width: wp(32),
     height: hp(5),
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
   next:{
     backgroundColor:'#FFC400',
     color:'#000000',
-    fontSize:16,
+    fontSize: hp(2),
     marginBottom:8,
     padding:8,
     width: wp(32),
