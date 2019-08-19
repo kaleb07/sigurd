@@ -7,8 +7,9 @@ const apiSignedUrl = 'http://localhost:3011/signed-url';
 const apiProject = 'http://localhost:3011/project/all';
 var RNFetchBlob = require('rn-fetch-blob').default
 const apiAccount = 'https://api.tanihub.net/v1/auth/signin';
-var id = '';
+var id_activity = '';
 var id_farmer='';
+var id_user='';
 
 async function getAccountInfo(params){
   try{
@@ -23,6 +24,7 @@ async function getAccountInfo(params){
         body: JSON.stringify(params),
     });
     let responseJson = await response.json();
+    id_user = responseJson.data.user.id;
     return responseJson;
   } catch(error){
     console.log('Error is: ', error);
@@ -115,6 +117,7 @@ async function insertActivityToServer(activity, params){
           )
     })
     params.images = arr;
+    params.userId = id_user;
     let response = await fetch(apiActivity, {
         method: 'POST',
         headers: {
@@ -124,7 +127,7 @@ async function insertActivityToServer(activity, params){
         body: JSON.stringify(params),
     });
     let responseJson = await response.json();
-    id = responseJson.id;
+    id_activity = responseJson.id;
     return responseJson;
   } catch(error){
     console.log('Error is: ', error);
@@ -133,7 +136,7 @@ async function insertActivityToServer(activity, params){
 
 async function insertProspectingToServer(params){
   try{
-    params.activityId = id
+    params.activityId = id_activity
     let response = await fetch(apiProspecting, {
         method: 'POST',
         headers: {
@@ -151,7 +154,7 @@ async function insertProspectingToServer(params){
 
 async function getActivityProspecting(){
   try{
-    let getById = apiActivity + '/' + id;
+    let getById = apiActivity + '/' + id_activity;
     let response = await fetch(getById);
     let responseJson = await response.json();
     return responseJson;
