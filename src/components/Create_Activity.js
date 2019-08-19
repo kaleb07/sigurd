@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
 import {StyleSheet,Text,View,TouchableOpacity,Image,Header,Alert} from 'react-native';
+import SInfo from 'react-native-sensitive-info';
+
 import {getAccountInfo}  from '../networking/server.js';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
@@ -55,6 +57,8 @@ export default class Create_Activity extends Component <{}> {
        if (domain == 'tanihub.com') {
          getAccountInfo(params).then((responseJson)=> {
            console.log('responseJson',responseJson);
+           SInfo.setItem('key2', JSON.stringify(responseJson), {});
+
            if(responseJson.error){
              Alert.alert(responseJson.error.message);
            }else{

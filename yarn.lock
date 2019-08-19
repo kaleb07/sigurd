@@ -950,6 +950,11 @@ acorn@^6.0.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
   integrity sha512-jPTiwtOxaHNaAPg/dmrJ/beuzLRnXtB0kQPQ8JpotKJgTB6rX6c8mlf315941pyjBSaPg8NHXS9fhP4u17DpGA==
 
+add@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
+  integrity sha1-JI8Kn25aUo7yKV2+7DBTITCuIjU=
+
 ajv@^6.5.5:
   version "6.10.0"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.10.0.tgz#90d0d54439da587cd7e843bfb7045f50bd22bdf1"
@@ -3834,7 +3839,7 @@ lodash.throttle@^4.1.1:
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
-lodash@4.17.11, lodash@^4.0.0, lodash@^4.16.4, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
+lodash@4.17.11, lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
@@ -4765,6 +4770,11 @@ options@>=0.0.5:
   resolved "https://registry.yarnpkg.com/options/-/options-0.0.6.tgz#ec22d312806bb53e731773e7cdaefcf1c643128f"
   integrity sha1-7CLTEoBrtT5zF3Pnza788cZDEo8=
 
+or@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/or/-/or-0.2.0.tgz#9904ea61e25943f935e20f4f4749e0a141a82b6a"
+  integrity sha1-mQTqYeJZQ/k14g9PR0ngoUGoK2o=
+
 os-homedir@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
@@ -5149,6 +5159,15 @@ query-string@^6.1.0:
     split-on-first "^1.0.0"
     strict-uri-encode "^2.0.0"
 
+query-string@^6.2.0:
+  version "6.8.2"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.8.2.tgz#36cb7e452ae11a4b5e9efee83375e0954407b2f6"
+  integrity sha512-J3Qi8XZJXh93t2FiKyd/7Ec6GNifsjKXUsVFkSBj/kjLsDylWhnCz4NT1bkPcKotttPW+QbKGqqPH8OoI2pdqw==
+  dependencies:
+    decode-uri-component "^0.2.0"
+    split-on-first "^1.0.0"
+    strict-uri-encode "^2.0.0"
+
 raf@^3.1.0:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
@@ -5249,10 +5268,16 @@ react-native-drop-down-item@^1.0.5:
   dependencies:
     dooboolab-welcome "^1.0.5"
 
-react-native-dynamic-search-bar@^0.1.11:
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/react-native-dynamic-search-bar/-/react-native-dynamic-search-bar-0.1.11.tgz#b7f539ab4538899b5b369945707640ad738a7ad4"
-  integrity sha512-7A1XDnrvCAFncjR5jVDzUmiK74jbV0E7mtVB0vMjdTzV+dxzvWNUEqW3zlFH1krjI4tMI3Mz7SLmgZeqjP4MYw==
+react-native-dropdown-autocomplete@^1.0.16:
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/react-native-dropdown-autocomplete/-/react-native-dropdown-autocomplete-1.0.16.tgz#491336428408e00a06673626dbf45ba1c51135f3"
+  integrity sha512-eUOjYFo2jegmqHy8LBnBN05aLDrjM3XuBFD4AefcHQmOXqTZOZXNs76wstG9nRF4yIncG21NJdpzOEaIN1afXQ==
+  dependencies:
+    prop-types "^15.6.2"
+    query-string "^6.2.0"
+    react-native-keyboard-aware-scroll-view "^0.8.0"
+    react-native-material-buttons "^0.5.0"
+    react-native-material-ripple "^0.8.0"
 
 react-native-dynamic-vector-icons@0.0.4:
   version "0.0.4"
@@ -5293,11 +5318,6 @@ react-native-iphone-x-helper@^1.0.3:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
-
-react-native-keyboard-accessory@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-accessory/-/react-native-keyboard-accessory-0.1.9.tgz#4c842940da1fc4f7da36aec32c69c9a4e9cd8836"
-  integrity sha512-LMBzgQajZzYY7BSCqlA99MIgoAK2xKQH+xRA/CuBv3UNDMn8H//ow0f2qi2t8Oky41nmo4wrL+I43YvSKWF24Q==
 
 react-native-keyboard-aware-scroll-view@0.8.0, react-native-keyboard-aware-scroll-view@^0.8.0:
   version "0.8.0"
@@ -5362,10 +5382,10 @@ react-native-ratings@^6.3.0:
     lodash "^4.17.4"
     prop-types "^15.5.10"
 
-react-native-responsive-screen@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-responsive-screen/-/react-native-responsive-screen-1.2.2.tgz#59d82146b61c62510032fb795652335433f05f93"
-  integrity sha512-0UDQIBD+bW7+3NNt+ukSleUkKxbRiNupmzLQjdjyRoAjqxidN8+1gs0mHXfmhowcg2b875zTYrtQUG3022yHKw==
+react-native-responsive-ui-views@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-responsive-ui-views/-/react-native-responsive-ui-views-0.1.2.tgz#db271a3605e62d7bd960286cbd5c305a425dbac7"
+  integrity sha512-FU/Jt0+0KFNEPajZMHMsX0UOrxkmOc13EG8+qDdbsFgETUhLfmU6gBhv7hSyFHmHnjm3YwsbRwf8oxc6DzIwjw==
 
 react-native-router-flux@^4.0.6:
   version "4.0.6"
@@ -5390,18 +5410,10 @@ react-native-screens@^1.0.0-alpha.11:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
 
-react-native-searchable-dropdown@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/react-native-searchable-dropdown/-/react-native-searchable-dropdown-1.0.6.tgz#38b6183165f7507c5319c69a23badef339657ff3"
-  integrity sha512-RVCoSciRX4xSfs4r5s7m1N6s/DZItLX8hLirF3W1CWUv8lZ1cLXyDGbO7VxX6FwZWFr+7igKGEJ62K/cuZcAsA==
-
-react-native-searchbar@^1.16.0:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/react-native-searchbar/-/react-native-searchbar-1.16.0.tgz#839cafd55ba9ad56c5f4d25548750d41cb799a21"
-  integrity sha512-k+gn5m24yjyGP2EgsQvBgsxKV7aBDF6rFhA02Qh/ldJhCoKgnywXEdXrWLWljXs8xkH80ryMJtnfiw7rUlO4xg==
-  dependencies:
-    lodash "^4.16.4"
-    react-native-vector-icons "^4.4.2"
+react-native-sensitive-info@5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-sensitive-info/-/react-native-sensitive-info-5.4.0.tgz#96e45cc5f101b430fc312f07151f1c125f7915d8"
+  integrity sha512-+u8/mRZOpnZKBEMyhzMudzZk6VHtyTRxCNFml951YcjV3UV3PJEKOYiW1cikodmdTFoFrXE47cdtBEsePFi5PQ==
 
 react-native-status-bar-height@^2.2.0:
   version "2.3.1"
@@ -5422,11 +5434,6 @@ react-native-tab-view@^1.0.0:
   dependencies:
     prop-types "^15.6.1"
 
-react-native-table-component@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-table-component/-/react-native-table-component-1.2.0.tgz#d4dff88abb58648086ba52a801ba9a1ab1825c03"
-  integrity sha512-j9AEryfGSStJ9vbcfj63uaMxL8Ek+Xn0+rIA4o2Dvovo7C9fAGMEJxJiL57jmNIX65jRtWNwko9GqeaXXzjJVw==
-
 react-native-text-input-mask@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/react-native-text-input-mask/-/react-native-text-input-mask-1.0.6.tgz#21ca0c1886f5b547e9f6594ba2f4bb50d39fe3a1"
@@ -5439,15 +5446,6 @@ react-native-vector-icons@6.1.0:
   dependencies:
     lodash "^4.0.0"
     prop-types "^15.6.2"
-    yargs "^8.0.2"
-
-react-native-vector-icons@^4.4.2:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.6.0.tgz#e4014311ffa6de397d914ffc31b7097a874cc8d5"
-  integrity sha512-rpfhfPiXCK2PX1nrNhdxSMrEGB/Gw/SvKoPM0G2wAkSoqynnes19K0VYI+Up7DqR1rFIpE4hP2erpT1tNx2tfg==
-  dependencies:
-    lodash "^4.0.0"
-    prop-types "^15.5.10"
     yargs "^8.0.2"
 
 react-native-vector-icons@^6.6.0:
@@ -7001,3 +6999,8 @@ yargs@^9.0.0:
     which-module "^2.0.0"
     y18n "^3.2.1"
     yargs-parser "^7.0.0"
+
+yarn@^1.17.3:
+  version "1.17.3"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.17.3.tgz#60e0b77d079eb78e753bb616f7592b51b6a9adce"
+  integrity sha512-CgA8o7nRZaQvmeF/WBx2FC7f9W/0X59T2IaLYqgMo6637wfp5mMEsM3YXoJtKUspnpmDJKl/gGFhnqS+sON7hA==

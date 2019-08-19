@@ -80,6 +80,7 @@
 		9DE836FE8B90456A9A08DF53 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3363456EDF4DCEAC679505 /* libRNGoogleSignin.a */; };
 		C242DDC43437424F9E6D4559 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B10D41AEF7104B20ADC60641 /* libRNFetchBlob.a */; };
 		54A41ED865A64955BFC27EE1 /* libRNSensitiveInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA188F7E9E742AC93304D11 /* libRNSensitiveInfo.a */; };
+		5AF43A30C4E74B21821CA491 /* libRNCookieManagerIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBB3BE14ECE4E75A6D980C4 /* libRNCookieManagerIOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -434,6 +435,8 @@
 		B10D41AEF7104B20ADC60641 /* libRNFetchBlob.a */ = {isa = PBXFileReference; name = "libRNFetchBlob.a"; path = "libRNFetchBlob.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		9269CF8F07ED4AD6BD508714 /* RNSensitiveInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNSensitiveInfo.xcodeproj"; path = "../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		8CA188F7E9E742AC93304D11 /* libRNSensitiveInfo.a */ = {isa = PBXFileReference; name = "libRNSensitiveInfo.a"; path = "libRNSensitiveInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		B2EF2D4D4C024469A5738FC9 /* RNCookieManagerIOS.xcodeproj */ = {isa = PBXFileReference; name = "RNCookieManagerIOS.xcodeproj"; path = "../node_modules/react-native-cookies/ios/RNCookieManagerIOS.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		FDBB3BE14ECE4E75A6D980C4 /* libRNCookieManagerIOS.a */ = {isa = PBXFileReference; name = "libRNCookieManagerIOS.a"; path = "libRNCookieManagerIOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -468,6 +471,7 @@
 				9DE836FE8B90456A9A08DF53 /* libRNGoogleSignin.a in Frameworks */,
 				C242DDC43437424F9E6D4559 /* libRNFetchBlob.a in Frameworks */,
 				54A41ED865A64955BFC27EE1 /* libRNSensitiveInfo.a in Frameworks */,
+				5AF43A30C4E74B21821CA491 /* libRNCookieManagerIOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -664,6 +668,7 @@
 				565DC91A50374E02A4D7D570 /* RNGoogleSignin.xcodeproj */,
 				676260E0E64946298F23C919 /* RNFetchBlob.xcodeproj */,
 				9269CF8F07ED4AD6BD508714 /* RNSensitiveInfo.xcodeproj */,
+				B2EF2D4D4C024469A5738FC9 /* RNCookieManagerIOS.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1375,6 +1380,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1384,6 +1390,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
+					"$(SRCROOT)\..\node_modules\react-native-cookies\ios\RNCookieManagerIOS",
 				);
 			};
 			name = Debug;
@@ -1412,6 +1419,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1421,6 +1429,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
+					"$(SRCROOT)\..\node_modules\react-native-cookies\ios\RNCookieManagerIOS",
 				);
 			};
 			name = Release;
@@ -1449,6 +1458,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
+					"$(SRCROOT)\..\node_modules\react-native-cookies\ios\RNCookieManagerIOS",
 				);
 			};
 			name = Debug;
@@ -1476,6 +1486,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
+					"$(SRCROOT)\..\node_modules\react-native-cookies\ios\RNCookieManagerIOS",
 				);
 			};
 			name = Release;
@@ -1512,6 +1523,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1521,6 +1533,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
+					"$(SRCROOT)\..\node_modules\react-native-cookies\ios\RNCookieManagerIOS",
 				);
 			};
 			name = Debug;
@@ -1557,6 +1570,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1566,6 +1580,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
+					"$(SRCROOT)\..\node_modules\react-native-cookies\ios\RNCookieManagerIOS",
 				);
 			};
 			name = Release;
@@ -1601,6 +1616,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1610,6 +1626,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
+					"$(SRCROOT)\..\node_modules\react-native-cookies\ios\RNCookieManagerIOS",
 				);
 			};
 			name = Debug;
@@ -1645,6 +1662,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1654,6 +1672,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin",
 					"$(SRCROOT)\..\node_modules\rn-fetch-blob\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-sensitive-info\ios\RNSensitiveInfo",
+					"$(SRCROOT)\..\node_modules\react-native-cookies\ios\RNCookieManagerIOS",
 				);
 			};
 			name = Release;
