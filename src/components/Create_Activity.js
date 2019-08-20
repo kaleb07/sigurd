@@ -56,17 +56,17 @@ export default class Create_Activity extends Component <{}> {
        const domain = email.substring(index + 1);
        if (domain == 'tanihub.com') {
          getAccountInfo(params).then((responseJson)=> {
-           console.log('responseJson',responseJson);
-           SInfo.setItem('key2', JSON.stringify(responseJson), {});
-           SInfo.getItem('key2',{}).then(value => {
-             console.log(value) //value2
-           })
-            if(responseJson.error){
-             Alert.alert(responseJson.error.message);
-           }else{
-             this.laporkan_aktivitas();
-           }
-         })
+           SInfo.setItem('key2', JSON.stringify(responseJson), {}).then(() => {
+             const user = {
+               id : responseJson.data.user.id,
+               name : responseJson.data.user.fullname,
+               email: responseJson.data.user.email
+             }
+             sendUser(user).then((res) => {
+               console.log('user', user);
+             })
+           });
+         });
        } else {
          Alert.alert('Silahkan masuk dengan akun TaniHub');
        }

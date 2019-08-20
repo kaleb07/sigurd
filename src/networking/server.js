@@ -11,7 +11,7 @@ var RNFetchBlob = require('react-native-fetch-blob').default
 const apiAccount = 'https://api.tanihub.net/v1/auth/signin';
 var id_activity = '';
 var id_farmer='';
-var id_user='';
+var user=[];
 
 async function getAccountInfo(params){
   try{
@@ -33,6 +33,9 @@ async function getAccountInfo(params){
   }
 }
 
+async function sendUser(params){
+  user = params;
+}
 
 async function signOut(){
   try {
@@ -44,16 +47,6 @@ async function signOut(){
     console.error(error);
   }
 };
-
-async function revokeAccess(){
-  try {
-    await GoogleSignin.revokeAccess();
-    console.log('deleted');
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 
 async function getProjectFromServer(){
   try{
@@ -141,7 +134,7 @@ async function insertActivityToServer(activity, params){
           )
     })
     params.images = arr;
-    params.userId = id_user;
+    params.user = user;
     let response = await fetch(apiActivity, {
         method: 'POST',
         headers: {
@@ -224,6 +217,7 @@ export {getProjectFromServer};
 export {getActivityProspecting};
 export {getProspecting};
 export {sendIdFarmer};
+export {sendUser};
 export {signOut};
 export {insertActivityToServer};
 export {insertProspectingToServer};
