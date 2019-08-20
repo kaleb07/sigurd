@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {GoogleSignin} from 'react-native-google-signin';
+import SInfo from 'react-native-sensitive-info';
 
 const apiActivity = 'http://localhost:3011/activity';
 const apiActivityOption = 'http://localhost:3011/activity_option';
@@ -30,6 +32,28 @@ async function getAccountInfo(params){
     console.log('Error is: ', error);
   }
 }
+
+
+async function signOut(){
+  try {
+    await SInfo.deleteItem('key2', {});
+    SInfo.getItem('key2',{}).then(value => {
+      console.log(value) //value2
+    }) // Remember to remove the user from your app's state as well
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+async function revokeAccess(){
+  try {
+    await GoogleSignin.revokeAccess();
+    console.log('deleted');
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 async function getProjectFromServer(){
   try{
@@ -200,6 +224,7 @@ export {getProjectFromServer};
 export {getActivityProspecting};
 export {getProspecting};
 export {sendIdFarmer};
+export {signOut};
 export {insertActivityToServer};
 export {insertProspectingToServer};
 export {deleteProspectingResult};

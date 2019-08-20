@@ -9,6 +9,7 @@ import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer, getProjectFromServer } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import {Autocomplete} from "react-native-dropdown-autocomplete";
+import { signOut } from '../networking/server';
 
 let unit = [{
   value: 'ton',
@@ -35,6 +36,10 @@ export default class Create_Panen extends Component<{}>{
   }
   success_page(){
     Actions.success_page()
+  }
+  _signOut(){
+    signOut();
+    Actions.login()
   }
 
   constructor() {
@@ -223,7 +228,7 @@ export default class Create_Panen extends Component<{}>{
             <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+            <TouchableOpacity onPress={this._signOut} style = {styles.button1}>
               <Text style={styles.close}>keluar</Text>
             </TouchableOpacity>
           </View>

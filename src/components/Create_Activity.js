@@ -58,8 +58,10 @@ export default class Create_Activity extends Component <{}> {
          getAccountInfo(params).then((responseJson)=> {
            console.log('responseJson',responseJson);
            SInfo.setItem('key2', JSON.stringify(responseJson), {});
-
-           if(responseJson.error){
+           SInfo.getItem('key2',{}).then(value => {
+             console.log(value) //value2
+           })
+            if(responseJson.error){
              Alert.alert(responseJson.error.message);
            }else{
              this.laporkan_aktivitas();

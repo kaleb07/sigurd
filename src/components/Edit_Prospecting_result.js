@@ -8,6 +8,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
 import { getProspecting, updateProspectingResult } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
+import { signOut } from '../networking/server';
 
 let index = 0;
 let weightUnit = [{
@@ -76,6 +77,11 @@ export default class Prospecting_Result extends Component<{}> {
 
   list_data() {
     Actions.list_data()
+  }
+
+  _signOut(){
+    signOut();
+    Actions.login()
   }
 
   removeItem(index) {
@@ -246,7 +252,7 @@ export default class Prospecting_Result extends Component<{}> {
          <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
            source={require('../images/logo1.png')}/>
          <Text style={styles.text2}>FO Activity</Text>
-         <TouchableOpacity onPress={this.prospecting} style = {styles.button1}>
+         <TouchableOpacity onPress={this._signOut} style = {styles.button1}>
            <Text style={styles.close}>keluar</Text>
          </TouchableOpacity>
       </View>
