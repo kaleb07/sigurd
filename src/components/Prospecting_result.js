@@ -350,7 +350,7 @@ var styles = StyleSheet.create({
     borderRadius:30,
     marginTop:3,
     fontWeight: 'bold',
-    paddingRight:100
+    paddingRight:210
   },
   imageGroup:{
     flexDirection: 'row',

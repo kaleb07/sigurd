@@ -215,7 +215,7 @@ export default class Tanam_Perdana extends Component<{}>{
         <View style={styles.container}>
           <View style = {{backgroundColor:'#284586',height: hp(8)}}>
             <View style={styles.imageGroup5}>
-              <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
+              <Image style={{width: wp(10), height: hp(5),left:16,marginTop:5}}
                 source={require('../images/logo1.png')}/>
               <Text style={styles.text2}>FO Activity</Text>
             </View>
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
    borderRadius:30,
    marginTop:3,
    fontWeight: 'bold',
-   paddingRight:100
+   paddingRight:200
   },
   textgroup:{
     fontSize: 30,

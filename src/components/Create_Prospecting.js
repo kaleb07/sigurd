@@ -177,9 +177,9 @@ export default class Create_Prospecting extends Component<{}>{
 
     return (
       <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586', height: hp(8)}}>
+        <View style = {{backgroundColor:'#284586', height: hp(8), paddingLeft:16}}>
           <View style={styles.imageGroup2}>
-            <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
+            <Image style={{width: wp(10), height: hp(5),marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
           </View>
@@ -189,7 +189,7 @@ export default class Create_Prospecting extends Component<{}>{
             source={require('../images/prospecting.png')}/>
           <Text style={styles.text1}> Prospecting</Text>
         </View>
-        <KeyboardAwareScrollView style={{paddingLeft:20,}}>
+        <KeyboardAwareScrollView style={{paddingLeft:16}}>
           <DatePicker
             style={{width: wp(90)}}
             date={this.state.date}
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
    borderRadius:30,
    marginTop:3,
    fontWeight: 'bold',
-   paddingRight:100
+   paddingRight:210
   },
   textgroup:{
     flexDirection: 'row',

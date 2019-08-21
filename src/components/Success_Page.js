@@ -50,12 +50,12 @@ export default class Success_Page extends Component <{}>{
     } else {
       return (
         <View style={styles.container}>
-          <View style = {{backgroundColor:'#284586', height:56}}>
+          <View style = {{backgroundColor:'#284586', height: hp(8)}}>
             <View style={styles.imageGroup1}>
-              <Image style={{width:40, height:40,left:16}}
+              <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
                 source={require('../images/logo1.png')}/>
               <Text style={styles.text1}>FO Activity</Text>
-              <TouchableOpacity onPress={() => {signOut(); this.props.navigation.navigate('Login')}}>
+              <TouchableOpacity onPress={() => {signOut(); this.props.navigation.navigate('Login')}} style = {styles.button1}>
                 <Text style={styles.close}>sign out</Text>
               </TouchableOpacity>
             </View>

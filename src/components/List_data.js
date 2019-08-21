@@ -251,7 +251,7 @@ text2:{
   borderRadius:30,
   marginTop:3,
   fontWeight: 'bold',
-  paddingRight:100
+  paddingRight:210
 },
 text3:{
   color:'#000000',
