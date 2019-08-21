@@ -50,28 +50,6 @@ export default class Create_Prospecting extends Component<{}>{
     return true;
   }
 
-  checkImage(){
-    if(this.state.arr.image === ''){
-      Alert.alert(
-        'Image cannot be blank.',
-        [
-          {text: 'OK', onPress: () => console.log('')},
-        ],
-        {cancelable: false},
-      );
-    } else if (this.state.arr.caption === '') {
-      Alert.alert(
-        'Caption cannot be blank.',
-        [
-          {text: 'OK', onPress: () => console.log('')},
-        ],
-        {cancelable: false},
-      );
-    } else {
-      console.log('');
-    }
-  }
-
   removeItem(index) {
     const list = this.state.arr;
     const newList = list.filter(data => {
@@ -161,11 +139,35 @@ export default class Create_Prospecting extends Component<{}>{
      activityResult: this.state.activityResult,
      images:this.state.arr,
    };
-   insertActivityToServer(activityName, newActivity).then((responseJson)=> {
-     if(responseJson.err){
-       Alert.alert(responseJson.err);
-     }else{
-       this.props.navigation.navigate('SuccessPage')
+
+   this.state.arr.map(val => {
+     console.log('val.length', this.state.arr.length);
+     if(val.image == '' && this.state.arr.length === 1){
+       Alert.alert(
+         'Image cannot be blank.',
+         '',
+         [
+           {text: 'OK', onPress: () => console.log('')},
+         ],
+         {cancelable: false},
+       );
+     } else if (val.caption == '' && this.state.arr.length === 1) {
+       Alert.alert(
+         'Caption cannot be blank.',
+         '',
+         [
+           {text: 'OK', onPress: () => console.log('')},
+         ],
+         {cancelable: false},
+       );
+     } else {
+       insertActivityToServer(activityName, newActivity).then((responseJson)=> {
+         if(responseJson.err){
+           Alert.alert(responseJson.err);
+         }else{
+           this.props.navigation.navigate('SuccessPage')
+         }
+       })
      }
    })
  }
@@ -279,7 +281,7 @@ export default class Create_Prospecting extends Component<{}>{
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
               <Text style={styles.cancel}>Batal</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { this.checkImage(); this.insertToServer('lainnya') }}>
+            <TouchableOpacity onPress={() => { this.insertToServer('lainnya') }}>
               <Text style={styles.next}>Simpan</Text>
             </TouchableOpacity>
           </View>

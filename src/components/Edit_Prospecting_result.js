@@ -131,13 +131,63 @@ export default class Prospecting_Result extends Component<{}> {
         }
       })
     };
-    updateProspectingResult(newProspecting).then((responseJson)=> {
-       if(responseJson.err){
-         Alert.alert(responseJson.err);
-       }else{
-        this.props.navigation.push('ListData');
-       }
-     })
+    this.state.arr.map(val => {
+      console.log('val.length', this.state.arr.length);
+      if(val.commodity == '' && this.state.arr.length === 1){
+        Alert.alert(
+          'Commodity cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+      } else if (val.capacity == '' && this.state.arr.length === 1) {
+        Alert.alert(
+          'Capacity cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+      } else if (val.unitCapacity == '' && this.state.arr.length === 1) {
+        Alert.alert(
+          'Unit capacity cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+      } else if (val.price == '' && this.state.arr.length === 1) {
+        Alert.alert(
+          'Price cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+      } else if (val.unitPrice == '' && this.state.arr.length === 1) {
+        Alert.alert(
+          'Unit price cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+      } else {
+        updateProspectingResult(newProspecting).then((responseJson)=> {
+           if(responseJson.err){
+             Alert.alert(responseJson.err);
+           }else{
+            this.props.navigation.push('ListData');
+           }
+         })
+      }
+    })
   }
 
   insertVal(data, index, key) {

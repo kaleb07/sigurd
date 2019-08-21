@@ -142,11 +142,34 @@ export default class Tanam_Perdana extends Component<{}>{
       activityResult: this.state.activityResult,
       images:this.state.arr,
     };
-    insertActivityToServer(activityName, newActivity).then((responseJson)=> {
-      if(responseJson.err){
-        Alert.alert(responseJson.err);
-      }else{
-        this.props.navigation.navigate('SuccessPage')
+    this.state.arr.map(val => {
+      console.log('val.length', this.state.arr.length);
+      if(val.image == '' && this.state.arr.length === 1){
+        Alert.alert(
+          'Image cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+      } else if (val.caption == '' && this.state.arr.length === 1) {
+        Alert.alert(
+          'Caption cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+      } else {
+        insertActivityToServer(activityName, newActivity).then((responseJson)=> {
+          if(responseJson.err){
+            Alert.alert(responseJson.err);
+          }else{
+            this.props.navigation.navigate('SuccessPage')
+          }
+        })
       }
     })
   }

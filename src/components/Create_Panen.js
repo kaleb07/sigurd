@@ -153,13 +153,66 @@ export default class Create_Panen extends Component<{}>{
       activityResult: this.state.activityResult,
       images:this.state.arr,
     };
-    insertActivityToServer(activityName, newActivity).then((responseJson)=> {
-      if(responseJson.err){
-        Alert.alert(responseJson.err);
-      }else{
-        this.props.navigation.navigate('SuccessPage')
-      }
-    })
+
+    if(this.state.project == ''){
+      Alert.alert(
+        'Project cannot be blank.',
+        '',
+        [
+          {text: 'OK', onPress: () => console.log('')},
+        ],
+        {cancelable: false},
+      );
+    } else if (this.state.harvestQuantity == '') {
+      Alert.alert(
+        'Harvest quantity cannot be blank.',
+        '',
+        [
+          {text: 'OK', onPress: () => console.log('')},
+        ],
+        {cancelable: false},
+      );
+    } else if (this.state.unitHarvest == '') {
+      Alert.alert(
+        'Unit harvest cannot be blank.',
+        '',
+        [
+          {text: 'OK', onPress: () => console.log('')},
+        ],
+        {cancelable: false},
+      );
+    } else {
+      this.state.arr.map(val => {
+        console.log('val.length', this.state.arr.length);
+        if(val.image == '' && this.state.arr.length === 1){
+          Alert.alert(
+            'Image cannot be blank.',
+            '',
+            [
+              {text: 'OK', onPress: () => console.log('')},
+            ],
+            {cancelable: false},
+          );
+        } else if (val.caption == '' && this.state.arr.length === 1) {
+          Alert.alert(
+            'Caption cannot be blank.',
+            '',
+            [
+              {text: 'OK', onPress: () => console.log('')},
+            ],
+            {cancelable: false},
+          );
+        } else {
+          insertActivityToServer(activityName, newActivity).then((responseJson)=> {
+            if(responseJson.err){
+              Alert.alert(responseJson.err);
+            }else{
+              this.props.navigation.navigate('SuccessPage')
+            }
+          })
+        }
+      })
+    }
   }
 
   clearVal() {
