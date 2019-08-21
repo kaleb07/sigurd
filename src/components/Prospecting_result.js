@@ -7,7 +7,6 @@ import { Dropdown } from 'react-native-material-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
 import { insertProspectingToServer } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
-import { signOut } from '../networking/server';
 
 let weightUnit = [{
   value: 'ton',
@@ -157,7 +156,7 @@ export default class Prospecting_Result extends Component<{}> {
         <View key={ index }>
          <View style={styles.small}>
            <View style={styles.textInputWrapper}>
-              <Text style={styles.text}>Komoditas</Text>
+              <Text style={styles.textCommodity}>Komoditas</Text>
               <TextInput
                 style={styles.smallCommodity}
                 value={r.commodity}
@@ -176,7 +175,7 @@ export default class Prospecting_Result extends Component<{}> {
            </View>
            <View style={styles.textInputWrapper}>
               <Dropdown label=' '
-                containerStyle={{width: wp(12), top: 10, left:4}}
+                containerStyle={{width: wp(12), top: 8, left:4}}
                 fontSize={14}
                 baseColor={"#000000"}
                 data={weightUnit}
@@ -204,8 +203,8 @@ export default class Prospecting_Result extends Component<{}> {
            </View>
            <Text style={{paddingTop:46,right:24}}>/</Text>
            <Dropdown label=' '
-             containerStyle={{width: wp(12),top:10, right:20}}
-             fontSize={16}
+             containerStyle={{width: wp(12),top:8, right:20}}
+             fontSize={14}
              baseColor={"#000000"}
              data={weightUnit}
              onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
@@ -230,9 +229,6 @@ export default class Prospecting_Result extends Component<{}> {
             <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
-              <Text style={styles.close}>sign out</Text>
-            </TouchableOpacity>
          </View>
         </View>
         <View style={styles.imageGroup1}>
@@ -400,7 +396,7 @@ var styles = StyleSheet.create({
     borderColor: '#000000',
     backgroundColor:'#F5F5F5',
     paddingVertical: 6,
-    fontSize:16,
+    fontSize:12,
     color:'#000000',
     marginVertical: 5,
   },
@@ -483,11 +479,17 @@ var styles = StyleSheet.create({
      marginBottom:4,
    },
    textCapacity:{
-    fontSize: hp(2),
+     fontSize: hp(2),
      fontWeight: '400',
      color:'#000000',
      marginTop: 10,
      left: 5
+   },
+   textCommodity:{
+      fontSize: hp(2),
+      fontWeight: '400',
+      color:'#000000',
+      marginTop: 10,
    },
    textPrice:{
      fontSize: hp(2),

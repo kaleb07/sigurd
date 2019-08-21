@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
-import {StyleSheet,Text,View,TouchableOpacity,Image,Header,Alert} from 'react-native';
+import {StyleSheet,Text,View,TouchableOpacity,Image,Header,Alert, BackHandler} from 'react-native';
 import SInfo from 'react-native-sensitive-info';
-
 import {getAccountInfo}  from '../networking/server.js';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
+let count = 0;
 export default class Create_Activity extends Component <{}> {
   componentDidMount() {
      this._configureGoogleSignIn();
@@ -26,6 +26,30 @@ export default class Create_Activity extends Component <{}> {
   static navigationOptions = {
     header: null,
   };
+
+  constructor(props) {
+    super(props)
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    count = count + 1;
+    if(count == 2){
+      count = 0;
+      BackHandler.exitApp();
+    } else {
+      ToastAndroid.show('Press back again to quit', ToastAndroid.SHORT);
+    }
+    return true;
+  }
 
    _configureGoogleSignIn() {
      GoogleSignin.configure({

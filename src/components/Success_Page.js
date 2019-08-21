@@ -3,6 +3,7 @@ import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image, Ba
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { signOut } from '../networking/server';
+import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
 export default class Success_Page extends Component <{}>{
   constructor(props) {
@@ -54,7 +55,7 @@ export default class Success_Page extends Component <{}>{
               <Image style={{width:40, height:40,left:16}}
                 source={require('../images/logo1.png')}/>
               <Text style={styles.text1}>FO Activity</Text>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
+              <TouchableOpacity onPress={() => {signOut(); this.props.navigation.navigate('Login')}}>
                 <Text style={styles.close}>sign out</Text>
               </TouchableOpacity>
             </View>
@@ -94,19 +95,21 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   close:{
-    backgroundColor:'#E6B000',
     color:'#000000',
-    fontSize:16,
-    padding:4,
-    width: 80,
-    height:32,
+    fontSize: hp(2),
     textAlign:'center',
+    marginTop:4
+  },
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
     borderRadius:5,
-    marginTop:2,
+    marginTop:6,
     right:16
   },
   text:{
-    fontSize:32,
+    fontSize: hp(4),
     color:'#000000',
     textAlign:'center',
     paddingTop: 10,
@@ -117,11 +120,10 @@ const styles = StyleSheet.create({
     width:300,
     alignItems: 'center',
     marginVertical:210,
-
   },
   text1:{
     color:'#FFFFFF',
-    fontSize:20,
+    fontSize: hp(3),
     padding:5,
     borderRadius:30,
     marginTop:3,
@@ -138,10 +140,10 @@ const styles = StyleSheet.create({
   cancel:{
    backgroundColor:'#FFC400',
    color:'#000000',
-   fontSize:16,
+   fontSize: hp(2.5),
    padding:8,
-   width: 200,
-   height:40,
+   width: wp(50),
+   height: hp(6),
    textAlign:'center',
    borderRadius:5
   }

@@ -7,7 +7,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
-import { signOut } from '../networking/server';
 
 const options={
   title: 'Choose photo',
@@ -183,9 +182,6 @@ export default class Create_Prospecting extends Component<{}>{
             <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
-              <Text style={styles.close}>sign out</Text>
-            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.imageGroup1}>
@@ -258,7 +254,21 @@ export default class Create_Prospecting extends Component<{}>{
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
               <Text style={styles.cancel}>Batal</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { this.insertToServer('prospecting') }}>
+            <TouchableOpacity onPress={() => {
+              Alert.alert(
+                'Confirm',
+                'Are you sure to continue? Your data will be saved.',
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {text: 'OK', onPress: () => this.insertToServer('prospecting')},
+                ],
+                {cancelable: false},
+              );
+            }}>
               <Text style={styles.next}>Selanjutnya</Text>
             </TouchableOpacity>
           </View>

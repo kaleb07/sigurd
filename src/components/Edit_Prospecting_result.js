@@ -7,9 +7,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
 import { getProspecting, updateProspectingResult } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
-import { signOut } from '../networking/server';
 
-let index = 0;
 let weightUnit = [{
   value: 'ton',
   }, {
@@ -187,7 +185,7 @@ export default class Prospecting_Result extends Component<{}> {
        <View key={ index }>
          <View style={styles.small}>
           <View style={styles.textInputWrapper}>
-             <Text style={styles.text}>Komoditas</Text>
+             <Text style={styles.textCommodity}>Komoditas</Text>
              <TextInput
                style={styles.smallCommodity}
                value={r.commodity}
@@ -206,7 +204,7 @@ export default class Prospecting_Result extends Component<{}> {
            </View>
            <View style={styles.textInputWrapper}>
              <Dropdown label=' '
-               containerStyle={{width:45, top: 10, left: 0}}
+               containerStyle={{width:45, top: 8, left: 0}}
                fontSize={14}
                baseColor={"#000000"}
                data={weightUnit}
@@ -234,8 +232,8 @@ export default class Prospecting_Result extends Component<{}> {
 
           <Text style={{paddingTop:46,right:24}}>/</Text>
           <Dropdown label=' '
-            containerStyle={{width:46, top: 10, right:16}}
-            fontSize={16}
+            containerStyle={{width:46, top: 8, right:16}}
+            fontSize={14}
             baseColor={"#000000"}
             data={weightUnit}
             onChangeText={unitPrice => this.insertVal(unitPrice, r.index, 'unitPrice')}
@@ -260,9 +258,6 @@ export default class Prospecting_Result extends Component<{}> {
          <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
            source={require('../images/logo1.png')}/>
          <Text style={styles.text2}>FO Activity</Text>
-         <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
-           <Text style={styles.close}>sign out</Text>
-         </TouchableOpacity>
       </View>
      </View>
       <View style={styles.imageGroup1}>
@@ -351,126 +346,126 @@ export default class Prospecting_Result extends Component<{}> {
 };
 
 var styles = StyleSheet.create({
- container:{
-   backgroundColor:'#FFFFFF',
-   flex: 1,
- },
- button1: {
-   width: wp(20),
-   height: hp(4),
-   backgroundColor: '#FFC400',
-   borderRadius:5,
-   marginTop:8,
-   right:16
- },
- dropdown:{
-   width:15,
-   fontSize: 12,
-   color:'#000000',
-   marginRight: 15
-   },
- small:{
-   flex: 1,
-   flexDirection: 'row',
- },
- text1:{
-   fontSize: 24,
-   fontWeight: '400',
-   color:'#000000',
-   paddingRight:144,
-   marginBottom:32,
-   marginTop:32
- },
- text2:{
-   color:'#FFFFFF',
-   fontSize: hp(3),
-   padding:5,
-   borderRadius:30,
-   marginTop:3,
-   fontWeight: 'bold',
-   paddingRight:100
- },
- imageGroup:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   padding:5,
- },
- imageGroup1:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   paddingRight:20,
-   marginBottom:-5,
-   paddingLeft:20
- },
- button: {
-   alignItems: 'center',
-   height:40,
-   width:120,
-   backgroundColor: '#FFC400',
-   marginVertical: 10,
-   paddingVertical: 13,
-   marginBottom:20,
-   borderRadius:30,
- },
- inputBox:{
-   width: wp(90),
-   height: hp(6),
-   borderRadius:5,
-   borderWidth: 0.5,
-   borderColor: '#000000',
-   backgroundColor:'#F5F5F5',
-   paddingVertical: 6,
-   fontSize:16,
-   color:'#000000',
-   marginVertical: 5
- },
- smallCapacity:{
-   flex: 1,
-   width: wp(17),
-   height: hp(5),
-   left:5,
-   borderRadius:5,
-   borderWidth: 0.5,
-   borderColor: '#000000',
-   backgroundColor:'#F5F5F5',
-   paddingVertical: 6,
-   fontSize:16,
-   color:'#000000',
-   marginVertical: 5,
- },
- smallPrice:{
-   flex: 1,
-   width: wp(16),
-   height: hp(5),
-   right:18,
-   borderRadius:5,
-   borderWidth: 0.5,
-   borderColor: '#000000',
-   paddingVertical: 4,
-   backgroundColor:'#F5F5F5',
-   fontSize:12,
-   color:'#000000',
-   marginVertical: 5,
- },
- smallCommodity:{
-   flex: 1,
-   width: wp(17),
-   height: hp(5),
-   borderRadius:5,
-   borderWidth: 0.5,
-   borderColor: '#000000',
-   paddingVertical: 4,
-   fontSize:12,
-   backgroundColor:'#F5F5F5',
-   color:'#000000',
-   marginVertical: 5,
- },
- textInputWrapper: {
-    flex:1,
+  container:{
+    backgroundColor:'#FFFFFF',
+    flex: 1,
   },
-  dropdownWrapper: {
-     flexDirection:'row',
+  dropdown:{
+    width:15,
+    fontSize: 12,
+    color:'#000000',
+    marginRight: 15
+  },
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
+    borderRadius:5,
+    marginTop:8,
+    right:16
+  },
+  small:{
+    flex: 1,
+    flexDirection: 'row',
+  },
+  text1:{
+    fontSize: 24,
+    fontWeight: '400',
+    color:'#000000',
+    paddingRight:144,
+    marginBottom:32,
+    marginTop:32
+  },
+  text2:{
+    color:'#FFFFFF',
+    fontSize: hp(3),
+    padding:5,
+    borderRadius:30,
+    marginTop:3,
+    fontWeight: 'bold',
+    paddingRight:100
+  },
+  imageGroup:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding:5,
+  },
+  imageGroup1:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingRight:20,
+    marginBottom:-5,
+    paddingLeft:20
+  },
+  button: {
+    alignItems: 'center',
+    height:40,
+    width:120,
+    backgroundColor: '#FFC400',
+    marginVertical: 10,
+    paddingVertical: 13,
+    marginBottom:20,
+    borderRadius:30,
+  },
+  inputBox:{
+    width: wp(90),
+    height: hp(6),
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    backgroundColor:'#F5F5F5',
+    paddingVertical: 6,
+    fontSize:16,
+    color:'#000000',
+    marginVertical: 5
+  },
+  smallCapacity:{
+    flex: 1,
+    width: wp(17),
+    height: hp(5),
+    left:5,
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    backgroundColor:'#F5F5F5',
+    paddingVertical: 6,
+    fontSize:12,
+    color:'#000000',
+    marginVertical: 5,
+  },
+  smallPrice:{
+    flex: 1,
+    width: wp(16),
+    height: hp(5),
+    right:18,
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    paddingVertical: 4,
+    backgroundColor:'#F5F5F5',
+    fontSize:12,
+    color:'#000000',
+    marginVertical: 5,
+  },
+  smallCommodity:{
+    flex: 1,
+    width: wp(17),
+    height: hp(5),
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    paddingVertical: 4,
+    fontSize:12,
+    backgroundColor:'#F5F5F5',
+    color:'#000000',
+    marginVertical: 5,
+  },
+  textInputWrapper: {
+     flex:1,
    },
+   dropdownWrapper: {
+      flexDirection:'row',
+    },
    inputBox4:{
      width: wp(50),
      height: hp(6),
@@ -482,76 +477,82 @@ var styles = StyleSheet.create({
      fontSize:16,
      color:'#000000',
      marginVertical: 5,
-  },
-  footer: {
-    position: 'absolute',
-    flex:0.1,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor:'#284586',
-    height:50,
-    alignItems:'center',
-  },
-  next:{
-    color:'#ffffff',
-    fontSize:20,
-    marginTop:5,
-    padding:5,
-    width:200,
-    borderRadius:30,
-    height:35,
-    textAlign:'center',
-    fontWeight: 'bold',
-  },
-  text:{
+   },
+   footer: {
+     position: 'absolute',
+     flex:0.1,
+     left: 0,
+     right: 0,
+     bottom: 0,
+     backgroundColor:'#284586',
+     height:50,
+     alignItems:'center',
+   },
+   next:{
+     color:'#ffffff',
+     fontSize:20,
+     marginTop:5,
+     padding:5,
+     width:200,
+     borderRadius:30,
+     height:35,
+     textAlign:'center',
+     fontWeight: 'bold',
+   },
+   text:{
+     fontSize: hp(2),
+     fontWeight: '400',
+     color:'#000000',
+     marginTop:8
+   },
+   text3:{
+     fontSize:16,
+     fontWeight: '400',
+     color:'#000000',
+     marginBottom:4,
+   },
+   textCapacity:{
     fontSize: hp(2),
-    fontWeight: '400',
-    color:'#000000',
-    marginTop:8
-  },
-  text3:{
-    fontSize:16,
-    fontWeight: '400',
-    color:'#000000',
-    marginBottom:4,
-  },
-  textCapacity:{
-   fontSize: hp(2),
-    fontWeight: '400',
-    color:'#000000',
-    marginTop: 10,
-    left: 5
-  },
-  textPrice:{
-    fontSize: hp(2),
-    fontWeight: '400',
-    color:'#000000',
-    marginTop: 10,
-    right:20
-  },
-  close:{
-    color:'#000000',
-    fontSize: hp(2),
-    textAlign:'center',
-    marginTop:4
-    },
-  imageGroup4:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft:280,
-    borderRadius:5,
-  },
-  save:{
-    backgroundColor:'#FFC400',
-    top: 10,
-    color:'#ffffff',
-    fontSize:16,
-    padding:3,
-    marginBottom: 25,
-    width: 40,
-    height:40,
-    borderRadius:8,
-    alignItems:'center',
-  },
+     fontWeight: '400',
+     color:'#000000',
+     marginTop: 10,
+     left: 5
+   },
+   textCommodity:{
+      fontSize: hp(2),
+      fontWeight: '400',
+      color:'#000000',
+      marginTop: 10,
+   },
+   textPrice:{
+     fontSize: hp(2),
+     fontWeight: '400',
+     color:'#000000',
+     marginTop: 10,
+     right:20
+   },
+    close:{
+      color:'#000000',
+      fontSize: hp(2),
+      textAlign:'center',
+      marginTop:4
+   },
+   imageGroup4:{
+     flexDirection: 'row',
+     justifyContent: 'space-between',
+     paddingLeft:280,
+     borderRadius:5,
+   },
+   save:{
+     backgroundColor:'#FFC400',
+     top: 10,
+     color:'#ffffff',
+     fontSize:16,
+     padding:3,
+     marginBottom: 25,
+     width: 40,
+     height:40,
+     borderRadius:8,
+     alignItems:'center',
+   },
 });

@@ -8,7 +8,6 @@ import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer, getProjectFromServer } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import {Autocomplete} from "react-native-dropdown-autocomplete";
-import { signOut } from '../networking/server';
 
 const options={
   title: 'Choose photo',
@@ -219,9 +218,6 @@ export default class Tanam_Perdana extends Component<{}>{
               <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
                 source={require('../images/logo1.png')}/>
               <Text style={styles.text2}>FO Activity</Text>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
-                <Text style={styles.close}>sign out</Text>
-              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.imageGroup1}>

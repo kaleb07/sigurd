@@ -5,7 +5,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { getActivityProspecting, deleteProspectingResult, sendIdFarmer } from '../networking/server';
 import DropDownItem from 'react-native-drop-down-item';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
-import { signOut } from '../networking/server';
 
 const IC_ARR_DOWN = require('../images/ic_arr_down.png');
 const IC_ARR_UP = require('../images/ic_arr_up.png');
@@ -156,9 +155,6 @@ export default class List_data extends Component <{}>{
               <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
                 source={require('../images/logo1.png')}/>
               <Text style={styles.text2}>FO Activity</Text>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
-                <Text style={styles.close}>sign out</Text>
-              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.imageGroup1}>
@@ -167,27 +163,29 @@ export default class List_data extends Component <{}>{
             <Text style={styles.text1}>Prospecting</Text>
           </View>
           <ScrollView style={{paddingRight:16}}>
-            <View style={{flex:1,paddingBottom:20 ,flexDirection: 'row'}}>
-              <View style={styles.textInputWrapper}>
-                <Text style={{color:'#000000',fontSize:16}}>Tanggal</Text>
-                <Text style={styles.text3}>Deskripsi Kegiatan</Text>
-                <Text style={styles.text3}>Lokasi</Text>
-                <Text style={styles.text3}>Hasil Kegiatan</Text>
-                <Text style={{color:'#000000', paddingTop:15,fontSize:16}}>Foto kegiatan</Text>
+            <View style={styles.imageGroup}>
+              <Text style={styles.text3}>Tanggal</Text>
+              <Text style={{paddingLeft:85,color:'#000000',marginTop:5,fontSize:16}}>:</Text>
+              <Text style={styles.text4}>{activityProspecting.date}</Text>
+            </View>
+            <View style={styles.imageGroup}>
+              <Text style={styles.text3}>Deskripsi Kegiatan</Text>
+              <Text style={{paddingLeft:8,color:'#000000',marginTop:5,fontSize:16,}}>:</Text>
+              <Text style={styles.text4} numberOfLines={100}>{activityProspecting.activityDesc}</Text>
+            </View>
+            <View style={styles.imageGroup}>
+              <Text style={styles.text3}>Lokasi</Text>
+              <Text style={{paddingLeft:92,color:'#000000',marginTop:5,fontSize:16}}>:</Text>
+               <Text style={styles.text4} numberOfLines={100}>{activityProspecting.location} </Text>
+            </View>
+            <View style={styles.imageGroup}>
+              <Text style={styles.text3}>Hasil Kegiatan</Text>
+              <Text style={{paddingLeft:35,color:'#000000',marginTop:5,fontSize:16}}>:</Text>
+              <Text style={styles.text4} numberOfLines={100}>{activityProspecting.activityResult} </Text>
+            </View>
+            <View style={styles.Group1}>
+              <Text style={{color:'#000000', paddingTop:15,fontSize:16,}}>Foto kegiatan</Text>
                 <View>{images}</View>
-              </View>
-                <View style={styles.textInputWrapper3}>
-                  <Text style={styles.text3}>:</Text>
-                  <Text style={styles.text3}>:</Text>
-                  <Text style={styles.text3}>:</Text>
-                  <Text style={styles.text3}>:</Text>
-                </View>
-              <View style={styles.textInputWrapper2}>
-                <Text style={styles.text4}>{activityProspecting.date}</Text>
-                <Text style={styles.text4} numberOfLines={3}>{activityProspecting.activityDesc}</Text>
-                <Text style={styles.text4} numberOfLines={1}>{activityProspecting.location} </Text>
-                <Text style={styles.text4} numberOfLines={1}>{activityProspecting.activityResult} </Text>
-              </View>
             </View>
             <View style={styles.imageGroup3}>
               <Image style={{width: wp(10), height: hp(7),left:16}}
@@ -197,171 +195,175 @@ export default class List_data extends Component <{}>{
                 <Text style={styles.tambah}>Tambah</Text>
               </TouchableOpacity>
             </View>
-            <ScrollView style={{flex:1,alignSelf: 'stretch', paddingBottom:150,paddingLeft:16}}>
-              <View style = {{marginTop:10,backgroundColor:'#FFFFFF'}}>
-                {farmers}
-              </View>
-            </ScrollView>
+          <ScrollView style={{flex:1,alignSelf: 'stretch', paddingBottom:150,paddingLeft:16}}>
+            <View style = {{marginTop:10,backgroundColor:'#FFFFFF'}}>
+              {farmers}
+            </View>
           </ScrollView>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SuccessPage')} style={styles.footer}>
-            <Text style={styles.next}>Selesai</Text>
-          </TouchableOpacity>
-        </View>
-      )
-    }
+        </ScrollView>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('SuccessPage')} style={styles.footer}>
+          <Text style={styles.next}>Selesai</Text>
+        </TouchableOpacity>
+      </View>
+    )}
   }
 }
 
 const styles = StyleSheet.create({
-  container:{
-    backgroundColor:'#FFFFFF',
-    flex: 1,
-  },
-  footer: {
-    flexDirection: 'row',
-    position: 'absolute',
-    flex:0.1,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor:'#3700B3',
-    height:50,
-    justifyContent: 'center',
-    alignItems:'center',
-  },
-  imageGroup1:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingRight:70,
-    marginBottom:-5,
-    paddingLeft:20
-  },
-  text1:{
-    fontSize: 24,
-    fontWeight: '400',
-    color:'#000000',
-    right:95,
-    marginBottom:32,
-    marginTop:32
-  },
-  text2:{
-    color:'#FFFFFF',
-    fontSize: hp(3),
-    padding:5,
-    borderRadius:30,
-    marginTop:3,
-    fontWeight: 'bold',
-    paddingRight:100
-  },
-  text3:{
-    color:'#000000',
-    marginTop:5,
-    fontSize:16,
-  },
-  text4:{
-    color:'#000000',
-    marginTop:5,
-    fontSize:16,
-  },
-  text5:{
-    color:'#000000',
-    fontSize:16,
-    paddingRight:35
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#284586',
-    marginTop:2,
-    paddingLeft:4
-  },
-  buttonText1: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginTop:2,
-    paddingLeft:4,
-    color:'red'
-  },
-  button1: {
-    width: wp(20),
-    height: hp(4),
-    backgroundColor: '#FFC400',
-    borderRadius:5,
-    marginTop:8,
-    right:16
-  },
-  close:{
-    color:'#000000',
-    fontSize: hp(2),
-    textAlign:'center',
-    marginTop:4
-  },
-  tambah:{
-    backgroundColor:'#FFC400',
-    color:'#000000',
-    fontSize:16,
-    padding:5,
-    width: wp(20),
-    height: hp(4.5),
-    textAlign:'center',
-    borderRadius:5,
-    marginTop:10,
-  },
-  next:{
-    color:'#ffffff',
-    fontSize:20,
-    marginTop:8,
-    padding:5,
-    width:200,
-    borderRadius:30,
-    height:35,
-    textAlign:'center',
-    fontWeight: 'bold',
-  },
-  imageGroup2:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding:5,
-  },
-  imageGroup3:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  imageGroup:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft:280,
-    borderRadius:5,
-  },
-  listButton:{
-    flexDirection: 'row',
-    paddingTop:20,
-    left:170
-  },
-  textInputWrapper: {
-     paddingRight: 8,
-     paddingLeft:16
-  },
-  textInputWrapper2: {
-     paddingRight: 16
-  },
-  textInputWrapper3: {
-    paddingRight:10
-  },
-  textInputWrapper4: {
-    paddingLeft:20
-  },
-  textInputWrapper5: {
-    left:10
-  },
-  footer: {
-    position: 'absolute',
-    flex:0.1,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor:'#284586',
-    height:56,
-    alignItems:'center'
-  }
+container:{
+  backgroundColor:'#FFFFFF',
+  flex: 1,
+},
+footer: {
+  flexDirection: 'row',
+  position: 'absolute',
+  flex:0.1,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor:'#3700B3',
+  height:50,
+  justifyContent: 'center',
+  alignItems:'center',
+},
+imageGroup1:{
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  paddingRight:70,
+  marginBottom:-5,
+  paddingLeft:20
+},
+Group1:{
+  paddingLeft:16
+},
+text1:{
+  fontSize: 24,
+  fontWeight: '400',
+  color:'#000000',
+  right:95,
+  marginBottom:32,
+  marginTop:32
+},
+text2:{
+  color:'#FFFFFF',
+  fontSize: hp(3),
+  padding:5,
+  borderRadius:30,
+  marginTop:3,
+  fontWeight: 'bold',
+  paddingRight:100
+},
+text3:{
+  color:'#000000',
+  marginTop:5,
+  fontSize:16,
+},
+text4:{
+  color:'#000000',
+  marginTop:5,
+  fontSize:16,
+  paddingLeft:10,
+  paddingRight:148
+},
+text5:{
+  color:'#000000',
+  fontSize:16,
+  paddingRight:35
+},
+buttonText: {
+  fontSize: 16,
+  fontWeight: '500',
+  color: '#284586',
+  marginTop:2,
+  paddingLeft:4
+},
+buttonText1: {
+  fontSize: 16,
+  fontWeight: '500',
+  marginTop:2,
+  paddingLeft:4,
+  color:'red'
+},
+button1: {
+  width: wp(20),
+  height: hp(4),
+  backgroundColor: '#FFC400',
+  borderRadius:5,
+  marginTop:8,
+  right:16
+},
+close:{
+  color:'#000000',
+  fontSize: hp(2),
+  textAlign:'center',
+  marginTop:4
+},
+tambah:{
+  backgroundColor:'#FFC400',
+  color:'#000000',
+  fontSize:16,
+  padding:5,
+  width: wp(20),
+  height: hp(4.5),
+  textAlign:'center',
+  borderRadius:5,
+  marginTop:10,
+},
+next:{
+  color:'#ffffff',
+  fontSize:20,
+  marginTop:8,
+  padding:5,
+  width:200,
+  borderRadius:30,
+  height:35,
+  textAlign:'center',
+  fontWeight: 'bold',
+},
+imageGroup2:{
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  padding:5,
+},
+imageGroup3:{
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  paddingTop:16
+},
+imageGroup:{
+  flexDirection: 'row',
+  flex:1,
+  paddingLeft:16
+},
+listButton:{
+  flexDirection: 'row',
+  paddingTop:20,
+  left:170
+},
+textInputWrapper: {
+   paddingRight: 8,
+   paddingLeft:16
+},
+textInputWrapper2: {
+   paddingRight: 16
+},
+textInputWrapper3: {
+  paddingRight:10
+},
+textInputWrapper4: {
+  paddingLeft:20
+},
+textInputWrapper5: {
+  left:10
+},
+footer: {
+  position: 'absolute',
+  flex:0.1,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor:'#284586',
+  height:56,
+  alignItems:'center'
+}
 });

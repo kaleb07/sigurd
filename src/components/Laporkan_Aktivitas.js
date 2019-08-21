@@ -5,10 +5,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
-import { signOut } from '../networking/server';
+import {signOut}  from '../networking/server.js';
 
 let count = 0;
-
 export default class Laporkan_Aktivitas extends Component <{}>{
   static navigationOptions = {
     header: null,
@@ -46,7 +45,7 @@ export default class Laporkan_Aktivitas extends Component <{}>{
             <Image style={{ width: wp(10), height: hp(5), left:8, marginTop:3}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text1}>FO Activity</Text>
-            <TouchableOpacity onPress={this._signOut} style = {styles.button1}>
+            <TouchableOpacity onPress={() => { signOut(); this.props.navigation.navigate('Login')}} style = {styles.button1}>
               <Text style={styles.close}>sign out</Text>
             </TouchableOpacity>
           </View>
