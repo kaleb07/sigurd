@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated, BackHandler} from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -17,8 +17,8 @@ const options={
 }
 
 export default class Create_Prospecting extends Component<{}>{
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       date:'',
       activityDesc:'',
@@ -31,11 +31,25 @@ export default class Create_Prospecting extends Component<{}>{
       }]
     }
     this.selectImage = this.selectImage.bind(this);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   };
 
   static navigationOptions = {
     header: null,
   };
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.navigate('Category');
+    return true;
+  }
 
   removeItem(index) {
     const list = this.state.arr;

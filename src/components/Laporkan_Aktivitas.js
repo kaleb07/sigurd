@@ -1,16 +1,42 @@
 import React, {Component} from 'react';
 import SInfo from 'react-native-sensitive-info';
-import {View,StyleSheet,TouchableOpacity,Text,ScrollView,ImageBackground,Image} from 'react-native';
+import {View,StyleSheet,TouchableOpacity,Text,ScrollView,ImageBackground,Image, BackHandler, ToastAndroid} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import { signOut } from '../networking/server';
 
+let count = 0;
+
 export default class Laporkan_Aktivitas extends Component <{}>{
   static navigationOptions = {
     header: null,
   };
+
+  constructor(props) {
+    super(props)
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    count = count + 1;
+    if(count == 2){
+      count = 0;
+      BackHandler.exitApp();
+    } else {
+      ToastAndroid.show('Press back again to quit', ToastAndroid.SHORT);
+    }
+    return true;
+  }
 
   render(){
     return (

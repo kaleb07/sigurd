@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated, BackHandler} from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -18,8 +18,8 @@ const options={
 }
 
 export default class Monitor_Lapangan extends Component<{}>{
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isLoading: true,
       date:'',
@@ -34,6 +34,7 @@ export default class Monitor_Lapangan extends Component<{}>{
       project: [],
     }
     this.selectImage = this.selectImage.bind(this);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   };
 
   componentDidMount(){
@@ -51,6 +52,19 @@ export default class Monitor_Lapangan extends Component<{}>{
   static navigationOptions = {
     header: null,
   };
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.navigate('Category');
+    return true;
+  }
 
   handleSelectItem(item, index) {
    this.setState({

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image} from 'react-native';
+import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image, BackHandler} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { getActivityProspecting, deleteProspectingResult, sendIdFarmer } from '../networking/server';
@@ -11,11 +11,12 @@ const IC_ARR_DOWN = require('../images/ic_arr_down.png');
 const IC_ARR_UP = require('../images/ic_arr_up.png');
 
 export default class List_data extends Component <{}>{
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = ({
       isLoading:true,
     });
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
 
   componentDidMount(){
@@ -33,9 +34,16 @@ export default class List_data extends Component <{}>{
     header: null,
   };
 
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
 
-  editFarmer(sendId){
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
 
+  handleBackButtonClick() {
+    return true;
   }
 
   deleteFarmer(id){

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity,Image} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity,Image, BackHandler} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button } from 'react-native-elements';
@@ -24,8 +24,8 @@ let landAreaUnit = [{
 }];
 
 export default class Prospecting_Result extends Component<{}> {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       leaderName:'',
       phoneNumber:'',
@@ -43,11 +43,24 @@ export default class Prospecting_Result extends Component<{}> {
         unitPrice: '',
       }],
     };
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   };
 
   static navigationOptions = {
     header: null,
   };
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    return true;
+  }
 
   removeItem(index) {
     const list = this.state.arr;

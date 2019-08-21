@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
-import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image} from 'react-native';
+import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image, BackHandler} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { signOut } from '../networking/server';
 
 export default class Success_Page extends Component <{}>{
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = ({
       isLoading:true,
     });
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
 
   componentDidMount(){
@@ -23,6 +24,18 @@ export default class Success_Page extends Component <{}>{
   static navigationOptions = {
     header: null,
   };
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    return true;
+  }
 
   render(){
    if(this.state.isLoading){
