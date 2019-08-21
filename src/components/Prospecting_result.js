@@ -3,14 +3,12 @@ import {Platform, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity,Ima
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Button } from 'react-native-elements';
-import { Actions } from 'react-native-router-flux';
 import { Dropdown } from 'react-native-material-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
 import { insertProspectingToServer } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import { signOut } from '../networking/server';
 
-let index = 0;
 let weightUnit = [{
   value: 'ton',
   }, {
@@ -47,14 +45,9 @@ export default class Prospecting_Result extends Component<{}> {
     };
   };
 
-  list_data() {
-    Actions.list_data()
-  }
-
-  _signOut(){
-    signOut();
-    Actions.login()
-  }
+  static navigationOptions = {
+    header: null,
+  };
 
   removeItem(index) {
     const list = this.state.arr;
@@ -101,7 +94,7 @@ export default class Prospecting_Result extends Component<{}> {
        if(responseJson.err){
          Alert.alert(responseJson.err);
        }else{
-         this.list_data();
+         this.props.navigation.push('ListData')
        }
      })
   }
@@ -224,8 +217,8 @@ export default class Prospecting_Result extends Component<{}> {
             <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this._signOut}style = {styles.button1}>
-              <Text style={styles.close}>keluar</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
+              <Text style={styles.close}>sign out</Text>
             </TouchableOpacity>
          </View>
         </View>

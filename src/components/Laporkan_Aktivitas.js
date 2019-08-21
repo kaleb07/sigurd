@@ -3,20 +3,14 @@ import SInfo from 'react-native-sensitive-info';
 import {View,StyleSheet,TouchableOpacity,Text,ScrollView,ImageBackground,Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {Actions} from 'react-native-router-flux';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import { signOut } from '../networking/server';
 
 export default class Laporkan_Aktivitas extends Component <{}>{
-  kegiatan() {
-    Actions.kegiatan()
-  }
-
-  _signOut(){
-    signOut();
-    Actions.login()
-  }
+  static navigationOptions = {
+    header: null,
+  };
 
   render(){
     return (
@@ -27,7 +21,7 @@ export default class Laporkan_Aktivitas extends Component <{}>{
               source={require('../images/logo1.png')}/>
             <Text style={styles.text1}>FO Activity</Text>
             <TouchableOpacity onPress={this._signOut} style = {styles.button1}>
-              <Text style={styles.close}  >keluar</Text>
+              <Text style={styles.close}>sign out</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -38,7 +32,7 @@ export default class Laporkan_Aktivitas extends Component <{}>{
             <Text style={styles.text}>Melaporkan Aktivitas Yang Anda</Text>
             <Text style={styles.text}>Lakukan</Text>
           </View>
-          <TouchableOpacity onPress={this.kegiatan} style = {styles.button}>
+          <TouchableOpacity onPress={ () => this.props.navigation.navigate('Category')} style = {styles.button}>
               <Text style = {styles.buttonText}> Laporkan Aktivitas </Text>
         </TouchableOpacity>
         </ImageBackground>

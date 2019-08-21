@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {Actions} from 'react-native-router-flux';
 import { getActivityProspecting, deleteProspectingResult, sendIdFarmer } from '../networking/server';
 import DropDownItem from 'react-native-drop-down-item';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
@@ -19,24 +18,6 @@ export default class List_data extends Component <{}>{
     });
   }
 
-  edit_prospecting() {
-      Actions.edit_prospecting()
-    }
-  prospecting() {
-    Actions.prospecting()
-  }
-
-  laporkan_aktivitas() {
-    Actions.laporkan_aktivitas()
-  }
-  success_page(){
-    Actions.success_page()
-  }
-  _signOut(){
-    signOut();
-    Actions.login()
-  }
-
   componentDidMount(){
     return ( getActivityProspecting().then((responseJson) => {
       this.setState({
@@ -46,6 +27,15 @@ export default class List_data extends Component <{}>{
     }).catch((error)=> {
       console.log('Error : ', error);
     }))
+  }
+
+  static navigationOptions = {
+    header: null,
+  };
+
+
+  editFarmer(sendId){
+
   }
 
   deleteFarmer(id){
@@ -127,7 +117,8 @@ export default class List_data extends Component <{}>{
                           size={24}
                           color='#284586'
                        />
-                       <TouchableOpacity style = {styles.button} onPress={() => {sendIdFarmer(val.id); this.edit_prospecting()}}>
+                       <TouchableOpacity style = {styles.button} onPress={() => { sendIdFarmer(val.id);
+                         this.props.navigation.push('EditFarmer')}}>
                           <Text style = {styles.buttonText}>Edit</Text>
                        </TouchableOpacity>
                        <Icon name='trash'
@@ -157,8 +148,8 @@ export default class List_data extends Component <{}>{
               <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
                 source={require('../images/logo1.png')}/>
               <Text style={styles.text2}>FO Activity</Text>
-              <TouchableOpacity onPress={this._signOut} style = {styles.button1}>
-                <Text style={styles.close}>keluar</Text>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
+                <Text style={styles.close}>sign out</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -194,7 +185,7 @@ export default class List_data extends Component <{}>{
               <Image style={{width: wp(10), height: hp(7),left:16}}
                 source={require('../images/data.jpg')}/>
               <Text style={{right:24,marginTop:12,fontSize:20,color:'#000000' }}> Detail Data Petani </Text>
-              <TouchableOpacity onPress={this.prospecting}>
+              <TouchableOpacity onPress={() => this.props.navigation.push('Farmer')}>
                 <Text style={styles.tambah}>Tambah</Text>
               </TouchableOpacity>
             </View>
@@ -204,7 +195,7 @@ export default class List_data extends Component <{}>{
               </View>
             </ScrollView>
           </ScrollView>
-          <TouchableOpacity onPress={this.success_page} style={styles.footer}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('SuccessPage')} style={styles.footer}>
             <Text style={styles.next}>Selesai</Text>
           </TouchableOpacity>
         </View>

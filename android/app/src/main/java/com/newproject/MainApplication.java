@@ -3,6 +3,8 @@ package com.newproject;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.swmansion.reanimated.ReanimatedPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
@@ -29,6 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGestureHandlerPackage(),
+            new ReanimatedPackage(),
             new RNFetchBlobPackage(),
             new RNSensitiveInfoPackage(),
             new RNGoogleSigninPackage(), // <-- this needs to be in the list

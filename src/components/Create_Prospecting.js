@@ -3,7 +3,6 @@ import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, But
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
@@ -18,13 +17,6 @@ const options={
 }
 
 export default class Create_Prospecting extends Component<{}>{
-  kegiatan() {
-    Actions.kegiatan()
-  }
-  _signOut(){
-    signOut();
-    Actions.login()
-  }
   constructor() {
     super();
     this.state = {
@@ -41,8 +33,8 @@ export default class Create_Prospecting extends Component<{}>{
     this.selectImage = this.selectImage.bind(this);
   };
 
-  prospecting() {
-    Actions.prospecting()
+  static navigationOptions = {
+    header: null,
   };
 
   removeItem(index) {
@@ -138,7 +130,7 @@ export default class Create_Prospecting extends Component<{}>{
      if(responseJson.err){
        Alert.alert(responseJson.err);
      }else{
-       this.prospecting();
+       this.props.navigation.navigate('Farmer');
      }
    })
  }
@@ -177,8 +169,8 @@ export default class Create_Prospecting extends Component<{}>{
             <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this._signOut} style = {styles.button1}>
-              <Text style={styles.close}>keluar</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
+              <Text style={styles.close}>sign out</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -247,9 +239,16 @@ export default class Create_Prospecting extends Component<{}>{
             <Icon name="plus-square" size={48} color="#284586"/>
           </TouchableOpacity>
         </KeyboardAwareScrollView>
-        <TouchableOpacity onPress={()=>{this.insertToServer('prospecting')}} style={styles.footer}>
-          <Text style={styles.next}>Selanjutnya</Text>
-        </TouchableOpacity>
+        <View style={styles.footer}>
+          <View style={styles.imageGroup2}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
+              <Text style={styles.cancel}>Batal</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { this.insertToServer('prospecting') }}>
+              <Text style={styles.next}>Selanjutnya</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     )
   };
@@ -268,10 +267,10 @@ const styles = StyleSheet.create({
     marginTop:8,
 
   },
- imageGroup2:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   padding:5,
+  imageGroup2:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop:8,
   },
   text1:{
     fontSize: 24,
@@ -318,26 +317,37 @@ const styles = StyleSheet.create({
     paddingLeft:20
   },
   cancel:{
-    backgroundColor:'#ff0000',
+    backgroundColor:'#FFC400',
+    color:'#000000',
+    fontSize: hp(2),
+    padding:8,
+    width: wp(32),
+    height: hp(5),
+    textAlign:'center',
+    marginRight:48,
+    borderRadius:5
+  },
+  save:{
+    backgroundColor:'#FFC400',
     color:'#ffffff',
     fontSize:16,
     padding:5,
-    width: 150,
-    height:35,
-    textAlign:'center',
-    marginRight:20
+    marginBottom: 25,
+    width: 50,
+    height:50,
+    borderRadius:8,
+    alignItems:'center',
   },
   next:{
-    flex:1,
-    color:'#ffffff',
-    fontSize:20,
-    marginTop:8,
-    padding:5,
-    width:200,
-    borderRadius:30,
-    height:35,
+    backgroundColor:'#FFC400',
+    color:'#000000',
+    fontSize: hp(2),
+    marginBottom:8,
+    padding:8,
+    width: wp(32),
+    height: hp(5),
     textAlign:'center',
-    fontWeight: 'bold'
+    borderRadius:5
   },
   inputDropdown:{
     borderWidth: 1,

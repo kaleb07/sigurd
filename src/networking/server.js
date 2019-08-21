@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {GoogleSignin} from 'react-native-google-signin';
 import SInfo from 'react-native-sensitive-info';
 
 const apiActivity = 'http://localhost:3011/activity';
@@ -11,7 +10,7 @@ var RNFetchBlob = require('react-native-fetch-blob').default
 const apiAccount = 'https://api.tanihub.net/v1/auth/signin';
 var id_activity = '';
 var id_farmer='';
-var user=[];
+var user = [];
 
 async function getAccountInfo(params){
   try{
@@ -31,10 +30,6 @@ async function getAccountInfo(params){
   } catch(error){
     console.log('Error is: ', error);
   }
-}
-
-async function sendUser(params){
-  user = params;
 }
 
 async function signOut(){
@@ -133,8 +128,15 @@ async function insertActivityToServer(activity, params){
             }, RNFetchBlob.wrap(img.image.uri)
           )
     })
+
+    await SInfo.getItem('key2',{}).then(value => {
+     const val = JSON.parse(value);
+     user = val.data.user;
+   });
+
     params.images = arr;
     params.user = user;
+    console.log('user: ', params.user);
     let response = await fetch(apiActivity, {
         method: 'POST',
         headers: {
@@ -172,6 +174,7 @@ async function insertProspectingToServer(params){
 async function getActivityProspecting(){
   try{
     let getById = apiActivity + '/' + id_activity;
+    console.log('get props: ', id_activity);
     let response = await fetch(getById);
     let responseJson = await response.json();
     return responseJson;
@@ -217,7 +220,6 @@ export {getProjectFromServer};
 export {getActivityProspecting};
 export {getProspecting};
 export {sendIdFarmer};
-export {sendUser};
 export {signOut};
 export {insertActivityToServer};
 export {insertProspectingToServer};

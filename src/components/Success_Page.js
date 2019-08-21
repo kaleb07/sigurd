@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {Actions} from 'react-native-router-flux';
 import { signOut } from '../networking/server';
 
 export default class Success_Page extends Component <{}>{
@@ -13,13 +12,6 @@ export default class Success_Page extends Component <{}>{
     });
   }
 
-  laporkan_aktivitas() {
-    Actions.laporkan_aktivitas()
-  }
-  _signOut(){
-    signOut();
-    Actions.login()
-  }
   componentDidMount(){
     return (
       this.setState({
@@ -27,6 +19,10 @@ export default class Success_Page extends Component <{}>{
       })
     )
   }
+
+  static navigationOptions = {
+    header: null,
+  };
 
   render(){
    if(this.state.isLoading){
@@ -45,8 +41,8 @@ export default class Success_Page extends Component <{}>{
               <Image style={{width:40, height:40,left:16}}
                 source={require('../images/logo1.png')}/>
               <Text style={styles.text1}>FO Activity</Text>
-              <TouchableOpacity onPress={this._signOut}>
-                <Text style={styles.close}>keluar</Text>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
+                <Text style={styles.close}>sign out</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -57,7 +53,7 @@ export default class Success_Page extends Component <{}>{
               style={{paddingLeft:100}}
             />
             <Text style={styles.text}>Sukses</Text>
-            <TouchableOpacity style={{paddingTop: 50, paddingLeft:95}} onPress={this.laporkan_aktivitas} >
+            <TouchableOpacity style={{paddingTop: 50, paddingLeft:95}} onPress={() => this.props.navigation.navigate('Home')} >
               <Text style={styles.cancel}>Tutup</Text>
             </TouchableOpacity>
           </View>

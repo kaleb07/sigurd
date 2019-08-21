@@ -3,7 +3,6 @@ import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, But
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer, getProjectFromServer } from '../networking/server';
@@ -27,21 +26,6 @@ const options={
 }
 
 export default class Create_Panen extends Component<{}>{
-  kegiatan() {
-    Actions.kegiatan()
-  }
-
-  laporkan_aktivitas() {
-    Actions.laporkan_aktivitas()
-  }
-  success_page(){
-    Actions.success_page()
-  }
-  _signOut(){
-    signOut();
-    Actions.login()
-  }
-
   constructor() {
     super();
     this.state = {
@@ -73,6 +57,10 @@ export default class Create_Panen extends Component<{}>{
       console.log('Error : ', error);
     })
   )}
+
+  static navigationOptions = {
+    header: null,
+  };
 
   handleSelectItem(item, index) {
    this.setState({
@@ -156,7 +144,7 @@ export default class Create_Panen extends Component<{}>{
       if(responseJson.err){
         Alert.alert(responseJson.err);
       }else{
-        this.success_page();
+        this.props.navigation.navigate('SuccessPage')
       }
     })
   }
@@ -223,13 +211,13 @@ export default class Create_Panen extends Component<{}>{
 
       return (
         <View style={styles.container}>
-        <View style = {{backgroundColor:'#284586',height: hp(8)}}>
+         <View style = {{backgroundColor:'#284586',height: hp(8)}}>
           <View style={styles.imageGroup5}>
             <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
-            <TouchableOpacity onPress={this._signOut} style = {styles.button1}>
-              <Text style={styles.close}>keluar</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
+              <Text style={styles.close}>sign out</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -280,8 +268,8 @@ export default class Create_Panen extends Component<{}>{
             />
             <Text style={styles.text}>Proyek</Text>
             <Autocomplete
-              style={styles.input}
-              scrollToInput={ev => {}}
+              inputStyle={styles.dropdown}
+              scrollToInput={() => {}}
               handleSelectItem={(item, id) => this.handleSelectItem(item, id)}
               onDropdownClose={() => {}}
               onDropdownShow={() => {}}
@@ -291,7 +279,7 @@ export default class Create_Panen extends Component<{}>{
               valueExtractor={item => item.title }
               rightContent
               rightTextExtractor={item => item.projectNo}
-              placeholder="Pilih proyek"
+              placeholder="Cari proyek"
             />
 
             <Text style={styles.text}>Jumlah Panen</Text>
@@ -338,7 +326,7 @@ export default class Create_Panen extends Component<{}>{
           </KeyboardAwareScrollView>
           <View style={styles.footer}>
             <View style={styles.imageGroup2}>
-              <TouchableOpacity onPress={this.kegiatan} >
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
                 <Text style={styles.cancel}>Batal</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => { this.insertToServer('panen') }}>
@@ -417,9 +405,17 @@ const styles = StyleSheet.create({
    marginBottom: 30,
   },
   dropdown:{
-    width: 300,
-    fontSize: 16,
+    paddingLeft: 5,
+    width: wp(90),
+    height: hp(6),
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    backgroundColor: '#F5F5F5',
+    paddingVertical:8,
+    fontSize:16,
     color:'#000000',
+    marginVertical:4,
   },
   imageGroup:{
     flexDirection: 'row',

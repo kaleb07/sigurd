@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Actions} from 'react-native-router-flux';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
 import {StyleSheet,Text,View,TouchableOpacity,Image,Header,Alert} from 'react-native';
 import SInfo from 'react-native-sensitive-info';
@@ -8,13 +7,25 @@ import {getAccountInfo}  from '../networking/server.js';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
 export default class Create_Activity extends Component <{}> {
-  laporkan_aktivitas() {
-    Actions.laporkan_aktivitas()
-  }
-
-  async componentDidMount() {
+  componentDidMount() {
      this._configureGoogleSignIn();
+     SInfo.getItem('key2',{}).then(value => {
+      const val = JSON.parse(value);
+      const now = new Date();
+      const nowTimeStamp = now.getTime();
+      const exp = val.data.auth.expires;
+      // ambil expires dari sensitive info
+      if (nowTimeStamp < exp) {
+        this.props.navigation.navigate('Home');
+      } else {
+       this._configureGoogleSignIn();
+      }
+    });
    }
+
+  static navigationOptions = {
+    header: null,
+  };
 
    _configureGoogleSignIn() {
      GoogleSignin.configure({
@@ -56,16 +67,12 @@ export default class Create_Activity extends Component <{}> {
        const domain = email.substring(index + 1);
        if (domain == 'tanihub.com') {
          getAccountInfo(params).then((responseJson)=> {
-           SInfo.setItem('key2', JSON.stringify(responseJson), {}).then(() => {
-             const user = {
-               id : responseJson.data.user.id,
-               name : responseJson.data.user.fullname,
-               email: responseJson.data.user.email
-             }
-             sendUser(user).then((res) => {
-               console.log('user', user);
-             })
-           });
+           SInfo.setItem('key2', JSON.stringify(responseJson), {});
+           if(responseJson.error){
+             console.log('Error: ', responseJson.error);
+           } else {
+             this.props.navigation.navigate('Home');
+           }
          });
        } else {
          Alert.alert('Silahkan masuk dengan akun TaniHub');
@@ -108,7 +115,7 @@ export default class Create_Activity extends Component <{}> {
                   style={{ width: 312, height: 48 }}
                   size={GoogleSigninButton.Size.Wide}
                   color={GoogleSigninButton.Color.Light}
-                  onPress={this._signIn }
+                  onPress={this._signIn}
                 />
             </TouchableOpacity>
           </View>

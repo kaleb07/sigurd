@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {Actions} from 'react-native-router-flux';
 import { getActivityOptionFromServer } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import { signOut } from '../networking/server';
@@ -17,6 +16,10 @@ export default class Kategori_kegiatan extends Component <{}>{
     );
   }
 
+  static navigationOptions = {
+    header: null,
+  };
+
   componentDidMount(){
     return ( getActivityOptionFromServer().then((responseJson) => {
       this.setState({
@@ -26,30 +29,6 @@ export default class Kategori_kegiatan extends Component <{}>{
     }).catch((error)=> {
       console.log('Error : ', error);
     }))
-  }
-
-  register() {
-    Actions.register()
-  }
-  create_prospecting(){
-    Actions.create_prospecting()
-  }
-  monitor_lapangan(){
-    Actions.monitor_lapangan()
-  }
-  tanam_perdana(){
-    Actions.tanam_perdana()
-  }
-  create_panen(){
-    Actions.create_panen()
-  }
-  create_lainnya(){
-    Actions.create_lainnya()
-  }
-
-  _signOut(){
-    signOut();
-    Actions.login()
   }
 
   render(){
@@ -75,18 +54,18 @@ export default class Kategori_kegiatan extends Component <{}>{
               <Image style={{width: wp(10), height: hp(5),left:8,marginTop:3}}
               source={require('../images/logo1.png')}/>
               <Text style={styles.text1}>FO Activity</Text>
-              <TouchableOpacity onPress={this._signOut} style = {styles.button1}>
-                <Text style={styles.close}>keluar</Text>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
+                <Text style={styles.close}>sign out</Text>
               </TouchableOpacity>
             </View>
           </View>
           <Text style={styles.text}>Kategori Kegiatan</Text>
           <View style={styles.imageGroup}>
-            <TouchableOpacity  onPress={this.create_prospecting}>
+            <TouchableOpacity  onPress={() => this.props.navigation.navigate('Prospecting')}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/prospecting.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={this.register}>
+            <TouchableOpacity  onPress={() => this.props.navigation.navigate('Consultation')}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/konsultasi.png')}/>
             </TouchableOpacity>
@@ -96,11 +75,11 @@ export default class Kategori_kegiatan extends Component <{}>{
             {activityOptions[1]}
           </View>
           <View style={styles.imageGroup}>
-            <TouchableOpacity  onPress={this.monitor_lapangan}>
+            <TouchableOpacity  onPress={() => this.props.navigation.navigate('FieldMonitoring')}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/monitoring.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={this.tanam_perdana}>
+            <TouchableOpacity  onPress={() => this.props.navigation.navigate('FirstPlanting')}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/tanam.png')}/>
             </TouchableOpacity>
@@ -110,11 +89,11 @@ export default class Kategori_kegiatan extends Component <{}>{
             {activityOptions[2]}
           </View>
           <View style={styles.imageGroup}>
-            <TouchableOpacity  onPress={this.create_panen}>
+            <TouchableOpacity  onPress={() => this.props.navigation.navigate('Harvesting')}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/panen.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={this.create_lainnya}>
+            <TouchableOpacity  onPress={() => this.props.navigation.navigate('Other')}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/lainnya.png')}/>
             </TouchableOpacity>

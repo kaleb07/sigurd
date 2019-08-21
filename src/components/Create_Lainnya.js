@@ -3,7 +3,6 @@ import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, But
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Actions} from 'react-native-router-flux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
 import { insertActivityToServer } from '../networking/server';
@@ -18,20 +17,6 @@ const options={
 }
 
 export default class Create_Prospecting extends Component<{}>{
-  kegiatan() {
-    Actions.kegiatan()
-  }
-
-  laporkan_aktivitas() {
-    Actions.laporkan_aktivitas()
-  }
-  success_page(){
-    Actions.success_page()
-  }
-  _signOut(){
-    signOut();
-    Actions.login()
-  }
   constructor() {
     super();
     this.state = {
@@ -48,8 +33,8 @@ export default class Create_Prospecting extends Component<{}>{
     this.selectImage = this.selectImage.bind(this);
   };
 
-  prospecting() {
-    Actions.prospecting()
+  static navigationOptions = {
+    header: null,
   };
 
   removeItem(index) {
@@ -145,7 +130,7 @@ export default class Create_Prospecting extends Component<{}>{
      if(responseJson.err){
        Alert.alert(responseJson.err);
      }else{
-       this.success_page();
+       this.props.navigation.navigate('SuccessPage')
      }
    })
  }
@@ -184,8 +169,8 @@ export default class Create_Prospecting extends Component<{}>{
           <Image style={{width: wp(10), height: hp(5),left:8,marginTop:5}}
             source={require('../images/logo1.png')}/>
           <Text style={styles.text2}>FO Activity</Text>
-          <TouchableOpacity onPress={this._signOut} style = {styles.button1}>
-            <Text style={styles.close}>keluar</Text>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style = {styles.button1}>
+            <Text style={styles.close}>sign out</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -259,7 +244,7 @@ export default class Create_Prospecting extends Component<{}>{
         </KeyboardAwareScrollView>
         <View style={styles.footer}>
           <View style={styles.imageGroup2}>
-            <TouchableOpacity onPress={this.kegiatan} >
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
               <Text style={styles.cancel}>Batal</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => { this.insertToServer('lainnya') }}>
@@ -314,10 +299,6 @@ const styles = StyleSheet.create({
     color:'#000000',
     paddingLeft:60,
    marginBottom: 30,
-  },
-  dropdown:{
-    fontSize: 16,
-    color:'#000000',
   },
   imageGroup:{
     flexDirection: 'row',
