@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import SInfo from 'react-native-sensitive-info';
+import Config from "react-native-config";
 
-const apiActivity = 'http://localhost:3011/activity';
-const apiActivityOption = 'http://localhost:3011/activity_option';
-const apiProspecting = 'http://localhost:3011/prospecting';
-const apiSignedUrl = 'http://localhost:3011/signed-url';
-const apiProject = 'http://localhost:3011/project/all';
+const apiActivity = Config.API_HOST + '/activity';
+const apiActivityOption = Config.API_HOST + '/activity/option';
+const apiProspecting = Config.API_HOST + '/prospecting';
+const apiSignedUrl = Config.API_HOST + '/signed-url';
+const apiProject = Config.API_HOST + '/project/all';
 var RNFetchBlob = require('react-native-fetch-blob').default
-const apiAccount = 'https://api.tanihub.net/v1/auth/signin';
+const apiAccount = Config.API_ACCOUNT + '/v1/auth/signin';
 var id_activity = '';
 var id_farmer='';
 var user = [];
@@ -174,7 +175,6 @@ async function insertProspectingToServer(params){
 async function getActivityProspecting(){
   try{
     let getById = apiActivity + '/' + id_activity;
-    console.log('get props: ', id_activity);
     let response = await fetch(getById);
     let responseJson = await response.json();
     return responseJson;
@@ -199,6 +199,7 @@ async function deleteProspectingResult(params){
 async function updateProspectingResult(params){
   try{
     let updateById = apiProspecting + '/' + id_farmer;
+    console.log('update: ', updateById);
     let response = await fetch(updateById, {
         method: 'PUT',
         headers: {

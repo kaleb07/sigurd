@@ -98,11 +98,11 @@ export default class List_data extends Component <{}>{
                         <Text style={styles.text3}>:</Text>
                       </View>
                       <View style={styles.textInputWrapper5}>
-                          <Text style={styles.text3}>{val.phoneNumber}</Text>
-                          <Text style={styles.text3} numberOfLines={1}>{val.groupFarmer}</Text>
-                          <Text style={styles.text3} numberOfLines={1}>{val.numberOfMembers} </Text>
-                          <Text style={styles.text3} numberOfLines={1}>{val.landArea}</Text>
-                          <Text style={styles.text3} numberOfLines={1}> {val.longTimeFarming}</Text>
+                          <Text style={styles.text3}>  {val.phoneNumber}</Text>
+                          <Text style={styles.text3} numberOfLines={1}>  {val.groupFarmer}</Text>
+                          <Text style={styles.text3} numberOfLines={1}>  {val.numberOfMembers} </Text>
+                          <Text style={styles.text3} numberOfLines={1}>  {val.landArea}</Text>
+                          <Text style={styles.text3} numberOfLines={1}>  {val.longTimeFarming}</Text>
                       </View>
                       </View>
                       <Text style={{color:'#000000',marginTop:16,fontSize:18,fontWeight: 'bold',}}>Daftar Produk</Text>

@@ -84,7 +84,7 @@ export default class Kategori_kegiatan extends Component <{}>{
             </TouchableOpacity>
           </View>
           <View style={styles.textGroup}>
-            {activityOptions[0]}
+            {activityOptions[4]}
             {activityOptions[1]}
           </View>
           <View style={styles.imageGroup}>
@@ -98,8 +98,8 @@ export default class Kategori_kegiatan extends Component <{}>{
             </TouchableOpacity>
           </View>
           <View style={styles.textGroup2}>
-            {activityOptions[5]}
             {activityOptions[2]}
+            {activityOptions[0]}
           </View>
           <View style={styles.imageGroup}>
             <TouchableOpacity  onPress={() => this.props.navigation.navigate('Harvesting')}>
@@ -112,8 +112,8 @@ export default class Kategori_kegiatan extends Component <{}>{
             </TouchableOpacity>
           </View>
           <View style={styles.textGroup3}>
-            {activityOptions[4]}
             {activityOptions[3]}
+            {activityOptions[5]}
         </View>
           <View style={styles.footer}>
           </View>

@@ -7,6 +7,8 @@ import { TextInputMask } from 'react-native-masked-text';
 import { insertProspectingToServer } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
+let check = true;
+
 let weightUnit = [{
   value: 'ton',
   }, {
@@ -68,6 +70,81 @@ export default class Prospecting_Result extends Component<{}> {
      this.setState({ arr:newList });
   };
 
+  add(){
+    this.checkArr();
+    if (check === true){
+       this.insertSomeThing('');
+    }
+  }
+
+  checkArr(){
+    this.state.arr.map(val => {
+      if(val.commodity == ''){
+          Alert.alert(
+            'Commodity cannot be blank.',
+            '',
+            [
+              {text: 'OK', onPress: () => console.log('')},
+            ],
+            {cancelable: false},
+          );
+          check = false;
+      } else if (val.capacity == '') {
+        Alert.alert(
+          'Capacity cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+        check = false;
+      } else if (val.unitCapacity == '') {
+        Alert.alert(
+          'Unit capacity cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+        check = false;
+      } else if (val.price == '') {
+        Alert.alert(
+          'Price cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+        check = false;
+      } else if (val.price == 'Rp0') {
+        Alert.alert(
+          'Price cannot have "0" value.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+        check = false;
+      } else if (val.unitPrice == '') {
+        Alert.alert(
+          'Unit price cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+        check = false;
+      } else {
+        check = true;
+      }
+    })
+  }
+
   insertSomeThing(){
     const newIndex = this.state.arr[this.state.arr.length-1].index+1;
     this.state.arr.push({
@@ -101,73 +178,31 @@ export default class Prospecting_Result extends Component<{}> {
         }
       })
     };
-    console.log(newProspecting);
-    this.state.arr.map(val => {
-      console.log('val.length', this.state.arr.length);
-      if(val.commodity == '' && this.state.arr.length === 1){
-        Alert.alert(
-          'Commodity cannot be blank.',
-          '',
-          [
-            {text: 'OK', onPress: () => console.log('')},
-          ],
-          {cancelable: false},
-        );
-      } else if (val.capacity == '' && this.state.arr.length === 1) {
-        Alert.alert(
-          'Capacity cannot be blank.',
-          '',
-          [
-            {text: 'OK', onPress: () => console.log('')},
-          ],
-          {cancelable: false},
-        );
-      } else if (val.unitCapacity == '' && this.state.arr.length === 1) {
-        Alert.alert(
-          'Unit capacity cannot be blank.',
-          '',
-          [
-            {text: 'OK', onPress: () => console.log('')},
-          ],
-          {cancelable: false},
-        );
-      } else if (val.price == '' && this.state.arr.length === 1) {
-        Alert.alert(
-          'Price cannot be blank.',
-          '',
-          [
-            {text: 'OK', onPress: () => console.log('')},
-          ],
-          {cancelable: false},
-        );
-      } else if (val.price == 'Rp0' && this.state.arr.length === 1) {
-        Alert.alert(
-          'Price cannot have "0" value.',
-          '',
-          [
-            {text: 'OK', onPress: () => console.log('')},
-          ],
-          {cancelable: false},
-        );
-      } else if (val.unitPrice == '' && this.state.arr.length === 1) {
-        Alert.alert(
-          'Unit price cannot be blank.',
-          '',
-          [
-            {text: 'OK', onPress: () => console.log('')},
-          ],
-          {cancelable: false},
-        );
-      } else {
-        insertProspectingToServer(newProspecting).then((responseJson)=> {
-           if(responseJson.err){
-             Alert.alert(responseJson.err);
-           }else{
-             this.props.navigation.push('ListData')
-           }
-         })
+
+    if (this.state.arr.length === 1 && newProspecting.product[0].commodity == '' &&  newProspecting.product[0].capacity == '' &&
+    newProspecting.product[0].price == '' && newProspecting.product[0].unitCapacity == '' && newProspecting.product[0].unitPrice == '') {
+      Alert.alert(
+        'Please insert at least one product.',
+        '',
+        [
+          {text: 'OK', onPress: () => console.log('')},
+        ],
+        {cancelable: false},
+      );
+      check = false;
+    } else {
+      this.checkArr();
+    }
+
+   if(check === true){
+     insertProspectingToServer(newProspecting).then((responseJson)=> {
+      if(responseJson.err){
+        Alert.alert(responseJson.err);
+      }else{
+        this.props.navigation.push('ListData')
       }
     })
+   }
   }
 
   insertVal(data, index, key) {
@@ -358,7 +393,7 @@ export default class Prospecting_Result extends Component<{}> {
           />
          <View>
           { arr }
-          <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+          <TouchableOpacity style={{paddingBottom:32, paddingTop:8, marginRight:'auto'}} onPress={() => { this.add() }}>
             <Icon name="plus-square" size={48} color="#284586"/>
           </TouchableOpacity>
          </View>

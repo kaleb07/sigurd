@@ -13,6 +13,7 @@
     "or": "^0.2.0",
     "react": "16.8.3",
     "react-native": "^0.59.9",
+    "react-native-config": "^0.11.7",
     "react-native-datepicker": "^1.7.2",
     "react-native-drop-down-item": "^1.0.5",
     "react-native-dropdown-autocomplete": "^1.0.16",
@@ -41,6 +42,12 @@
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.54.1",
     "react-test-renderer": "16.8.3"
+  },
+  "scripts": {
+    "android-dev": "ENVFILE=.env.dev react-native run-android",
+    "android-staging": "ENVFILE=.env.staging react-native run-android",
+    "android-prod": "ENVFILE=.env.prod react-native run-android",
+    "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd .."
   },
   "jest": {
     "preset": "react-native"

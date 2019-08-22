@@ -8,6 +8,7 @@ import { insertActivityToServer, getProjectFromServer } from '../networking/serv
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import {Autocomplete} from "react-native-dropdown-autocomplete";
 
+let check = true;
 const options={
   title: 'Choose photo',
   takePhotoButtonTitle:'Take from my camera',
@@ -131,6 +132,41 @@ export default class Tanam_Perdana extends Component<{}>{
     }});
   };
 
+  add(){
+    this.checkArr();
+    if (check === true){
+       this.insertSomeThing('');
+    }
+  }
+
+  checkArr(){
+    this.state.arr.map(val => {
+      if(val.image == ''){
+        Alert.alert(
+          'Image cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+        check = false
+      } else if (val.caption == '') {
+        Alert.alert(
+          'Caption cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+        check = false
+      } else {
+        check = true;
+      }
+    })
+  }
+
   insertToServer(activityName){
     const newActivity = {
       date: this.state.date,
@@ -141,36 +177,29 @@ export default class Tanam_Perdana extends Component<{}>{
       activityResult: this.state.activityResult,
       images:this.state.arr,
     };
-    this.state.arr.map(val => {
-      console.log('val.length', this.state.arr.length);
-      if(val.image == '' && this.state.arr.length === 1){
-        Alert.alert(
-          'Image cannot be blank.',
-          '',
-          [
-            {text: 'OK', onPress: () => console.log('')},
-          ],
-          {cancelable: false},
-        );
-      } else if (val.caption == '' && this.state.arr.length === 1) {
-        Alert.alert(
-          'Caption cannot be blank.',
-          '',
-          [
-            {text: 'OK', onPress: () => console.log('')},
-          ],
-          {cancelable: false},
-        );
-      } else {
-        insertActivityToServer(activityName, newActivity).then((responseJson)=> {
-          if(responseJson.err){
-            Alert.alert(responseJson.err);
-          }else{
-            this.props.navigation.navigate('SuccessPage')
-          }
-        })
-      }
-    })
+    if(this.state.project == ''){
+      Alert.alert(
+        'Project cannot be blank.',
+        '',
+        [
+          {text: 'OK', onPress: () => console.log('')},
+        ],
+        {cancelable: false},
+      );
+      check = false;
+    } else {
+      this.checkArr();
+    }
+
+    if(check === true){
+      insertActivityToServer(activityName, newActivity).then((responseJson)=> {
+       if(responseJson.err){
+         Alert.alert(responseJson.err);
+       }else{
+         this.props.navigation.navigate('SuccessPage')
+       }
+     })
+    }
   }
 
   clearVal() {
@@ -319,8 +348,8 @@ export default class Tanam_Perdana extends Component<{}>{
 
             <Text style={styles.text}>Foto Kegiatan</Text>
             {arr}
-            <View style={{paddingBottom:32}}>
-              <TouchableOpacity onPress={() => { this.insertSomeThing('')}}>
+            <View style={{paddingBottom:32, marginRight:'auto'}}>
+              <TouchableOpacity onPress={() => { this.add()}}>
                 <Icon name="plus-square" size={48} color="#284586"/>
               </TouchableOpacity>
             </View>
