@@ -36,8 +36,8 @@ async function signOut(){
   try {
     await SInfo.deleteItem('key2', {});
     SInfo.getItem('key2',{}).then(value => {
-      console.log(value) //value2
-    }) // Remember to remove the user from your app's state as well
+      console.log(value)
+    })
   } catch (error) {
     console.error(error);
   }
@@ -214,15 +214,6 @@ async function updateProspectingResult(params){
   }
 }
 
-export {getActivityOptionFromServer};
-export {getActivityFromServer};
-export {getProjectFromServer};
-export {getActivityProspecting};
-export {getProspecting};
-export {sendIdFarmer};
-export {signOut};
-export {insertActivityToServer};
-export {insertProspectingToServer};
-export {deleteProspectingResult};
-export {updateProspectingResult};
-export {getAccountInfo};
+export {getActivityOptionFromServer, getActivityFromServer, getProjectFromServer, getActivityProspecting,
+getProspecting, sendIdFarmer, signOut, insertActivityToServer, insertProspectingToServer, deleteProspectingResult,
+updateProspectingResult, getAccountInfo};

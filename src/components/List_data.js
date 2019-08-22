@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image, BackHandler} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text, ScrollView, Image, BackHandler} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { getActivityProspecting, deleteProspectingResult, sendIdFarmer } from '../networking/server';
 import DropDownItem from 'react-native-drop-down-item';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
@@ -210,160 +209,121 @@ export default class List_data extends Component <{}>{
 }
 
 const styles = StyleSheet.create({
-container:{
-  backgroundColor:'#FFFFFF',
-  flex: 1,
-},
-footer: {
-  flexDirection: 'row',
-  position: 'absolute',
-  flex:0.1,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor:'#3700B3',
-  height:50,
-  justifyContent: 'center',
-  alignItems:'center',
-},
-imageGroup1:{
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  paddingRight:70,
-  marginBottom:-5,
-  paddingLeft:20
-},
-Group1:{
-  paddingLeft:16
-},
-text1:{
-  fontSize: 24,
-  fontWeight: '400',
-  color:'#000000',
-  right:95,
-  marginBottom:32,
-  marginTop:32
-},
-text2:{
-  color:'#FFFFFF',
-  fontSize: hp(3),
-  padding:5,
-  borderRadius:30,
-  marginTop:3,
-  fontWeight: 'bold',
-  paddingRight:210
-},
-text3:{
-  color:'#000000',
-  marginTop:5,
-  fontSize:16,
-},
-text4:{
-  color:'#000000',
-  marginTop:5,
-  fontSize:16,
-  paddingLeft:10,
-  paddingRight:148
-},
-text5:{
-  color:'#000000',
-  fontSize:16,
-  paddingRight:35
-},
-buttonText: {
-  fontSize: 16,
-  fontWeight: '500',
-  color: '#284586',
-  marginTop:2,
-  paddingLeft:4
-},
-buttonText1: {
-  fontSize: 16,
-  fontWeight: '500',
-  marginTop:2,
-  paddingLeft:4,
-  color:'red'
-},
-button1: {
-  width: wp(20),
-  height: hp(4),
-  backgroundColor: '#FFC400',
-  borderRadius:5,
-  marginTop:8,
-  right:16
-},
-close:{
-  color:'#000000',
-  fontSize: hp(2),
-  textAlign:'center',
-  marginTop:4
-},
-tambah:{
-  backgroundColor:'#FFC400',
-  color:'#000000',
-  fontSize:16,
-  padding:5,
-  width: wp(20),
-  height: hp(4.5),
-  textAlign:'center',
-  borderRadius:5,
-  marginTop:10,
-},
-next:{
-  color:'#ffffff',
-  fontSize:20,
-  marginTop:8,
-  padding:5,
-  width:200,
-  borderRadius:30,
-  height:35,
-  textAlign:'center',
-  fontWeight: 'bold',
-},
-imageGroup2:{
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  padding:5,
-},
-imageGroup3:{
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  paddingTop:16
-},
-imageGroup:{
-  flexDirection: 'row',
-  flex:1,
-  paddingLeft:16
-},
-listButton:{
-  flexDirection: 'row',
-  paddingTop:20,
-  left:170
-},
-textInputWrapper: {
-   paddingRight: 8,
-   paddingLeft:16
-},
-textInputWrapper2: {
-   paddingRight: 16
-},
-textInputWrapper3: {
-  paddingRight:10
-},
-textInputWrapper4: {
-  paddingLeft:20
-},
-textInputWrapper5: {
-  left:10
-},
-footer: {
-  position: 'absolute',
-  flex:0.1,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor:'#284586',
-  height:56,
-  alignItems:'center'
-}
+  container:{
+    backgroundColor:'#FFFFFF',
+    flex: 1,
+  },
+  imageGroup1:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingRight:70,
+    marginBottom:-5,
+    paddingLeft:20
+  },
+  Group1:{
+    paddingLeft:16
+  },
+  text1:{
+    fontSize: 24,
+    fontWeight: '400',
+    color:'#000000',
+    right:95,
+    marginBottom:32,
+    marginTop:32
+  },
+  text2:{
+    color:'#FFFFFF',
+    fontSize: hp(3),
+    padding:5,
+    borderRadius:30,
+    marginTop:3,
+    fontWeight: 'bold',
+    paddingRight:210
+  },
+  text3:{
+    color:'#000000',
+    marginTop:5,
+    fontSize:16,
+  },
+  text4:{
+    color:'#000000',
+    marginTop:5,
+    fontSize:16,
+    paddingLeft:10,
+    paddingRight:148
+  },
+  text5:{
+    color:'#000000',
+    fontSize:16,
+    paddingRight:35
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#284586',
+    marginTop:2,
+    paddingLeft:4
+  },
+  buttonText1: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginTop:2,
+    paddingLeft:4,
+    color:'red'
+  },
+  tambah:{
+    backgroundColor:'#FFC400',
+    color:'#000000',
+    fontSize:16,
+    padding:5,
+    width: wp(20),
+    height: hp(4.5),
+    textAlign:'center',
+    borderRadius:5,
+    marginTop:10,
+  },
+  next:{
+    color:'#ffffff',
+    fontSize:20,
+    marginTop:8,
+    padding:5,
+    width:200,
+    borderRadius:30,
+    height:35,
+    textAlign:'center',
+    fontWeight: 'bold',
+  },
+  imageGroup2:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding:5,
+  },
+  imageGroup3:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop:16
+  },
+  imageGroup:{
+    flexDirection: 'row',
+    flex:1,
+    paddingLeft:16
+  },
+  listButton:{
+    flexDirection: 'row',
+    paddingTop:20,
+    left:170
+  },
+  textInputWrapper: {
+    paddingLeft:20
+  },
+  footer: {
+    position: 'absolute',
+    flex:0.1,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor:'#284586',
+    height:56,
+    alignItems:'center'
+  }
 });

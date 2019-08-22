@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image, BackHandler} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text, Image, BackHandler} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { signOut } from '../networking/server';
@@ -131,20 +131,20 @@ const styles = StyleSheet.create({
     paddingRight:100
   },
   imageGroup1:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   paddingLeft:10,
-   paddingRight:10,
-   padding:8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft:10,
+    paddingRight:10,
+    padding:8,
   },
   cancel:{
-   backgroundColor:'#FFC400',
-   color:'#000000',
-   fontSize: hp(2.5),
-   padding:8,
-   width: wp(50),
-   height: hp(6),
-   textAlign:'center',
-   borderRadius:5
+    backgroundColor:'#FFC400',
+    color:'#000000',
+    fontSize: hp(2.5),
+    padding:8,
+    width: wp(50),
+    height: hp(6),
+    textAlign:'center',
+    borderRadius:5
   }
 });

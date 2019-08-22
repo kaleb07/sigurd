@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {View, StyleSheet,FlatList, TouchableOpacity, Text, ScrollView, Image, BackHandler} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text, Image, BackHandler} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { getActivityOptionFromServer } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import {signOut}  from '../networking/server.js';
@@ -139,75 +138,69 @@ const styles = StyleSheet.create({
     height:56,
     alignItems:'center'
   },
-text:{
-  fontSize: hp(4),
-  fontWeight: '400',
-  color:'#000000',
-  marginTop:30,
-  paddingLeft:30
-},
-text1:{
-  color:'#FFFFFF',
-  fontSize: hp(3),
-  padding:5,
-  borderRadius:30,
-  marginTop:3,
-  fontWeight: 'bold',
-  paddingRight:100
-},
-imageGroup:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   marginTop:40,
-   paddingLeft:50,
-   paddingRight:50,
- },
- imageGroup1:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   paddingLeft:10,
-   paddingRight:10,
-   padding:8,
- },
- textGroup:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   paddingLeft:46,
-   paddingRight:50,
-   marginTop: 20,
-},
- textGroup2:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   marginTop: 20,
-   paddingLeft:28,
-   paddingRight:37
- },
- textGroup3:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   marginTop: 20,
-   paddingLeft:65,
-   paddingRight:60,
- },
- button1: {
-   width: wp(20),
-   height: hp(4),
-   backgroundColor: '#FFC400',
-   borderRadius:5,
-   marginTop:6,
-   right:16
- },
- close:{
-   color:'#000000',
-   fontSize: hp(2),
-   textAlign:'center',
-   marginTop:4
-},
- imageGroup4:{
-   flexDirection: 'row',
-   justifyContent: 'space-between',
-   paddingLeft:280,
-   borderRadius:5,
+  text:{
+    fontSize: hp(4),
+    fontWeight: '400',
+    color:'#000000',
+    marginTop:30,
+    paddingLeft:30
+  },
+  text1:{
+    color:'#FFFFFF',
+    fontSize: hp(3),
+    padding:5,
+    borderRadius:30,
+    marginTop:3,
+    fontWeight: 'bold',
+    paddingRight:100
+  },
+  imageGroup:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop:40,
+    paddingLeft:50,
+    paddingRight:50,
+  },
+  imageGroup1:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft:10,
+    paddingRight:10,
+    padding:8,
+  },
+  textGroup:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft:46,
+    paddingRight:50,
+    marginTop: 20,
+  },
+  textGroup2:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    paddingLeft:28,
+    paddingRight:37
+  },
+  textGroup3:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    paddingLeft:65,
+    paddingRight:60,
+  },
+  button1: {
+    width: wp(20),
+    height: hp(4),
+    backgroundColor: '#FFC400',
+    borderRadius:5,
+    marginTop:6,
+    right:16
+  },
+  close:{
+    color:'#000000',
+    fontSize: hp(2),
+    textAlign:'center',
+    marginTop:4
   }
 });

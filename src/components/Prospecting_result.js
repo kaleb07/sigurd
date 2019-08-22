@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, Alert, TouchableOpacity,Image, BackHandler} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Alert, TouchableOpacity, Image, BackHandler} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Button } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
 import { TextInputMask } from 'react-native-masked-text';
 import { insertProspectingToServer } from '../networking/server';
@@ -102,6 +101,7 @@ export default class Prospecting_Result extends Component<{}> {
         }
       })
     };
+    console.log(newProspecting);
     this.state.arr.map(val => {
       console.log('val.length', this.state.arr.length);
       if(val.commodity == '' && this.state.arr.length === 1){
@@ -134,6 +134,15 @@ export default class Prospecting_Result extends Component<{}> {
       } else if (val.price == '' && this.state.arr.length === 1) {
         Alert.alert(
           'Price cannot be blank.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+      } else if (val.price == 'Rp0' && this.state.arr.length === 1) {
+        Alert.alert(
+          'Price cannot have "0" value.',
           '',
           [
             {text: 'OK', onPress: () => console.log('')},
@@ -373,14 +382,6 @@ var styles = StyleSheet.create({
     color:'#000000',
     marginRight: 15
   },
-  button1: {
-    width: wp(20),
-    height: hp(4),
-    backgroundColor: '#FFC400',
-    borderRadius:5,
-    marginTop:8,
-    right:16
-  },
   small:{
     flex: 1,
     flexDirection: 'row',
@@ -413,16 +414,6 @@ var styles = StyleSheet.create({
     paddingRight:20,
     marginBottom:-5,
     paddingLeft:20
-  },
-  button: {
-    alignItems: 'center',
-    height:40,
-    width:120,
-    backgroundColor: '#FFC400',
-    marginVertical: 10,
-    paddingVertical: 13,
-    marginBottom:20,
-    borderRadius:30,
   },
   inputBox:{
     width: wp(90),
@@ -478,98 +469,74 @@ var styles = StyleSheet.create({
     marginVertical: 5,
   },
   textInputWrapper: {
-     flex:1,
-   },
-   dropdownWrapper: {
-      flexDirection:'row',
-    },
-   inputBox4:{
-     width: wp(50),
-     height: hp(6),
-     borderRadius:5,
-     borderWidth: 0.5,
-     borderColor: '#000000',
-     backgroundColor:'#F5F5F5',
-     paddingVertical: 6,
-     fontSize:16,
-     color:'#000000',
-     marginVertical: 5,
-   },
-   footer: {
-     position: 'absolute',
-     flex:0.1,
-     left: 0,
-     right: 0,
-     bottom: 0,
-     backgroundColor:'#284586',
-     height:50,
-     alignItems:'center',
-   },
-   next:{
-     color:'#ffffff',
-     fontSize:20,
-     marginTop:5,
-     padding:5,
-     width:200,
-     borderRadius:30,
-     height:35,
-     textAlign:'center',
-     fontWeight: 'bold',
-   },
-   text:{
-     fontSize: hp(2),
-     fontWeight: '400',
-     color:'#000000',
-     marginTop:8
-   },
-   text3:{
-     fontSize:16,
-     fontWeight: '400',
-     color:'#000000',
-     marginBottom:4,
-   },
-   textCapacity:{
-     fontSize: hp(2),
-     fontWeight: '400',
-     color:'#000000',
-     marginTop: 10,
-     left: 5
-   },
-   textCommodity:{
-      fontSize: hp(2),
-      fontWeight: '400',
-      color:'#000000',
-      marginTop: 10,
-   },
-   textPrice:{
-     fontSize: hp(2),
-     fontWeight: '400',
-     color:'#000000',
-     marginTop: 10,
-     right:20
-   },
-    close:{
-      color:'#000000',
-      fontSize: hp(2),
-      textAlign:'center',
-      marginTop:4
-   },
-   imageGroup4:{
-     flexDirection: 'row',
-     justifyContent: 'space-between',
-     paddingLeft:280,
-     borderRadius:5,
-   },
-   save:{
-     backgroundColor:'#FFC400',
-     top: 10,
-     color:'#ffffff',
-     fontSize:16,
-     padding:3,
-     marginBottom: 25,
-     width: 40,
-     height:40,
-     borderRadius:8,
-     alignItems:'center',
-   },
+    flex:1,
+  },
+  dropdownWrapper: {
+    flexDirection:'row',
+  },
+  inputBox4:{
+    width: wp(50),
+    height: hp(6),
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    backgroundColor:'#F5F5F5',
+    paddingVertical: 6,
+    fontSize:16,
+    color:'#000000',
+    marginVertical: 5,
+  },
+  footer: {
+    position: 'absolute',
+    flex:0.1,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor:'#284586',
+    height:50,
+    alignItems:'center',
+  },
+  next:{
+    color:'#ffffff',
+    fontSize:20,
+    marginTop:5,
+    padding:5,
+    width:200,
+    borderRadius:30,
+    height:35,
+    textAlign:'center',
+    fontWeight: 'bold',
+  },
+  text:{
+    fontSize: hp(2),
+    fontWeight: '400',
+    color:'#000000',
+    marginTop:8
+  },
+  text3:{
+    fontSize:16,
+    fontWeight: '400',
+    color:'#000000',
+    marginBottom:4,
+  },
+  textCapacity:{
+    fontSize: hp(2),
+    fontWeight: '400',
+    color:'#000000',
+    marginTop: 10,
+    left: 5
+  },
+  textCommodity:{
+    fontSize: hp(2),
+    fontWeight: '400',
+    color:'#000000',
+    marginTop: 10,
+  },
+  textPrice:{
+    fontSize: hp(2),
+    fontWeight: '400',
+    color:'#000000',
+    marginTop: 10,
+    right:20
+  }
 });

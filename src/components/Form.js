@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated, BackHandler} from 'react-native';
-import {Dropdown} from 'react-native-material-dropdown';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image, BackHandler} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -355,14 +354,6 @@ const styles = StyleSheet.create({
     color:'#000000',
     marginTop:8,
   },
-  button1: {
-    width: wp(20),
-    height: hp(4),
-    backgroundColor: '#FFC400',
-    borderRadius:5,
-    marginTop:8,
-    right:16
-  },
   dropdown: {
     paddingLeft: 5,
     width: wp(90),
@@ -385,20 +376,13 @@ const styles = StyleSheet.create({
     marginTop:32
   },
   text2:{
-   color:'#FFFFFF',
-   fontSize: hp(3),
-   padding:5,
-   borderRadius:30,
-   marginTop:3,
-   fontWeight: 'bold',
-   paddingRight:200
-  },
-  textgroup:{
-    fontSize: 30,
-    fontWeight: '400',
-    color:'#000000',
-    paddingLeft:60,
-   marginBottom: 30,
+    color:'#FFFFFF',
+    fontSize: hp(3),
+    padding:5,
+    borderRadius:30,
+    marginTop:3,
+    fontWeight: 'bold',
+    paddingRight:200
   },
   imageGroup:{
     flexDirection: 'row',
@@ -435,17 +419,6 @@ const styles = StyleSheet.create({
     marginRight:48,
     borderRadius:5
   },
-  save:{
-    backgroundColor:'#FFC400',
-    color:'#ffffff',
-    fontSize:16,
-    padding:5,
-    marginBottom: 65,
-    width: 50,
-    height:50,
-    borderRadius:8,
-    alignItems:'center',
-  },
   next:{
     backgroundColor:'#FFC400',
     color:'#000000',
@@ -456,23 +429,6 @@ const styles = StyleSheet.create({
     height: hp(5),
     textAlign:'center',
     borderRadius:5
-  },
-  inputDropdown:{
-    borderWidth: 0.5,
-    borderRadius:5,
-    width:350,
-    borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    marginVertical: 10,
-
-  },
-  itemDropdown: {
-    padding: 15,
-    marginTop: 2,
-    borderColor: '#000000',
-    backgroundColor: '#F5F5F5',
-    borderWidth: 1,
-    borderRadius:5,
   },
   inputBox:{
     width: wp(90),
@@ -520,17 +476,5 @@ const styles = StyleSheet.create({
     backgroundColor:'#284586',
     height:56,
     alignItems:'center',
-  },
-  close:{
-    color:'#000000',
-    fontSize: hp(2),
-    textAlign:'center',
-    marginTop:4
- },
-  imageGroup4:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft:280,
-    borderRadius:5,
   },
 });

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity,Alert, Button, Image, Animated, BackHandler} from 'react-native';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image, BackHandler} from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -277,13 +277,13 @@ export default class Create_Panen extends Component<{}>{
 
       return (
         <View style={styles.container}>
-         <View style = {{backgroundColor:'#284586',height: hp(8)}}>
-          <View style={styles.imageGroup5}>
+          <View style = {{backgroundColor:'#284586',height: hp(8)}}>
+           <View style={styles.imageGroup5}>
             <Image style={{width: wp(10), height: hp(5),left:16,marginTop:5}}
               source={require('../images/logo1.png')}/>
             <Text style={styles.text2}>FO Activity</Text>
+           </View>
           </View>
-        </View>
           <View style={styles.imageGroup1}>
             <Image style={{width: wp(18), height: hp(9.5), marginTop:16}}
               source={require('../images/panen.png')}/>
@@ -417,14 +417,6 @@ const styles = StyleSheet.create({
     color:'#000000',
     marginTop:8,
   },
-  button1: {
-    width: wp(20),
-    height: hp(4),
-    backgroundColor: '#FFC400',
-    borderRadius:5,
-    marginTop:8,
-    right:16
-  },
   text1:{
     fontSize: 24,
     fontWeight: '400',
@@ -459,13 +451,6 @@ const styles = StyleSheet.create({
     fontSize:16,
     color:'#000000',
     marginVertical: 5,
-  },
-  textgroup:{
-    fontSize: 30,
-    fontWeight: '400',
-    color:'#000000',
-    paddingLeft:60,
-   marginBottom: 30,
   },
   dropdown:{
     paddingLeft: 5,
@@ -509,17 +494,6 @@ const styles = StyleSheet.create({
     marginRight:48,
     borderRadius:5
   },
-  save:{
-    backgroundColor:'#FFC400',
-    color:'#ffffff',
-    fontSize:16,
-    padding:5,
-    marginBottom: 25,
-    width: 50,
-    height:50,
-    borderRadius:8,
-    alignItems:'center',
-  },
   next:{
     backgroundColor:'#FFC400',
     color:'#000000',
@@ -530,22 +504,6 @@ const styles = StyleSheet.create({
     height: hp(5),
     textAlign:'center',
     borderRadius:5
-  },
-  inputDropdown:{
-    borderWidth: 0.5,
-    borderRadius:5,
-    width:350,
-    borderColor: '#000000',
-    backgroundColor: '#F5F5F5',
-    marginVertical: 10,
-  },
-  itemDropdown: {
-    padding: 15,
-    marginTop: 2,
-    backgroundColor: '#F5F5F5',
-    borderColor: '#000000',
-    borderWidth:0.5,
-    borderRadius:5,
   },
   inputBox:{
     width: wp(90),
@@ -591,21 +549,9 @@ const styles = StyleSheet.create({
     height:56,
     alignItems:'center',
   },
-  close:{
-    color:'#000000',
-    fontSize: hp(2),
-    textAlign:'center',
-    marginTop:4
-  },
   imageGroup5:{
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding:5,
- },
-  imageGroup4:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft:280,
-    borderRadius:5,
   },
 });

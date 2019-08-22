@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
-import {StyleSheet,Text,View,TouchableOpacity,Image,Header,Alert, BackHandler} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image, Alert, BackHandler} from 'react-native';
 import SInfo from 'react-native-sensitive-info';
 import {getAccountInfo}  from '../networking/server.js';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';

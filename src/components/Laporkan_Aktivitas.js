@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-import SInfo from 'react-native-sensitive-info';
-import {View,StyleSheet,TouchableOpacity,Text,ScrollView,ImageBackground,Image, BackHandler, ToastAndroid} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
+import {View, StyleSheet, TouchableOpacity, Text, ImageBackground, Image, BackHandler, ToastAndroid} from 'react-native';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import {signOut}  from '../networking/server.js';
 
@@ -72,7 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textGroup2:{
-   marginVertical: 144,
+    marginVertical: 144,
   },
   button: {
     width: wp(70),
