@@ -16,7 +16,7 @@ const options={
   quality: 0.2,
 }
 
-export default class Form extends Component<{}>{
+export default class Monitor_Lapangan extends Component<{}>{
   constructor(props) {
     super(props);
     this.state = {
@@ -170,7 +170,7 @@ export default class Form extends Component<{}>{
   insertToServer(activityName){
     const newActivity = {
       date: this.state.date,
-      activityOption: 'Konsultasi',
+      activityOption: 'Monitor Lapangan',
       activityDesc: this.state.activityDesc,
       project: this.state.project,
       location: this.state.location,
@@ -264,96 +264,94 @@ export default class Form extends Component<{}>{
 
       return (
         <View style={styles.container}>
-          <View style = {{backgroundColor:'#284586',height: hp(8)}}>
-            <View style={styles.imageGroup5}>
-              <Image style={{width: wp(10), height: hp(5),left:16,marginTop:5}}
-                source={require('../images/logo1.png')}/>
-              <Text style={styles.text2}>FO Activity</Text>
-            </View>
+        <View style = {{backgroundColor:'#284586',height: hp(8)}}>
+          <View style={styles.imageGroup5}>
+            <Image style={{width: wp(10), height: hp(5),left:16,marginTop:5}}
+              source={require('../images/logo1.png')}/>
+            <Text style={styles.text2}>FO Activity</Text>
           </View>
+        </View>
           <View style={styles.imageGroup1}>
             <Image style={{width: wp(18), height: hp(9.5), marginTop:16}}
-              source={require('../images/konsultasi.png')}/>
-            <Text style={styles.text1}>Konsultasi</Text>
+              source={require('../images/monitoring.png')}/>
+            <Text style={styles.text1}>Monitor Lapangan</Text>
           </View>
-          <KeyboardAwareScrollView>
-            <View style={{paddingLeft:20, marginBottom:5}}>
-              <DatePicker
-                style={{width: wp(90)}}
-                date={this.state.date}
-                mode="date"
-                placeholder="Pilih tanggal"
-                format="DD-MM-YYYY"
-                minDate={prevMonths}
-                maxDate={now}
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
+          <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+            <DatePicker
+              style={{width: wp(90)}}
+              date={this.state.date}
+              mode="date"
+              placeholder="Pilih tanggal"
+              format="DD-MM-YYYY"
+              minDate={prevMonths}
+              maxDate={now}
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
                   position: 'absolute',
                   left: 0,
                   marginLeft: 0,
                   width: wp(10),
                   height: hp(7)
-                  },
-                  dateInput: {
-                    marginLeft:56,
-                    fontSize: 16,
-                    borderRadius:5,
-                    borderWidth: 0.5,
-                    backgroundColor:'#F5F5F5',
-                    borderColor: '#000000',
-                  }
-                }}
-                onDateChange={(date) => {this.setState({date: date})}}
-              />
+                },
+                dateInput: {
+                  marginLeft:56,
+                  fontSize: 16,
+                  borderRadius:5,
+                  borderWidth: 0.5,
+                  borderColor: '#000000',
+                  backgroundColor: '#F5F5F5',
+                }
+              }}
+              onDateChange={(date) => {this.setState({date: date})}}
+            />
 
-              <Text style={styles.text}>Deskripsi Kegiatan</Text>
-              <TextInput style={styles.inputBox}
-                multiline={true}
-                onChangeText={(activityDesc) => this.setState({activityDesc})}
-                value={this.state.activityDesc}
-                placeholder="Konsultasi dengan... Kelompok tani... Perihal..."
-              />
+            <Text style={styles.text}>Deskripsi Kegiatan</Text>
+            <TextInput style={styles.inputBox}
+              multiline={true}
+              onChangeText={(activityDesc) => this.setState({activityDesc})}
+              value={this.state.activityDesc}
+              placeholder="Monitor kegiatan: persiapan lahan, perawatan, penyemprotan."
+            />
 
-              <Text style={styles.text}>Proyek</Text>
-              <Autocomplete
-                inputStyle={styles.dropdown}
-                scrollToInput={() => {}}
-                handleSelectItem={(item, id) => this.handleSelectItem(item, id)}
-                onDropdownClose={() => {}}
-                onDropdownShow={() => {}}
-                data={projects}
-                minimumCharactersCount={1}
-                highlightText
-                valueExtractor={item => item.title }
-                rightContent
-                rightTextExtractor={item => item.projectNo}
-                placeholder="Cari proyek"
-              />
+            <Text style={styles.text}>Proyek</Text>
+            <Autocomplete
+              inputStyle={styles.dropdown}
+              scrollToInput={() => {}}
+              handleSelectItem={(item, id) => this.handleSelectItem(item, id)}
+              onDropdownClose={() => {}}
+              onDropdownShow={() => {}}
+              data={projects}
+              minimumCharactersCount={1}
+              highlightText
+              valueExtractor={item => item.title }
+              rightContent
+              rightTextExtractor={item => item.projectNo}
+              placeholder="Cari proyek"
+            />
 
-              <Text style={styles.text}>Lokasi</Text>
-              <TextInput style={styles.inputBox3}
-                onChangeText={(location) => this.setState({location})}
-                value={this.state.location}
-                placeholder="Daerah, provinsi, area (west/east)"
-              />
+            <Text style={styles.text}>Lokasi</Text>
+            <TextInput style={styles.inputBox3}
+                      onChangeText={(location) => this.setState({location})}
+                      value={this.state.location}
+                      placeholder="Daerah, provinsi, area (west/east)"
+            />
 
-              <Text style={styles.text}>Hasil Kegiatan </Text>
-              <TextInput style={styles.inputBox}
-                multiline={true}
-                onChangeText={(activityResult) => this.setState({activityResult})}
-                value={this.state.activityResult}
-                placeholder="Konsultasi dengan... Kelompok tani... Perihal..."
-              />
+            <Text style={styles.text}>Hasil Kegiatan </Text>
+            <TextInput style={styles.inputBox}
+                      multiline={true}
+                      onChangeText={(activityResult) => this.setState({activityResult})}
+                      value={this.state.activityResult}
+                      placeholder="Kegiatan berjalan lancar.../ ada hambatan.../ dll."
+            />
 
-              <Text style={styles.text}>Foto Kegiatan</Text>
-                {arr}
-              <View style={{paddingBottom:80, marginRight:'auto'}}>
-                <TouchableOpacity onPress={() => { this.add()}}>
-                  <Icon name="plus-square" size={48} color="#284586"/>
-                </TouchableOpacity>
-              </View>
+            <Text style={styles.text}>Foto Kegiatan</Text>
+              {arr}
+            <View style={{paddingBottom:32, marginRight:'auto'}}>
+              <TouchableOpacity onPress={() => { this.add()}}>
+                <Icon name="plus-square" size={48} color="#284586"/>
+              </TouchableOpacity>
             </View>
           </KeyboardAwareScrollView>
           <View style={styles.footer}>
@@ -361,7 +359,7 @@ export default class Form extends Component<{}>{
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
                 <Text style={styles.cancel}>Batal</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => { this.insertToServer('konsultasi') }}>
+              <TouchableOpacity onPress={() => { this.insertToServer('monitor_lapangan') }}>
                 <Text style={styles.next}>Simpan</Text>
               </TouchableOpacity>
             </View>
@@ -381,26 +379,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
-    marginTop:8,
-  },
-  dropdown: {
-    paddingLeft: 5,
-    width: wp(90),
-    height: hp(6),
-    borderRadius:5,
-    borderWidth: 0.5,
-    borderColor: '#000000',
-    backgroundColor: '#F5F5F5',
-    paddingVertical:8,
-    fontSize:16,
-    color:'#000000',
-    marginVertical:4,
+    marginTop: 10,
   },
   text1:{
     fontSize: 24,
     fontWeight: '400',
     color:'#000000',
-    paddingRight:160,
+    paddingRight:80,
     marginBottom:32,
     marginTop:32
   },
@@ -413,10 +398,41 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingRight:200
   },
+  dropdown:{
+    paddingLeft: 5,
+    width: wp(90),
+    height: hp(6),
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    backgroundColor: '#F5F5F5',
+    paddingVertical:8,
+    fontSize:16,
+    color:'#000000',
+    marginVertical:4,
+  },
   imageGroup:{
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingRight:20,
+  },
+  inputBox3:{
+    width: wp(90),
+    height: hp(6),
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    backgroundColor:'#F5F5F5',
+    paddingVertical: 6,
+    fontSize:16,
+    color:'#000000',
+    marginVertical: 5,
+  },
+  imageGroup1:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingRight:20,
+    paddingLeft:20
   },
   imageGroup2:{
     flexDirection: 'row',
@@ -424,12 +440,6 @@ const styles = StyleSheet.create({
     paddingRight:20,
     paddingLeft:20,
     marginTop:8,
-  },
-  imageGroup1:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingRight:20,
-    paddingLeft:20
   },
   imageGroup5:{
     flexDirection: 'row',
@@ -465,24 +475,12 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
+    backgroundColor: '#F5F5F5',
     paddingVertical: 6,
     fontSize:16,
     color:'#000000',
     marginVertical: 5,
     textAlignVertical: 'top',
-  },
-  inputBox3:{
-    width: wp(90),
-    height: hp(6),
-    borderRadius:5,
-    borderWidth: 0.5,
-    borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
-    fontSize:16,
-    color:'#000000',
-    marginVertical: 5,
   },
   inputBox2:{
     width: wp(64),

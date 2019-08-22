@@ -1,8 +1,8 @@
 <resources>
-
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+      <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogStyle</item>
     </style>
-
+    <style name="MyDatePickerDialogStyle" parent="@style/ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="colorAccent">#284586</item>
+    </style>
 </resources>

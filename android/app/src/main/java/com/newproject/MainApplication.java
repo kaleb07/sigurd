@@ -3,6 +3,15 @@ package com.newproject;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.swmansion.reanimated.ReanimatedPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
+import com.RNTextInputMask.RNTextInputMaskPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -22,7 +31,16 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage()
+          new MainReactPackage(),
+            new ReactNativeConfigPackage(),
+            new RNGestureHandlerPackage(),
+            new ReanimatedPackage(),
+            new RNFetchBlobPackage(),
+            new RNSensitiveInfoPackage(),
+            new RNGoogleSigninPackage(), // <-- this needs to be in the list
+            new RNTextInputMaskPackage(),
+            new VectorIconsPackage(),
+            new ImagePickerPackage()
       );
     }
 

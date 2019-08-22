@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image, BackHandler} from 'react-native';
+import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -9,6 +10,14 @@ import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-resp
 import {Autocomplete} from "react-native-dropdown-autocomplete";
 
 let check = true;
+let unit = [{
+  value: 'ton',
+  }, {
+  value: 'kw',
+  }, {
+  value: 'kg',
+}];
+
 const options={
   title: 'Choose photo',
   takePhotoButtonTitle:'Take from my camera',
@@ -16,13 +25,15 @@ const options={
   quality: 0.2,
 }
 
-export default class Form extends Component<{}>{
+export default class Create_Panen extends Component<{}>{
   constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
       date:'',
+      harvestQuantity: '',
       activityDesc:'',
+      unitHarvest:'',
       location:'',
       activityResult:'',
       arr: [{
@@ -170,13 +181,15 @@ export default class Form extends Component<{}>{
   insertToServer(activityName){
     const newActivity = {
       date: this.state.date,
-      activityOption: 'Konsultasi',
+      activityOption: 'Panen',
       activityDesc: this.state.activityDesc,
       project: this.state.project,
+      harvestQuantity: this.state.harvestQuantity + ' ' + this.state.unitHarvest,
       location: this.state.location,
       activityResult: this.state.activityResult,
       images:this.state.arr,
     };
+
     if(this.state.project == ''){
       Alert.alert(
         'Project cannot be blank.',
@@ -187,6 +200,36 @@ export default class Form extends Component<{}>{
         {cancelable: false},
       );
       check = false;
+    } else if (this.state.harvestQuantity == '') {
+      Alert.alert(
+        'Harvest quantity cannot be blank.',
+        '',
+        [
+          {text: 'OK', onPress: () => console.log('')},
+        ],
+        {cancelable: false},
+      );
+      check = false;
+    } else if (this.state.unitHarvest == '') {
+      Alert.alert(
+        'Unit harvest cannot be blank.',
+        '',
+        [
+          {text: 'OK', onPress: () => console.log('')},
+        ],
+        {cancelable: false},
+      );
+      check = false;
+    } else if(newActivity.images[0].image == '' && newActivity.images[0].caption == '' && this.state.arr.length === 1){
+        Alert.alert(
+          'Please insert at least one product.',
+          '',
+          [
+            {text: 'OK', onPress: () => console.log('')},
+          ],
+          {cancelable: false},
+        );
+        check = false;
     } else {
       this.checkArr();
     }
@@ -244,7 +287,7 @@ export default class Form extends Component<{}>{
               <TouchableOpacity onPress={() => this.selectImage(r.index)}>
                 <Image source={r.image !=='' ? r.image :
                   require('../images/add.png')}
-                  style={{width: wp(11),height: hp(6),marginRight:8,marginTop:12, paddingLeft:8}}/>
+                  style={{width: wp(11),height: hp(6),marginRight:8,marginTop:10, paddingLeft:8}}/>
               </TouchableOpacity>
               <TextInput
                 style={styles.inputBox2}
@@ -254,7 +297,7 @@ export default class Form extends Component<{}>{
               <Icon name="trash"
                  size={32}
                  color="red"
-                 style={{ marginLeft: 'auto', marginTop: 16, marginRight:5}}
+                 style={{ marginLeft: 'auto', marginTop:16, marginRight:16}}
                  onPress={() => this.trashVal(r.index)}
               />
             </View>
@@ -265,95 +308,113 @@ export default class Form extends Component<{}>{
       return (
         <View style={styles.container}>
           <View style = {{backgroundColor:'#284586',height: hp(8)}}>
-            <View style={styles.imageGroup5}>
-              <Image style={{width: wp(10), height: hp(5),left:16,marginTop:5}}
-                source={require('../images/logo1.png')}/>
-              <Text style={styles.text2}>FO Activity</Text>
-            </View>
+           <View style={styles.imageGroup5}>
+            <Image style={{width: wp(10), height: hp(5),left:16,marginTop:5}}
+              source={require('../images/logo1.png')}/>
+            <Text style={styles.text2}>FO Activity</Text>
+           </View>
           </View>
           <View style={styles.imageGroup1}>
             <Image style={{width: wp(18), height: hp(9.5), marginTop:16}}
-              source={require('../images/konsultasi.png')}/>
-            <Text style={styles.text1}>Konsultasi</Text>
+              source={require('../images/panen.png')}/>
+            <Text style={styles.text1}>
+              <Text> Panen</Text>
+            </Text>
           </View>
-          <KeyboardAwareScrollView>
-            <View style={{paddingLeft:20, marginBottom:5}}>
-              <DatePicker
-                style={{width: wp(90)}}
-                date={this.state.date}
-                mode="date"
-                placeholder="Pilih tanggal"
-                format="DD-MM-YYYY"
-                minDate={prevMonths}
-                maxDate={now}
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
+          <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+            <DatePicker
+              style={{width: wp(90)}}
+              date={this.state.date}
+              mode="date"
+              placeholder="Pilih tanggal"
+              format="DD-MM-YYYY"
+              minDate={prevMonths}
+              maxDate={now}
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
                   position: 'absolute',
                   left: 0,
                   marginLeft: 0,
-                  width: wp(10),
-                  height: hp(7)
-                  },
-                  dateInput: {
-                    marginLeft:56,
-                    fontSize: 16,
-                    borderRadius:5,
-                    borderWidth: 0.5,
-                    backgroundColor:'#F5F5F5',
-                    borderColor: '#000000',
-                  }
-                }}
-                onDateChange={(date) => {this.setState({date: date})}}
-              />
+                  width:48,
+                  height:48
+                },
+                dateInput: {
+                  marginLeft:56,
+                  fontSize: 16,
+                  borderRadius:5,
+                  borderWidth: 0.5,
+                  borderColor: '#000000',
+                  backgroundColor: '#F5F5F5',
+                }
+              }}
+              onDateChange={(date) => {this.setState({date: date})}}
+            />
 
-              <Text style={styles.text}>Deskripsi Kegiatan</Text>
-              <TextInput style={styles.inputBox}
+            <Text style={styles.text}>Deskripsi Kegiatan</Text>
+            <TextInput style={styles.inputBox}
+              multiline={true}
+              onChangeText={(activityDesc) => this.setState({activityDesc})}
+              value={this.state.activityDesc}
+              placeholder="Monitor kegiatan: persiapan lahan, perawatan, penyemprotan."
+            />
+            <Text style={styles.text}>Proyek</Text>
+            <Autocomplete
+              inputStyle={styles.dropdown}
+              scrollToInput={() => {}}
+              handleSelectItem={(item, id) => this.handleSelectItem(item, id)}
+              onDropdownClose={() => {}}
+              onDropdownShow={() => {}}
+              data={projects}
+              minimumCharactersCount={1}
+              highlightText
+              valueExtractor={item => item.title }
+              rightContent
+              rightTextExtractor={item => item.projectNo}
+              placeholder="Cari proyek"
+            />
+
+            <Text style={styles.text}>Jumlah Panen</Text>
+            <View style={styles.textInputWrapper}>
+              <TextInput style={styles.inputHarvest}
                 multiline={true}
-                onChangeText={(activityDesc) => this.setState({activityDesc})}
-                value={this.state.activityDesc}
-                placeholder="Konsultasi dengan... Kelompok tani... Perihal..."
+                onChangeText={(harvestQuantity) => this.setState({harvestQuantity})}
+                value={this.state.harvestQuantity}
+                keyboardType="numeric"
               />
+              <Dropdown label=' '
+                containerStyle={{width:95, bottom: 16, left: 24}}
+                fontSize={16}
+                baseColor={"#000000"}
+                placeholder="kg,kw,ton"
+                data={unit}
+                onChangeText={(unitHarvest) => this.setState({unitHarvest})}
+                value={this.state.unitHarvest}>
+              </Dropdown>
+            </View>
 
-              <Text style={styles.text}>Proyek</Text>
-              <Autocomplete
-                inputStyle={styles.dropdown}
-                scrollToInput={() => {}}
-                handleSelectItem={(item, id) => this.handleSelectItem(item, id)}
-                onDropdownClose={() => {}}
-                onDropdownShow={() => {}}
-                data={projects}
-                minimumCharactersCount={1}
-                highlightText
-                valueExtractor={item => item.title }
-                rightContent
-                rightTextExtractor={item => item.projectNo}
-                placeholder="Cari proyek"
-              />
+            <Text style={styles.text3}>Lokasi</Text>
+            <TextInput style={styles.inputBox3}
+              onChangeText={(location) => this.setState({location})}
+              value={this.state.location}
+              placeholder="Daerah, provinsi, area (west/east)"
+            />
 
-              <Text style={styles.text}>Lokasi</Text>
-              <TextInput style={styles.inputBox3}
-                onChangeText={(location) => this.setState({location})}
-                value={this.state.location}
-                placeholder="Daerah, provinsi, area (west/east)"
-              />
+            <Text style={styles.text}>Hasil Kegiatan </Text>
+            <TextInput style={styles.inputBox}
+              multiline={true}
+              onChangeText={(activityResult) => this.setState({activityResult})}
+              value={this.state.activityResult}
+              placeholder="Panen melon, panen semangka"
+            />
 
-              <Text style={styles.text}>Hasil Kegiatan </Text>
-              <TextInput style={styles.inputBox}
-                multiline={true}
-                onChangeText={(activityResult) => this.setState({activityResult})}
-                value={this.state.activityResult}
-                placeholder="Konsultasi dengan... Kelompok tani... Perihal..."
-              />
-
-              <Text style={styles.text}>Foto Kegiatan</Text>
-                {arr}
-              <View style={{paddingBottom:80, marginRight:'auto'}}>
-                <TouchableOpacity onPress={() => { this.add()}}>
-                  <Icon name="plus-square" size={48} color="#284586"/>
-                </TouchableOpacity>
-              </View>
+            <Text style={styles.text}>Foto Kegiatan</Text>
+            {arr}
+            <View style={{paddingBottom:32, marginRight:'auto'}}>
+              <TouchableOpacity onPress={() => { this.add()}}>
+                <Icon name="plus-square" size={48} color="#284586"/>
+              </TouchableOpacity>
             </View>
           </KeyboardAwareScrollView>
           <View style={styles.footer}>
@@ -361,7 +422,7 @@ export default class Form extends Component<{}>{
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
                 <Text style={styles.cancel}>Batal</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => { this.insertToServer('konsultasi') }}>
+              <TouchableOpacity onPress={() => { this.insertToServer('panen') }}>
                 <Text style={styles.next}>Simpan</Text>
               </TouchableOpacity>
             </View>
@@ -377,13 +438,51 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
     flex: 1,
   },
+  textInputWrapper: {
+    flexDirection: 'row',
+   },
   text:{
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
     marginTop:8,
   },
-  dropdown: {
+  text1:{
+    fontSize: 24,
+    fontWeight: '400',
+    color:'#000000',
+    paddingRight:205,
+    marginBottom:30,
+    marginTop:30
+  },
+  text2:{
+   color:'#FFFFFF',
+   fontSize: hp(3),
+   padding:5,
+   borderRadius:30,
+   marginTop:3,
+   fontWeight: 'bold',
+   paddingRight:200
+  },
+ text3:{
+   fontSize: 16,
+   fontWeight: '400',
+   color:'#000000',
+   marginBottom:4
+  },
+  inputHarvest:{
+    width: wp(42),
+    height: hp(6),
+    borderRadius:5,
+    borderWidth: 0.5,
+    borderColor: '#000000',
+    backgroundColor:'#F5F5F5',
+    paddingVertical: 6,
+    fontSize:16,
+    color:'#000000',
+    marginVertical: 5,
+  },
+  dropdown:{
     paddingLeft: 5,
     width: wp(90),
     height: hp(6),
@@ -395,23 +494,6 @@ const styles = StyleSheet.create({
     fontSize:16,
     color:'#000000',
     marginVertical:4,
-  },
-  text1:{
-    fontSize: 24,
-    fontWeight: '400',
-    color:'#000000',
-    paddingRight:160,
-    marginBottom:32,
-    marginTop:32
-  },
-  text2:{
-    color:'#FFFFFF',
-    fontSize: hp(3),
-    padding:5,
-    borderRadius:30,
-    marginTop:3,
-    fontWeight: 'bold',
-    paddingRight:200
   },
   imageGroup:{
     flexDirection: 'row',
@@ -430,12 +512,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingRight:20,
     paddingLeft:20
-  },
-  imageGroup5:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding:5,
-    marginTop:3
   },
   cancel:{
     backgroundColor:'#FFC400',
@@ -465,11 +541,10 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
+    backgroundColor: '#F5F5F5',
     fontSize:16,
     color:'#000000',
-    marginVertical: 5,
+    marginVertical:8,
     textAlignVertical: 'top',
   },
   inputBox3:{
@@ -478,8 +553,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
+    backgroundColor: '#F5F5F5',
     fontSize:16,
     color:'#000000',
     marginVertical: 5,
@@ -490,11 +564,10 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
+    backgroundColor: '#F5F5F5',
     fontSize:16,
     color:'#000000',
-    marginVertical: 12
+    marginVertical:8
   },
   footer: {
     position: 'absolute',
@@ -505,5 +578,10 @@ const styles = StyleSheet.create({
     backgroundColor:'#284586',
     height:56,
     alignItems:'center',
+  },
+  imageGroup5:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding:5,
   },
 });

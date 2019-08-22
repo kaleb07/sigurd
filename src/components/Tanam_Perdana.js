@@ -16,7 +16,7 @@ const options={
   quality: 0.2,
 }
 
-export default class Form extends Component<{}>{
+export default class Tanam_Perdana extends Component<{}>{
   constructor(props) {
     super(props);
     this.state = {
@@ -170,7 +170,7 @@ export default class Form extends Component<{}>{
   insertToServer(activityName){
     const newActivity = {
       date: this.state.date,
-      activityOption: 'Konsultasi',
+      activityOption: 'Tanam Perdana',
       activityDesc: this.state.activityDesc,
       project: this.state.project,
       location: this.state.location,
@@ -244,7 +244,7 @@ export default class Form extends Component<{}>{
               <TouchableOpacity onPress={() => this.selectImage(r.index)}>
                 <Image source={r.image !=='' ? r.image :
                   require('../images/add.png')}
-                  style={{width: wp(11),height: hp(6),marginRight:8,marginTop:12, paddingLeft:8}}/>
+                  style={{width: wp(11),height: hp(6),marginRight:8,marginTop:10, paddingLeft:8}}/>
               </TouchableOpacity>
               <TextInput
                 style={styles.inputBox2}
@@ -272,88 +272,86 @@ export default class Form extends Component<{}>{
             </View>
           </View>
           <View style={styles.imageGroup1}>
-            <Image style={{width: wp(18), height: hp(9.5), marginTop:16}}
-              source={require('../images/konsultasi.png')}/>
-            <Text style={styles.text1}>Konsultasi</Text>
+            <Image style={{width: wp(18), height: hp(9.5), marginTop:16 }}
+              source={require('../images/tanam.png')}/>
+            <Text style={styles.text1}>Tanam Perdana</Text>
           </View>
-          <KeyboardAwareScrollView>
-            <View style={{paddingLeft:20, marginBottom:5}}>
-              <DatePicker
-                style={{width: wp(90)}}
-                date={this.state.date}
-                mode="date"
-                placeholder="Pilih tanggal"
-                format="DD-MM-YYYY"
-                minDate={prevMonths}
-                maxDate={now}
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
+          <KeyboardAwareScrollView style={{paddingLeft:20, marginBottom:50}}>
+            <DatePicker
+              style={{width: wp(90)}}
+              date={this.state.date}
+              mode="date"
+              placeholder="Pilih tanggal"
+              format="DD-MM-YYYY"
+              minDate={prevMonths}
+              maxDate={now}
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
                   position: 'absolute',
                   left: 0,
                   marginLeft: 0,
                   width: wp(10),
                   height: hp(7)
-                  },
-                  dateInput: {
-                    marginLeft:56,
-                    fontSize: 16,
-                    borderRadius:5,
-                    borderWidth: 0.5,
-                    backgroundColor:'#F5F5F5',
-                    borderColor: '#000000',
-                  }
-                }}
-                onDateChange={(date) => {this.setState({date: date})}}
-              />
+                },
+                dateInput: {
+                  marginLeft:56,
+                  fontSize: 16,
+                  borderRadius:5,
+                  borderWidth:0.5,
+                  backgroundColor: '#F5F5F5',
+                  borderColor: '#000000',
+                }
+              }}
+              onDateChange={(date) => {this.setState({date: date})}}
+            />
 
-              <Text style={styles.text}>Deskripsi Kegiatan</Text>
-              <TextInput style={styles.inputBox}
-                multiline={true}
-                onChangeText={(activityDesc) => this.setState({activityDesc})}
-                value={this.state.activityDesc}
-                placeholder="Konsultasi dengan... Kelompok tani... Perihal..."
-              />
+            <Text style={styles.text}>Deskripsi Kegiatan</Text>
+            <TextInput style={styles.inputBox}
+              multiline={true}
+              onChangeText={(activityDesc) => this.setState({activityDesc})}
+              value={this.state.activityDesc}
+              placeholder="Tanam perdana diikuti oleh: Team TF, TH, Media, Organisasi, dll."
+            />
 
-              <Text style={styles.text}>Proyek</Text>
-              <Autocomplete
-                inputStyle={styles.dropdown}
-                scrollToInput={() => {}}
-                handleSelectItem={(item, id) => this.handleSelectItem(item, id)}
-                onDropdownClose={() => {}}
-                onDropdownShow={() => {}}
-                data={projects}
-                minimumCharactersCount={1}
-                highlightText
-                valueExtractor={item => item.title }
-                rightContent
-                rightTextExtractor={item => item.projectNo}
-                placeholder="Cari proyek"
-              />
+            <Text style={styles.text}>Proyek</Text>
+            <Autocomplete
+              inputStyle={styles.dropdown}
+              scrollToInput={() => {}}
+              handleSelectItem={(item, id) => this.handleSelectItem(item, id)}
+              onDropdownClose={() => {}}
+              onDropdownShow={() => {}}
+              data={projects}
+              minimumCharactersCount={1}
+              highlightText
+              valueExtractor={item => item.title }
+              rightContent
+              rightTextExtractor={item => item.projectNo}
+              placeholder="Cari proyek"
+            />
 
-              <Text style={styles.text}>Lokasi</Text>
-              <TextInput style={styles.inputBox3}
-                onChangeText={(location) => this.setState({location})}
-                value={this.state.location}
-                placeholder="Daerah, provinsi, area (west/east)"
-              />
+            <Text style={styles.text}>Lokasi</Text>
+            <TextInput style={styles.inputBox3}
+              onChangeText={(location) => this.setState({location})}
+              value={this.state.location}
+              placeholder="Daerah, provinsi, area (west/east)"
+            />
 
-              <Text style={styles.text}>Hasil Kegiatan </Text>
-              <TextInput style={styles.inputBox}
-                multiline={true}
-                onChangeText={(activityResult) => this.setState({activityResult})}
-                value={this.state.activityResult}
-                placeholder="Konsultasi dengan... Kelompok tani... Perihal..."
-              />
+            <Text style={styles.text}>Hasil Kegiatan </Text>
+            <TextInput style={styles.inputBox}
+              multiline={true}
+              onChangeText={(activityResult) => this.setState({activityResult})}
+              value={this.state.activityResult}
+              placeholder="Berhasil menanam sebanyak ... dengan luas lahan..."
+            />
 
-              <Text style={styles.text}>Foto Kegiatan</Text>
-                {arr}
-              <View style={{paddingBottom:80, marginRight:'auto'}}>
-                <TouchableOpacity onPress={() => { this.add()}}>
-                  <Icon name="plus-square" size={48} color="#284586"/>
-                </TouchableOpacity>
-              </View>
+            <Text style={styles.text}>Foto Kegiatan</Text>
+            {arr}
+            <View style={{paddingBottom:32, marginRight:'auto'}}>
+              <TouchableOpacity onPress={() => { this.add()}}>
+                <Icon name="plus-square" size={48} color="#284586"/>
+              </TouchableOpacity>
             </View>
           </KeyboardAwareScrollView>
           <View style={styles.footer}>
@@ -361,7 +359,7 @@ export default class Form extends Component<{}>{
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
                 <Text style={styles.cancel}>Batal</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => { this.insertToServer('konsultasi') }}>
+              <TouchableOpacity onPress={() => { this.insertToServer('tanam_perdana') }}>
                 <Text style={styles.next}>Simpan</Text>
               </TouchableOpacity>
             </View>
@@ -381,7 +379,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     color:'#000000',
-    marginTop:8,
+    marginTop: 10,
+  },
+  text1:{
+    fontSize: 24,
+    fontWeight: '400',
+    color:'#000000',
+    paddingRight:104,
+    marginBottom:32,
+    marginTop:32
   },
   dropdown: {
     paddingLeft: 5,
@@ -395,14 +401,6 @@ const styles = StyleSheet.create({
     fontSize:16,
     color:'#000000',
     marginVertical:4,
-  },
-  text1:{
-    fontSize: 24,
-    fontWeight: '400',
-    color:'#000000',
-    paddingRight:160,
-    marginBottom:32,
-    marginTop:32
   },
   text2:{
     color:'#FFFFFF',
@@ -425,17 +423,16 @@ const styles = StyleSheet.create({
     paddingLeft:20,
     marginTop:8,
   },
+  imageGroup5:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding:5,
+  },
   imageGroup1:{
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingRight:20,
     paddingLeft:20
-  },
-  imageGroup5:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding:5,
-    marginTop:3
   },
   cancel:{
     backgroundColor:'#FFC400',
@@ -465,8 +462,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
+    backgroundColor: '#F5F5F5',
     fontSize:16,
     color:'#000000',
     marginVertical: 5,
@@ -478,8 +474,8 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
+    backgroundColor: '#F5F5F5',
+    paddingVertical:8,
     fontSize:16,
     color:'#000000',
     marginVertical: 5,
@@ -490,11 +486,10 @@ const styles = StyleSheet.create({
     borderRadius:5,
     borderWidth: 0.5,
     borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
+    backgroundColor: '#F5F5F5',
     fontSize:16,
     color:'#000000',
-    marginVertical: 12
+    marginVertical:8
   },
   footer: {
     position: 'absolute',
@@ -505,5 +500,5 @@ const styles = StyleSheet.create({
     backgroundColor:'#284586',
     height:56,
     alignItems:'center',
-  },
+  }
 });
