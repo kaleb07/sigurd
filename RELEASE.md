@@ -1,5 +1,8 @@
 # RELEASE NOTES
 
+### 0.3.0
+* [MODIFY] service in .env
+
 ### 0.2.0
 * [MODIFY] app name and placeholder
 
