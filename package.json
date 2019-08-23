@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "android-dev": "ENVFILE=.env.dev react-native run-android",
+    "android-staging": "ENVFILE=.env.staging react-native run-android",
+    "android-prod": "ENVFILE=.env.prod react-native run-android",
+    "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd .."
   },
   "dependencies": {
     "add": "^2.0.6",
@@ -42,12 +44,6 @@
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.54.1",
     "react-test-renderer": "16.8.3"
-  },
-  "scripts": {
-    "android-dev": "ENVFILE=.env.dev react-native run-android",
-    "android-staging": "ENVFILE=.env.staging react-native run-android",
-    "android-prod": "ENVFILE=.env.prod react-native run-android",
-    "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd .."
   },
   "jest": {
     "preset": "react-native"

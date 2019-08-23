@@ -214,6 +214,7 @@ export default class Create_Prospecting extends Component<{}>{
             style={styles.inputBox2}
             value={r.caption}
             onChangeText={data => this.insertVal(data, r.index)}
+            placeholder="Keterangan gambar"
           />
           <Icon name="trash"
              size={32}
@@ -296,7 +297,7 @@ export default class Create_Prospecting extends Component<{}>{
 
           <Text style={styles.text}>Foto Kegiatan</Text>
           {arr}
-          <TouchableOpacity style={{paddingBottom:32, marginRight:'auto'}} onPress={() => { this.add()}}>
+          <TouchableOpacity style={{paddingBottom:80, marginRight:'auto'}} onPress={() => { this.add()}}>
             <Icon name="plus-square" size={48} color="#284586"/>
           </TouchableOpacity>
         </KeyboardAwareScrollView>
