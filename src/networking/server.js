@@ -20,8 +20,8 @@ async function getAccountInfo(params){
         headers: {
           'Accept' : 'application/json',
           'Content-Type' : 'application/json',
-          'serviceId' : 1655787172617,
-          'servicesecret' : '47f64d61139f70fcfe2626be8510971dd710c8aaba1a3374c8098a4a98165683e9370cf525dc0d0ab324baf3349b7d8b7be09e62a9bab0e2054878ff783f1ae1'
+          'serviceId' : Config.SERVICE_ID,
+          'servicesecret' : Config.SERVICE_SECRET
         },
         body: JSON.stringify(params),
     });
