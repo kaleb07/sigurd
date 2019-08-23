@@ -1,5 +1,8 @@
 # RELEASE NOTES
 
+### 0.2.0
+* [MODIFY] app name and placeholder
+
 ### 0.1.0
 * [MODIFY] .env, check value, and styles
 * [MODIFY] handling back button hardware
