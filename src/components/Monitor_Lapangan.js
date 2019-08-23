@@ -179,7 +179,7 @@ export default class Monitor_Lapangan extends Component<{}>{
     };
     if(this.state.project == ''){
       Alert.alert(
-        'Project cannot be blank.',
+        'Please select the project.',
         '',
         [
           {text: 'OK', onPress: () => console.log('')},
@@ -250,6 +250,7 @@ export default class Monitor_Lapangan extends Component<{}>{
                 style={styles.inputBox2}
                 value={r.caption}
                 onChangeText={data => this.insertVal(data, r.index)}
+                placeholder="Keterangan gambar"
               />
               <Icon name="trash"
                  size={32}

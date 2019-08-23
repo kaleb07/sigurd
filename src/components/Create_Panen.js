@@ -192,7 +192,7 @@ export default class Create_Panen extends Component<{}>{
 
     if(this.state.project == ''){
       Alert.alert(
-        'Project cannot be blank.',
+        'Please select the project.',
         '',
         [
           {text: 'OK', onPress: () => console.log('')},
@@ -293,6 +293,7 @@ export default class Create_Panen extends Component<{}>{
                 style={styles.inputBox2}
                 value={r.caption}
                 onChangeText={data => this.insertVal(data, r.index)}
+                placeholder="Keterangan gambar"
               />
               <Icon name="trash"
                  size={32}
@@ -382,6 +383,7 @@ export default class Create_Panen extends Component<{}>{
                 onChangeText={(harvestQuantity) => this.setState({harvestQuantity})}
                 value={this.state.harvestQuantity}
                 keyboardType="numeric"
+                placeholder="Contoh : 50"
               />
               <Dropdown label=' '
                 containerStyle={{width:95, bottom: 16, left: 24}}

@@ -413,7 +413,8 @@ export default class Prospecting_Result extends Component<{}> {
              baseColor={"#000000"}
              data={landAreaUnit}
              onChangeText={(unitLandArea) => this.setState({unitLandArea})}
-             value={this.state.unitLandArea}>
+             value={this.state.unitLandArea}
+             placeholder="ha/m2">
            </Dropdown>
          </View>
 

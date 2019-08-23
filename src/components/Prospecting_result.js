@@ -357,6 +357,7 @@ export default class Prospecting_Result extends Component<{}> {
           <TextInput style={styles.inputBox}
             onChangeText={(groupFarmer) => this.setState({groupFarmer})}
             value={this.state.groupFarmer}
+            placeholder="Contoh : Guna Tani"
           />
 
           <Text style={styles.text}>Jumlah Anggota</Text>
@@ -381,7 +382,9 @@ export default class Prospecting_Result extends Component<{}> {
               baseColor={"#000000"}
               data={landAreaUnit}
               onChangeText={(unitLandArea) => this.setState({unitLandArea})}
-              value={this.state.unitLandArea}>
+              value={this.state.unitLandArea}
+              placeholder="ha/m2">
+
             </Dropdown>
           </View>
 

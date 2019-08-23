@@ -215,6 +215,7 @@ export default class Create_Prospecting extends Component<{}>{
               style={styles.inputBox2}
               value={r.caption}
               onChangeText={data => this.insertVal(data, r.index)}
+              placeholder="Keterangan gambar"
             />
             <Icon name="trash"
                size={32}
