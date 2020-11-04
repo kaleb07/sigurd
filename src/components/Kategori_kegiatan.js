@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, TouchableOpacity, Text, Image, BackHandler} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getActivityOptionFromServer } from '../networking/server';
+import { getActivityOptionFromServer, sendIdActivityOptions } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import {signOut}  from '../networking/server.js';
 
@@ -44,6 +44,13 @@ export default class Kategori_kegiatan extends Component <{}>{
     return true;
   }
 
+  sendIdActivityOption(index){
+    let idActivity = this.state.dataSource.map((val, idx) => {
+      if(index == idx)
+        sendIdActivityOptions(val.id);
+    });
+  }
+
   render(){
     if(this.state.isLoading){
       return(
@@ -74,45 +81,45 @@ export default class Kategori_kegiatan extends Component <{}>{
           </View>
           <Text style={styles.text}>Kategori Kegiatan</Text>
           <View style={styles.imageGroup}>
-            <TouchableOpacity  onPress={() => this.props.navigation.navigate('Prospecting')}>
+            <TouchableOpacity  onPress={() => {this.sendIdActivityOption(0); this.props.navigation.navigate('Prospecting')}}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/prospecting.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={() => this.props.navigation.navigate('Consultation')}>
+            <TouchableOpacity  onPress={() => {this.sendIdActivityOption(1); this.props.navigation.navigate('Consultation')}}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/konsultasi.png')}/>
             </TouchableOpacity>
           </View>
           <View style={styles.textGroup}>
-            {activityOptions[4]}
+            {activityOptions[0]}
             {activityOptions[1]}
           </View>
           <View style={styles.imageGroup}>
-            <TouchableOpacity  onPress={() => this.props.navigation.navigate('FieldMonitoring')}>
+            <TouchableOpacity  onPress={() => {this.sendIdActivityOption(2); this.props.navigation.navigate('FieldMonitoring')}}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/monitoring.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={() => this.props.navigation.navigate('FirstPlanting')}>
+            <TouchableOpacity  onPress={() => {this.sendIdActivityOption(3); this.props.navigation.navigate('FirstPlanting')}}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/tanam.png')}/>
             </TouchableOpacity>
           </View>
           <View style={styles.textGroup2}>
             {activityOptions[2]}
-            {activityOptions[0]}
+            {activityOptions[3]}
           </View>
           <View style={styles.imageGroup}>
-            <TouchableOpacity  onPress={() => this.props.navigation.navigate('Harvesting')}>
+            <TouchableOpacity  onPress={() => {this.sendIdActivityOption(4); this.props.navigation.navigate('Harvesting')}}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/panen.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={() => this.props.navigation.navigate('Other')}>
+            <TouchableOpacity  onPress={() => {this.sendIdActivityOption(5); this.props.navigation.navigate('Other')}}>
               <Image style={{width: wp(20), height: hp(11)}}
                 source={require('../images/lainnya.png')}/>
             </TouchableOpacity>
           </View>
           <View style={styles.textGroup3}>
-            {activityOptions[3]}
+            {activityOptions[4]}
             {activityOptions[5]}
         </View>
           <View style={styles.footer}>

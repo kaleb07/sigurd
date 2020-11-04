@@ -4,7 +4,7 @@ import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DatePicker from 'react-native-datepicker';
-import { insertActivityToServer, getProjectFromServer } from '../networking/server';
+import { insertActivityToServer, getProjectFromServer, getActivityOptionById } from '../networking/server';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 import {Autocomplete} from "react-native-dropdown-autocomplete";
 
@@ -22,6 +22,10 @@ export default class Form extends Component<{}>{
     this.state = {
       isLoading: true,
       date:'',
+      activityOption:[{
+        id:'',
+        name:''
+      }],
       activityDesc:'',
       location:'',
       activityResult:'',
@@ -37,10 +41,21 @@ export default class Form extends Component<{}>{
   };
 
   componentDidMount(){
-    return ( getProjectFromServer().then((responseJson) => {
+    return (getProjectFromServer().then((responseJson) => {
       this.setState({
         projects: responseJson.data.items,
         isLoading:false
+      });
+      getActivityOptionById().then((responseJson) => {
+        this.setState({
+          activityOption: ({
+            id: responseJson.id,
+            name: responseJson.name
+          }),
+        });
+        console.log('activityOption: ', this.state.activityOption);
+      }).catch((error)=> {
+        console.log('Error : ', error);
       });
       console.log('project: ', this.state.projects);
     }).catch((error)=> {
@@ -170,13 +185,13 @@ export default class Form extends Component<{}>{
   insertToServer(activityName){
     const newActivity = {
       date: this.state.date,
-      activityOption: 'Konsultasi',
       activityDesc: this.state.activityDesc,
       project: this.state.project,
       location: this.state.location,
       activityResult: this.state.activityResult,
       images:this.state.arr,
     };
+    console.log(newActivity);
     if(this.state.project == ''){
       Alert.alert(
         'Please select the project.',
@@ -334,7 +349,8 @@ export default class Form extends Component<{}>{
               />
 
               <Text style={styles.text}>Lokasi</Text>
-              <TextInput style={styles.inputBox3}
+              <TextInput style={styles.inputBox}
+                multiline={true}
                 onChangeText={(location) => this.setState({location})}
                 value={this.state.location}
                 placeholder="Daerah, provinsi, area (west/east)"
@@ -362,7 +378,21 @@ export default class Form extends Component<{}>{
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
                 <Text style={styles.cancel}>Batal</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => { this.insertToServer('konsultasi') }}>
+              <TouchableOpacity onPress={() => {
+                Alert.alert(
+                  'Confirm',
+                  'Are you sure to continue? Your data will be saved.',
+                  [
+                    {
+                      text: 'Cancel',
+                      onPress: () => this.insertToServer('konsultasi'),
+                      style: 'cancel',
+                    },
+                    {text: 'OK', onPress: () => this.insertToServer('prospecting')},
+                  ],
+                  {cancelable: false},
+                );
+              }}>
                 <Text style={styles.next}>Simpan</Text>
               </TouchableOpacity>
             </View>
@@ -473,18 +503,18 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     textAlignVertical: 'top',
   },
-  inputBox3:{
-    width: wp(90),
-    height: hp(6),
-    borderRadius:5,
-    borderWidth: 0.5,
-    borderColor: '#000000',
-    backgroundColor:'#F5F5F5',
-    paddingVertical: 6,
-    fontSize:16,
-    color:'#000000',
-    marginVertical: 5,
-  },
+  // inputBox3:{
+  //   width: wp(90),
+  //   height: hp(6),
+  //   borderRadius:5,
+  //   borderWidth: 0.5,
+  //   borderColor: '#000000',
+  //   backgroundColor:'#F5F5F5',
+  //   paddingVertical: 6,
+  //   fontSize:16,
+  //   color:'#000000',
+  //   marginVertical: 5,
+  // },
   inputBox2:{
     width: wp(64),
     height: hp(6),

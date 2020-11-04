@@ -170,7 +170,6 @@ export default class Monitor_Lapangan extends Component<{}>{
   insertToServer(activityName){
     const newActivity = {
       date: this.state.date,
-      activityOption: 'Monitor Lapangan',
       activityDesc: this.state.activityDesc,
       project: this.state.project,
       location: this.state.location,
@@ -333,10 +332,11 @@ export default class Monitor_Lapangan extends Component<{}>{
             />
 
             <Text style={styles.text}>Lokasi</Text>
-            <TextInput style={styles.inputBox3}
-                      onChangeText={(location) => this.setState({location})}
-                      value={this.state.location}
-                      placeholder="Daerah, provinsi, area (west/east)"
+            <TextInput style={styles.inputBox}
+                onChangeText={(location) => this.setState({location})}
+                multiline={true}
+                value={this.state.location}
+                placeholder="Daerah, provinsi, area (west/east)"
             />
 
             <Text style={styles.text}>Hasil Kegiatan </Text>
@@ -360,7 +360,21 @@ export default class Monitor_Lapangan extends Component<{}>{
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
                 <Text style={styles.cancel}>Batal</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => { this.insertToServer('monitor_lapangan') }}>
+              <TouchableOpacity onPress={() => {
+                Alert.alert(
+                  'Confirm',
+                  'Are you sure to continue? Your data will be saved.',
+                  [
+                    {
+                      text: 'Cancel',
+                      onPress: () => this.insertToServer('monitor_lapangan'),
+                      style: 'cancel',
+                    },
+                    {text: 'OK', onPress: () => this.insertToServer('prospecting')},
+                  ],
+                  {cancelable: false},
+                );
+              }}>
                 <Text style={styles.next}>Simpan</Text>
               </TouchableOpacity>
             </View>

@@ -1,24 +1,32 @@
 import React, {Component} from 'react';
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
-import {StyleSheet, Text, View, TouchableOpacity, Image, Alert, BackHandler} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image, Alert, BackHandler, ToastAndroid} from 'react-native';
 import SInfo from 'react-native-sensitive-info';
-import {getAccountInfo}  from '../networking/server.js';
+import {getAccountInfo, signOut}  from '../networking/server.js';
 import { responsiveWidth as wp, responsiveHeight as hp } from 'react-native-responsive-ui-views';
 
 let count = 0;
+const now = new Date();
+const nowTimeStamp = now.getTime();
+const add_minutes = 2*60*1000;
+
 export default class Create_Activity extends Component <{}> {
+  constructor(props) {
+    super(props);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+  }
+
   componentDidMount() {
      this._configureGoogleSignIn();
      SInfo.getItem('key2',{}).then(value => {
       const val = JSON.parse(value);
-      const now = new Date();
-      const nowTimeStamp = now.getTime();
-      const exp = val.data.auth.expires;
-      // ambil expires dari sensitive info
-      if (nowTimeStamp < exp) {
-        this.props.navigation.navigate('Home');
-      } else {
-       this._configureGoogleSignIn();
+      if (val != null){
+        if (nowTimeStamp > val.exp) {
+          signOut();
+          this._configureGoogleSignIn();
+        } else {
+          this.props.navigation.navigate('Home');
+        }
       }
     });
    }
@@ -26,11 +34,6 @@ export default class Create_Activity extends Component <{}> {
   static navigationOptions = {
     header: null,
   };
-
-  constructor(props) {
-    super(props)
-    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-  }
 
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -83,7 +86,7 @@ export default class Create_Activity extends Component <{}> {
              }
            ],
            provider: 'google-app',
-         }
+         },
        };
 
        const email = userInfo.user.email;
@@ -91,19 +94,15 @@ export default class Create_Activity extends Component <{}> {
        const domain = email.substring(index + 1);
        if (domain == 'tanihub.com') {
          getAccountInfo(params).then((responseJson)=> {
-           SInfo.setItem('key2', JSON.stringify(responseJson), {});
-           if(responseJson.error){
-             console.log('Error: ', responseJson.error);
-           } else {
-             this.props.navigation.navigate('Home');
-           }
+           SInfo.setItem('key2', JSON.stringify(params), {});
+           console.log(JSON.stringify(params));
          });
        } else {
          Alert.alert('Silahkan masuk dengan akun TaniHub');
        }
 
        await GoogleSignin.revokeAccess();
-
+       this.props.navigation.navigate('Home');
      } catch (error) {
        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
          Alert.alert('cancelled');
@@ -120,6 +119,7 @@ export default class Create_Activity extends Component <{}> {
        }
      }
    };
+
 
   render(){
     return (

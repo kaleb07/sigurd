@@ -7,11 +7,13 @@ const apiActivityOption = Config.API_HOST + '/activity/option';
 const apiProspecting = Config.API_HOST + '/prospecting';
 const apiSignedUrl = Config.API_HOST + '/signed-url';
 const apiProject = Config.API_HOST + '/project/all';
-var RNFetchBlob = require('react-native-fetch-blob').default
 const apiAccount = Config.API_ACCOUNT + '/v1/auth/signin';
+
+var RNFetchBlob = require('react-native-fetch-blob').default
 var id_activity = '';
 var id_farmer='';
 var user = [];
+var id_activity_option = '';
 
 async function getAccountInfo(params){
   try{
@@ -26,7 +28,7 @@ async function getAccountInfo(params){
         body: JSON.stringify(params),
     });
     let responseJson = await response.json();
-    id_user = responseJson.data.user.id;
+    console.log('user: ', responseJson);
     return responseJson;
   } catch(error){
     console.log('Error is: ', error);
@@ -74,6 +76,19 @@ async function getActivityOptionFromServer(){
   }
 }
 
+async function getActivityOptionById(){
+  try{
+    let getById = apiActivityOption + '/' + id_activity_option;
+    let response = await fetch(getById, {
+        method: 'GET',
+    });
+    let responseJson = await response.json();
+    return responseJson;
+  } catch(error){
+    console.log('Error is: ', error);
+  }
+}
+
 async function getProspecting(){
   try{
     let getById = apiProspecting + '/' + id_farmer;
@@ -87,6 +102,10 @@ async function getProspecting(){
 
 async function sendIdFarmer(params){
   id_farmer = params;
+}
+
+async function sendIdActivityOptions(params){
+  id_activity_option = params;
 }
 
 async function insertActivityToServer(activity, params){
@@ -132,9 +151,9 @@ async function insertActivityToServer(activity, params){
 
     await SInfo.getItem('key2',{}).then(value => {
      const val = JSON.parse(value);
-     user = val.data.user;
+     user = val.profile;
    });
-
+    params.activityOptionId = id_activity_option;
     params.images = arr;
     params.user = user;
     console.log('user: ', params.user);
@@ -183,6 +202,8 @@ async function getActivityProspecting(){
   }
 }
 
+
+
 async function deleteProspectingResult(params){
   try{
     let deleteById = apiProspecting + '/' + params;
@@ -215,6 +236,6 @@ async function updateProspectingResult(params){
   }
 }
 
-export {getActivityOptionFromServer, getActivityFromServer, getProjectFromServer, getActivityProspecting,
-getProspecting, sendIdFarmer, signOut, insertActivityToServer, insertProspectingToServer, deleteProspectingResult,
+export {getActivityOptionFromServer, getActivityFromServer, getProjectFromServer, getActivityProspecting, getActivityOptionById,
+getProspecting, sendIdFarmer, sendIdActivityOptions, signOut, insertActivityToServer, insertProspectingToServer, deleteProspectingResult,
 updateProspectingResult, getAccountInfo};

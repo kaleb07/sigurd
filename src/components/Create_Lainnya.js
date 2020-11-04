@@ -168,7 +168,6 @@ export default class Create_Prospecting extends Component<{}>{
  insertToServer(activityName){
    const newActivity = {
      date: this.state.date,
-     activityOption: 'Lainnya',
      activityDesc: this.state.activityDesc,
      location: this.state.location,
      activityResult: this.state.activityResult,
@@ -177,7 +176,7 @@ export default class Create_Prospecting extends Component<{}>{
 
    if(newActivity.images[0].image == '' && newActivity.images[0].caption == '' && this.state.arr.length === 1){
      Alert.alert(
-       'Please insert at least one product.',
+       'Please insert at least one image and these caption.',
        '',
        [
          {text: 'OK', onPress: () => console.log('')},
@@ -284,8 +283,9 @@ export default class Create_Prospecting extends Component<{}>{
           />
 
           <Text style={styles.text}>Lokasi</Text>
-          <TextInput style={styles.inputBox3}
+          <TextInput style={styles.inputBox}
             onChangeText={(location) => this.setState({location})}
+            multiline={true}
             value={this.state.location}
             placeholder="Daerah, provinsi, area (west/east)"
           />
@@ -310,7 +310,21 @@ export default class Create_Prospecting extends Component<{}>{
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Category')} >
               <Text style={styles.cancel}>Batal</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { this.insertToServer('lainnya') }}>
+            <TouchableOpacity onPress={() => {
+              Alert.alert(
+                'Confirm',
+                'Are you sure to continue? Your data will be saved.',
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => this.insertToServer('lainnya'),
+                    style: 'cancel',
+                  },
+                  {text: 'OK', onPress: () => this.insertToServer('prospecting')},
+                ],
+                {cancelable: false},
+              );
+            }}>
               <Text style={styles.next}>Simpan</Text>
             </TouchableOpacity>
           </View>
@@ -404,18 +418,18 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     textAlignVertical: 'top',
   },
-  inputBox3:{
-    width: wp(90),
-    height: hp(6),
-    borderRadius:5,
-    borderWidth: 0.5,
-    borderColor: '#000000',
-    backgroundColor: '#F5F5F5',
-    paddingVertical: 6,
-    fontSize:16,
-    color:'#000000',
-    marginVertical: 5,
-  },
+  // inputBox3:{
+  //   width: wp(90),
+  //   height: hp(6),
+  //   borderRadius:5,
+  //   borderWidth: 0.5,
+  //   borderColor: '#000000',
+  //   backgroundColor: '#F5F5F5',
+  //   paddingVertical: 6,
+  //   fontSize:16,
+  //   color:'#000000',
+  //   marginVertical: 5,
+  // },
   inputBox2:{
     width: wp(64),
     height: hp(6),

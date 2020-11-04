@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, TouchableOpacity, Text, ScrollView, Image, BackHandler} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text, ScrollView, Image, BackHandler, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getActivityProspecting, deleteProspectingResult, sendIdFarmer } from '../networking/server';
 import DropDownItem from 'react-native-drop-down-item';
@@ -56,6 +56,26 @@ export default class List_data extends Component <{}>{
    )
  }
 
+ checkFarmer(){
+   return ( getActivityProspecting().then((responseJson) => {
+     if(responseJson.farmer.length == 0){
+       Alert.alert(
+         'Please insert at least one farmer data.',
+         '',
+         [
+           {text: 'OK', onPress: () => console.log('')},
+         ],
+         {cancelable: false},
+       );
+
+     } else {
+       this.props.navigation.navigate('SuccessPage');
+     }
+   }).catch((error)=> {
+     console.log('Error : ', error);
+   }))
+ }
+
   render(){
     if(this.state.isLoading){
       return(
@@ -100,7 +120,7 @@ export default class List_data extends Component <{}>{
                       <View style={styles.textInputWrapper5}>
                           <Text style={styles.text3}>  {val.phoneNumber}</Text>
                           <Text style={styles.text3} numberOfLines={1}>  {val.groupFarmer}</Text>
-                          <Text style={styles.text3} numberOfLines={1}>  {val.numberOfMembers} </Text>
+                          <Text style={styles.text3} numberOfLines={1}>  {val.numberOfMember} </Text>
                           <Text style={styles.text3} numberOfLines={1}>  {val.landArea}</Text>
                           <Text style={styles.text3} numberOfLines={1}>  {val.longTimeFarming}</Text>
                       </View>
@@ -115,7 +135,7 @@ export default class List_data extends Component <{}>{
                         <View  style={{flexDirection:'row'}} key={keys}>
                           <Text style={{flex:1,fontSize:14,color:'#000000'}}>{vals.commodity}</Text>
                           <Text style={{flex:1,left:45,fontSize:14,color:'#000000'}}>{vals.capacity} {vals.unitCapacity}</Text>
-                          <Text style={{flex:2,left:90,fontSize:14,color:'#000000'}}>{vals.price}/{vals.unitPrice}</Text>
+                          <Text style={{flex:2,left:85,fontSize:14,color:'#000000'}}>{vals.price}/{vals.unitPrice}</Text>
                         </View>
                      )}
                      <View style={styles.listButton}>
@@ -200,7 +220,7 @@ export default class List_data extends Component <{}>{
             </View>
           </ScrollView>
         </ScrollView>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('SuccessPage')} style={styles.footer}>
+        <TouchableOpacity onPress={() => this.checkFarmer() } style={styles.footer}>
           <Text style={styles.next}>Selesai</Text>
         </TouchableOpacity>
       </View>
